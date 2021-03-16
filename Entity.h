@@ -19,15 +19,15 @@ class Entity {
         vector<Status> state; // current debuffs or buffs.
         string description;
     public:
-        float getHP();
-        float getATK();
-        float getDEF();
-        string getDescription();
-        float setHP();
-        float setATK();
-        float setDEF();
+        float getHP() { return HP; };
+        float getATK() { return ATK; };
+        float getDEF() { return DEF; };
+        string getDescription() { return description; };
+        void setHP(float HP) { this->HP = HP; };
+        void setATK(float ATK) { this->ATK = ATK; };
+        void setDEF(float DEF) { this->DEF = DEF; };
+        void setDebuff(Status debuff) { state.push_back(debuff); };
         void attack(); // combat
-        void setDebuff();
 };
 
 enum State { Combat, NotInCombat, BossCombat, shop };
