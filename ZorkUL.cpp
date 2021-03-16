@@ -1,4 +1,4 @@
-#include <iostream>
+
 
 using namespace std;
 #include "ZorkUL.h"
@@ -14,41 +14,61 @@ ZorkUL::ZorkUL() {
 }
 
 void ZorkUL::createRooms()  {
-    Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *centra;
+    Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *entrance, *exit;
 
-	a = new Room("a");
-        a->addItem(new Item("x", 1, 11));
-        a->addItem(new Item("y", 2, 22));
-	b = new Room("b");
-        b->addItem(new Item("xx", 3, 33));
-        b->addItem(new Item("yy", 4, 44));
-	c = new Room("c");
-	d = new Room("d");
-	e = new Room("e");
-	f = new Room("f");
-	g = new Room("g");
-	h = new Room("h");
-	i = new Room("i");
-    j = new Room("j");
-        j->addItem(new Item("Frozen Blade", 10, 100));
-    centra = new Room("Centra");
-        centra ->addItem(new Item("Sausage Roll", 1, 2));
+    switch(currentRegion) {
+        case SmokingCrater:
+            a = new Room("Crater");
+                a->addItem(new Item("Broken Phone", 1, 300));
+                a->addItem(new Item("Shattered Glasses", 0, 30));
+            exit = new Room("exit");
 
-//             (N, E, S, W)
-	a->setExits(f, b, d, c);
-	b->setExits(NULL, NULL, NULL, a);
-	c->setExits(NULL, a, NULL, NULL);
-	d->setExits(a, e, NULL, i);
-	e->setExits(NULL, NULL, NULL, d);
-	f->setExits(NULL, g, a, h);
-	g->setExits(NULL, NULL, NULL, f);
-	h->setExits(NULL, f, NULL, NULL);
-    i->setExits(NULL, d, j, NULL);
-    j->setExits(i, centra, NULL, NULL);
-    centra->setExits(NULL, NULL, NULL, j);
+        //             (N, E, S, W)
+            a->setExits(NULL, NULL, NULL, exit);
 
-        currentRoom = a;
+        case WindingPath:
+            delete a; delete exit;
+
+            entrance = new Room("entrance");
+            a = new Room("Winding Path");
+            b = new Room("Winding Path 2");
+            c = new Room("Winding Path 3");
+            d = new Room("Winding Path 4");
+            e = new Room("Winding Path 5");
+            f = new Room("Winding Path 6");
+            g = new Room("Winding Path 7");
+            h = new Room("Winding Path 8");
+            i = new Room("Winding Path 9");
+            exit = new Room("exit");
+
+            a->setExits(NULL, entrance, NULL, NULL);
+            b->setExits(NULL, a, NULL, c);
+            c->setExits(d, b, NULL, NULL);
+            d->setExits(NULL, NULL, c, e);
+            e->setExits(NULL, f, NULL, d);
+            f->setExits(g, NULL, NULL, e);
+            g->setExits(NULL, h, f, NULL);
+            h->setExits(NULL, i, NULL, g);
+            i->setExits(exit, NULL, NULL, h);
+
+        case EtheVillage:
+            delete a; delete b; delete c; delete d;
+            delete e; delete f; delete g; delete h;
+            delete i; delete entrance; delete exit;
+
+        case MistyWoods:
+
+        case CastleEntrance:
+
+        case CastleUnderground:
+
+        case WizardsChambers:
+
+        case KingsChambers:
+    }
+            currentRoom = a;
 }
+
 
 /**
  *  Main play routine.  Loops until end of play.
@@ -182,7 +202,26 @@ void ZorkUL::goRoom(Command command) {
 
 	if (nextRoom == NULL)
 		cout << "underdefined input"<< endl;
-	else {
+    else if(nextRoom->shortDescription() == "exit") {
+        switch(currentRegion) {
+        case SmokingCrater:
+            currentRegion = WindingPath;
+        case WindingPath:
+            currentRegion = EtheVillage;
+        case EtheVillage:
+            currentRegion = MistyWoods;
+        case MistyWoods:
+            currentRegion = CastleEntrance;
+        case CastleEntrance:
+
+        case CastleUnderground:
+            currentRegion = WizardsChambers;
+        case WizardsChambers:
+
+        case KingsChambers:
+        }
+        createRooms();
+    } else {
 		currentRoom = nextRoom;
 		cout << currentRoom->longDescription() << endl;
 	}
