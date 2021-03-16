@@ -9,10 +9,16 @@
 #include <string>
 using namespace std;
 
+enum Region {SmokingCrater = 1, WindingPath = 2, EtheVillage = 3,
+             MistyWoods = 4, CastleEntrance = 5, CastleUnderground = 6,
+             WizardsChambers = 7, KingsChambers = 8
+            };
+
 class ZorkUL {
 private:
 	Parser parser;
 	Room *currentRoom;
+    Region currentRegion;
 	void createRooms();
 	void printWelcome();
 	bool processCommand(Command command);
