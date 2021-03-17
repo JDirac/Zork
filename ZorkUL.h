@@ -18,7 +18,7 @@ class ZorkUL {
 private:
 	Parser parser;
 	Room *currentRoom;
-    Region currentRegion;
+    Region currentRegion = SmokingCrater;
 	void createRooms();
 	void printWelcome();
 	bool processCommand(Command command);
@@ -33,4 +33,5 @@ public:
 	string go(string direction);
 };
 
+#endif /*ZORKUL_H_*/
 #endif /*ZORKUL_H_*/
