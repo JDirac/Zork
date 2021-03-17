@@ -1,4 +1,4 @@
-
+#include <iostream>
 
 using namespace std;
 #include "ZorkUL.h"
@@ -14,7 +14,9 @@ ZorkUL::ZorkUL() {
 }
 
 void ZorkUL::createRooms()  {
-    Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *entrance, *exit;
+    Room *a = nullptr, *b = nullptr, *c = nullptr, *d = nullptr,
+         *e = nullptr, *f = nullptr, *g = nullptr, *h = nullptr,
+         *i = nullptr, *entrance = nullptr, *exit = nullptr;
 
     switch(currentRegion) {
         case SmokingCrater:
@@ -24,10 +26,10 @@ void ZorkUL::createRooms()  {
             exit = new Room("exit");
 
         //             (N, E, S, W)
-            a->setExits(NULL, NULL, NULL, exit);
+            a->setExits(NULL, exit, NULL, NULL);
+         break;
 
         case WindingPath:
-            delete a; delete exit;
 
             entrance = new Room("entrance");
             a = new Room("Winding Path");
@@ -41,30 +43,86 @@ void ZorkUL::createRooms()  {
             i = new Room("Winding Path 9");
             exit = new Room("exit");
 
-            a->setExits(NULL, entrance, NULL, NULL);
-            b->setExits(NULL, a, NULL, c);
-            c->setExits(d, b, NULL, NULL);
+            a->setExits(NULL, b, NULL, entrance);
+            b->setExits(NULL, c, NULL, a);
+            c->setExits(d, NULL, NULL, b);
             d->setExits(NULL, NULL, c, e);
-            e->setExits(NULL, f, NULL, d);
-            f->setExits(g, NULL, NULL, e);
+            e->setExits(NULL, d, NULL, f);
+            f->setExits(g, e, NULL, NULL);
             g->setExits(NULL, h, f, NULL);
             h->setExits(NULL, i, NULL, g);
             i->setExits(exit, NULL, NULL, h);
+        break;
 
         case EtheVillage:
             delete a; delete b; delete c; delete d;
             delete e; delete f; delete g; delete h;
             delete i; delete entrance; delete exit;
 
+            entrance = new Room("entrance");
+            a = new Room("Village Square");
+            b = new Room("Inn");
+            c = new Room("Merchant");
+            d = new Room("Blarn Street");
+            e = new Room("Blacksmith");
+            exit = new Room("exit");
+
+            a->setExits(c, d, entrance, b);
+            b->setExits(NULL, a, NULL, NULL);
+            c->setExits(NULL, NULL, a, NULL);
+            d->setExits(e, exit, NULL, a);
+            e->setExits(NULL, NULL, e, NULL);
+        break;
+
         case MistyWoods:
+            delete a; delete b; delete c; delete d;
+            delete e; delete entrance; delete exit;
+
+            entrance = new Room("entrance");
+            a = new Room("Forest Entrance");
+            exit = new Room("exit");
+
+            a->setExits(exit, NULL, entrance, NULL);
+        break;
 
         case CastleEntrance:
+            delete a; delete entrance; delete exit;
+
+            entrance = new Room("entrance");
+            a = new Room("Forest Entrance");
+            exit = new Room("exit");
+
+            a->setExits(exit, NULL, entrance, NULL);
+        break;
 
         case CastleUnderground:
+            delete a; delete entrance; delete exit;
+
+            entrance = new Room("entrance");
+            a = new Room("Forest Entrance");
+            exit = new Room("exit");
+
+            a->setExits(exit, NULL, entrance, NULL);
+        break;
 
         case WizardsChambers:
+            delete a; delete entrance; delete exit;
+
+            entrance = new Room("entrance");
+            a = new Room("Forest Entrance");
+            exit = new Room("exit");
+
+            a->setExits(exit, NULL, entrance, NULL);
+        break;
 
         case KingsChambers:
+            delete a; delete entrance; delete exit;
+
+            entrance = new Room("entrance");
+            a = new Room("Forest Entrance");
+            exit = new Room("exit");
+
+            a->setExits(exit, NULL, entrance, NULL);
     }
             currentRoom = a;
 }
@@ -117,16 +175,32 @@ bool ZorkUL::processCommand(Command command) {
 
 	else if (commandWord.compare("map") == 0)
 		{
-        cout << "[h] --- [f] --- [g]" << endl;
-		cout << "         |         " << endl;
-        cout << "         |         " << endl;
-		cout << "[c] --- [a] --- [b]" << endl;
-		cout << "         |         " << endl;
-		cout << "         |         " << endl;
-		cout << "[i] --- [d] --- [e]" << endl;
-        cout << " | " << endl;
-        cout << " | " << endl;
-        cout << "[j] --- [ce]" << endl;
+        switch(currentRegion) {
+        case SmokingCrater:
+            cout << "[Crater] --- [Exit]" << endl;
+            break;
+        case WindingPath:
+            cout << "                             [Exit]" << endl;
+            cout << "                                | " << endl;
+            cout << "                                | " << endl;
+            cout << "               [7] --- [8] --- [9]" << endl;
+            cout << "                |                 " << endl;
+            cout << "                |                 " << endl;
+            cout << "               [6] --- [5] --- [4]" << endl;
+            cout << "                                | " << endl;
+            cout << "                                | " << endl;
+            cout << "[Entrance] --- [1] --- [2] --- [3]" << endl;
+         break;
+         case EtheVillage:
+             cout << "              [Merchant]       [Blacksmith]" << endl;
+             cout << "                  |                  |" << endl;
+             cout << "                  |                  |" << endl;
+             cout << "[Inn] --- [Village Square] --- [Blarn Street] --- [Exit]" << endl;
+             cout << "                       |" << endl;
+             cout << "                       |" << endl;
+             cout << "                   [Entrance] " << endl;
+         break;
+        }
 
 		}
 
@@ -200,27 +274,34 @@ void ZorkUL::goRoom(Command command) {
 	// Try to leave current room.
 	Room* nextRoom = currentRoom->nextRoom(direction);
 
-	if (nextRoom == NULL)
+    if (nextRoom == NULL) {
 		cout << "underdefined input"<< endl;
-    else if(nextRoom->shortDescription() == "exit") {
+    } else if(nextRoom->shortDescription() == "exit") {
         switch(currentRegion) {
         case SmokingCrater:
             currentRegion = WindingPath;
+            break;
         case WindingPath:
             currentRegion = EtheVillage;
+            break;
         case EtheVillage:
             currentRegion = MistyWoods;
+            break;
         case MistyWoods:
             currentRegion = CastleEntrance;
+            break;
         case CastleEntrance:
 
         case CastleUnderground:
             currentRegion = WizardsChambers;
+            break;
         case WizardsChambers:
-
+            break;
         case KingsChambers:
+            printf("Swag");
         }
         createRooms();
+        cout << currentRoom->longDescription() << endl;
     } else {
 		currentRoom = nextRoom;
 		cout << currentRoom->longDescription() << endl;
@@ -232,10 +313,35 @@ string ZorkUL::go(string direction) {
 	//transform(direction.begin(), direction.end(), direction.begin(),:: tolower);
 	//Move to the next room
 	Room* nextRoom = currentRoom->nextRoom(direction);
-	if (nextRoom == NULL)
+    if (nextRoom == NULL) {
 		return("direction null");
-	else
-	{
+    } else if(nextRoom->shortDescription() == "exit") {
+        switch(currentRegion) {
+        case SmokingCrater:
+            currentRegion = WindingPath;
+            break;
+        case WindingPath:
+            currentRegion = EtheVillage;
+            break;
+        case EtheVillage:
+            currentRegion = MistyWoods;
+            break;
+        case MistyWoods:
+            currentRegion = CastleEntrance;
+            break;
+        case CastleEntrance:
+            break;
+        case CastleUnderground:
+            currentRegion = WizardsChambers;
+            break;
+        case WizardsChambers:
+            break;
+        case KingsChambers:
+            printf("Swag");
+        }
+        createRooms();
+        return currentRoom->longDescription();
+    } else {
 		currentRoom = nextRoom;
 		return currentRoom->longDescription();
 	}
