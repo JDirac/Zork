@@ -24,6 +24,7 @@ public:
 	string shortDescription();
 	string longDescription();
 	Room* nextRoom(string direction);
+    Item& getItem(int index) {return itemsInRoom[index]; };
     void addItem(Item *inItem);
     string displayItem();
     int isItemInRoom(string inString);
