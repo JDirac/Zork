@@ -7,6 +7,7 @@
 #include "item.h"
 #include <iostream>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 enum Region {SmokingCrater = 1, WindingPath = 2, EtheVillage = 3,
@@ -18,7 +19,8 @@ class ZorkUL {
 private:
 	Parser parser;
 	Room *currentRoom;
-    Region currentRegion = SmokingCrater;
+    Region currentRegion = CastleEntrance;
+    bool wizardFought = false;
 	void createRooms();
 	void printWelcome();
 	bool processCommand(Command command);
@@ -33,5 +35,4 @@ public:
 	string go(string direction);
 };
 
-#endif /*ZORKUL_H_*/
 #endif /*ZORKUL_H_*/
