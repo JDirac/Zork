@@ -89,10 +89,17 @@ void ZorkUL::createRooms()  {
             delete a; delete entrance; delete exit;
 
             entrance = new Room("entrance");
-            a = new Room("Forest Entrance");
+            a = new Room("Hallway A");
+            b = new Room("Knights");
+            c = new Room("Armory");
+            d = new Room("Hallway B");
+            e = new Room("To King");
             exit = new Room("exit");
 
-            a->setExits(exit, NULL, entrance, NULL);
+            a->setExits(d, b, entrance, NULL);
+            b->setExits(NULL, NULL, c, a);
+            c->setExits(b, NULL, NULL, NULL);
+            d->setExits(NULL, exit, NULL, e);
         break;
 
         case CastleUnderground:
@@ -119,7 +126,7 @@ void ZorkUL::createRooms()  {
             delete a; delete entrance; delete exit;
 
             entrance = new Room("entrance");
-            a = new Room("Forest Entrance");
+            a = new Room("King's Chambers");
             exit = new Room("exit");
 
             a->setExits(exit, NULL, entrance, NULL);
@@ -181,24 +188,52 @@ bool ZorkUL::processCommand(Command command) {
             break;
         case WindingPath:
             cout << "                             [Exit]" << endl;
-            cout << "                                | " << endl;
-            cout << "                                | " << endl;
-            cout << "               [7] --- [8] --- [9]" << endl;
-            cout << "                |                 " << endl;
-            cout << "                |                 " << endl;
-            cout << "               [6] --- [5] --- [4]" << endl;
-            cout << "                                | " << endl;
-            cout << "                                | " << endl;
-            cout << "[Entrance] --- [1] --- [2] --- [3]" << endl;
+            cout << "                                |  " << endl;
+            cout << "                                |  " << endl;
+            cout << "               [7] --- [8] --- [9] " << endl;
+            cout << "                |                  " << endl;
+            cout << "                |                  " << endl;
+            cout << "               [6] --- [5] --- [4] " << endl;
+            cout << "                                |  " << endl;
+            cout << "                                |  " << endl;
+            cout << "[Entrance] --- [1] --- [2] --- [3] " << endl;
          break;
          case EtheVillage:
-             cout << "              [Merchant]       [Blacksmith]" << endl;
-             cout << "                  |                  |" << endl;
-             cout << "                  |                  |" << endl;
-             cout << "[Inn] --- [Village Square] --- [Blarn Street] --- [Exit]" << endl;
-             cout << "                       |" << endl;
-             cout << "                       |" << endl;
-             cout << "                   [Entrance] " << endl;
+            cout << "              [Merchant]       [Blacksmith]             " << endl;
+            cout << "                  |                  |                  " << endl;
+            cout << "                  |                  |                  " << endl;
+            cout << "[Inn] --- [Village Square] --- [Blarn Street] --- [Exit]" << endl;
+            cout << "                  |                                     " << endl;
+            cout << "                  |                                     " << endl;
+            cout << "              [Entrance]                                " << endl;
+         break;
+
+         case CastleEntrance:
+            cout << "  [To King]          [To Wizard]    " << endl;
+            cout << "      |                   |         " << endl;
+            cout << "      |                   |         " << endl;
+            cout << "      ---- [Hallway B] ----         " << endl;
+            cout << "                |                   " << endl;
+            cout << "                |                   " << endl;
+            cout << "           [Hallway A] --- [Knights]" << endl;
+            cout << "                |              |    " << endl;
+            cout << "                |              |    " << endl;
+            cout << "            [Entrance]      [Armory]" << endl;
+         break;
+
+         case KingsChambers:
+            cout << "      -----------------------       " << endl;
+            cout << "      |                     |       " << endl;
+            cout << "      |                     |       " << endl;
+            cout << "      |                     |       " << endl;
+            cout << "      |   King's Chambers   |       " << endl;
+            cout << "      |                     |       " << endl;
+            cout << "      |                     |       " << endl;
+            cout << "      |                     |       " << endl;
+            cout << "      -----------------------       " << endl;
+            cout << "                |                   " << endl;
+            cout << "                |                   " << endl;
+            cout << "            [Entrance]              " << endl;
          break;
         }
 
@@ -291,58 +326,67 @@ void ZorkUL::goRoom(Command command) {
             currentRegion = CastleEntrance;
             break;
         case CastleEntrance:
-
+            currentRegion = CastleUnderground;
+            break;
         case CastleUnderground:
             currentRegion = WizardsChambers;
             break;
         case WizardsChambers:
+            currentRegion = CastleEntrance;
             break;
-        case KingsChambers:
-            printf("Swag");
         }
         createRooms();
         cout << currentRoom->longDescription() << endl;
+    } else if(nextRoom->shortDescription() == "entrance") {
+        switch(currentRegion) {
+        case WindingPath:
+            cout << "There's no reason to go back there now." << endl;
+            break;
+        case EtheVillage:
+            currentRegion = WindingPath;
+            break;
+        case MistyWoods:
+            currentRegion = EtheVillage;
+            break;
+        case CastleEntrance:
+            currentRegion = MistyWoods;
+            break;
+        case CastleUnderground:
+            currentRegion = CastleEntrance;
+            break;
+        case WizardsChambers:
+            currentRegion = CastleUnderground;
+            break;
+        case KingsChambers:
+            currentRegion = CastleEntrance;
+        }
+        createRooms();
+        cout << currentRoom->longDescription() << endl;
+    } else if(nextRoom->shortDescription() == "To King") {
+        if(!wizardFought) {
+            cout << "\nAre you sure you wish to meet the King?\n"
+                 << "It is highly recommended you head to the Wizard first! [yes/no]\n"
+                 << "\n> ";
+            string temp;
+            getline(cin, temp);
+            transform(temp.begin(), temp.end(), temp.begin(),:: tolower);
+
+            if(temp == "yes") {
+                currentRegion = KingsChambers;
+                createRooms();
+                cout << "\nYou are now in the King's chambers." << endl;
+                cout << "His overwhelming aura dominates the room." << endl;
+            } else {
+                cout << currentRoom->longDescription() << endl;
+            }
+        } else {
+          currentRegion = KingsChambers;
+          createRooms();
+          cout << currentRoom->longDescription() << endl;
+        }
+
     } else {
 		currentRoom = nextRoom;
 		cout << currentRoom->longDescription() << endl;
 	}
-}
-
-string ZorkUL::go(string direction) {
-	//Make the direction lowercase
-	//transform(direction.begin(), direction.end(), direction.begin(),:: tolower);
-	//Move to the next room
-	Room* nextRoom = currentRoom->nextRoom(direction);
-    if (nextRoom == NULL) {
-		return("direction null");
-    } else if(nextRoom->shortDescription() == "exit") {
-        switch(currentRegion) {
-        case SmokingCrater:
-            currentRegion = WindingPath;
-            break;
-        case WindingPath:
-            currentRegion = EtheVillage;
-            break;
-        case EtheVillage:
-            currentRegion = MistyWoods;
-            break;
-        case MistyWoods:
-            currentRegion = CastleEntrance;
-            break;
-        case CastleEntrance:
-            break;
-        case CastleUnderground:
-            currentRegion = WizardsChambers;
-            break;
-        case WizardsChambers:
-            break;
-        case KingsChambers:
-            printf("Swag");
-        }
-        createRooms();
-        return currentRoom->longDescription();
-    } else {
-		currentRoom = nextRoom;
-		return currentRoom->longDescription();
-	}
-}
+}`
