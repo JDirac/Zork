@@ -6,10 +6,13 @@
 #include <iostream>
 using namespace std;
 
+enum Type {Weapon, Armor, Accessory, Consumable, KeyItem};
+
 class Item {
 private:
 	string description;
 	string longDescription;
+    Type type;
 	int weightGrams;
 	float value;
 	bool weaponCheck;
@@ -25,6 +28,7 @@ public:
 	void setValue(float value);
 	int getWeaponCheck();
 	void setWeaponCheck(int weaponCheck);
+    Type getType() { return type; };
 };
 
 #endif /*ITEM_H_*/
