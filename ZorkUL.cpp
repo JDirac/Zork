@@ -140,6 +140,7 @@ void ZorkUL::createRooms()  {
  */
 void ZorkUL::play() {
 	printWelcome();
+    player = new Player("Craig", "Our Valiant Hero", 100, 10, 10, 100, 15, 0);
 
 	// Enter the main command loop.  Here we repeatedly read commands and
 	// execute them until the ZorkUL game is over.
@@ -245,44 +246,44 @@ bool ZorkUL::processCommand(Command command) {
     else if (commandWord.compare("take") == 0)
     {
        	if (!command.hasSecondWord()) {
-		cout << "incomplete input"<< endl;
-        }
-        else {
+            cout << "incomplete input"<< endl;
+        } else {
             int location;
-         if (command.hasThirdWord()) {
-            cout << "you're trying to take " + command.getSecondWord() + " " + command.getThirdWord() << endl;
-            location = currentRoom->isItemInRoom(command.getSecondWord() + " " + command.getThirdWord());
-         } else {
-            cout << "you're trying to take " + command.getSecondWord() <<endl;
-            location = currentRoom->isItemInRoom(command.getSecondWord());
-         }
-            if (location  < 0 )
-                cout << "item is not in room" << endl;
-            else {
-                cout << "item is in room" << endl;
-                cout << "index number " << + location << endl;
-                cout << endl;
-                cout << currentRoom->longDescription() << endl;
+            if (command.hasThirdWord()) {
+                cout << "you're trying to take " + command.getSecondWord() + " " + command.getThirdWord() << endl;
+                location = currentRoom->isItemInRoom(command.getSecondWord() + " " + command.getThirdWord());
+            } else {
+                cout << "you're trying to take " + command.getSecondWord() <<endl;
+                location = currentRoom->isItemInRoom(command.getSecondWord());
+            }
+                if (location  < 0 ) cout << "item is not in room" << endl;
+                else {
+                    player->takeItem(currentRoom->getItem(location));
+                    currentRoom->removeItemFromRoom(location);
+                    cout << endl;
+                    cout << currentRoom->longDescription() << endl;
             }
         }
     }
 
-    else if (commandWord.compare("put") == 0)
-    {
-
+    else if (commandWord.compare("inventory") == 0) {
+        player->showInventory();
     }
-    /*
+
+    else if (commandWord.compare("put") == 0)
     {
     if (!command.hasSecondWord()) {
 		cout << "incomplete input"<< endl;
         }
-        else
-            if (command.hasSecondWord()) {
+        else if (command.hasSecondWord() && !command.hasThirdWord()) {
             cout << "you're adding " + command.getSecondWord() << endl;
-            itemsInRoom.push_Back;
+            currentRoom->addItem(player->putItem(command.getSecondWord()));
+        } else {
+            cout << "you're adding " + command.getSecondWord() << " " << command.getThirdWord() << endl;
+            currentRoom->addItem(player->putItem(command.getSecondWord() + " " + command.getSecondWord()));
         }
     }
-*/
+
     else if (commandWord.compare("quit") == 0) {
 		if (command.hasSecondWord())
 			cout << "overdefined input"<< endl;
@@ -389,4 +390,4 @@ void ZorkUL::goRoom(Command command) {
 		currentRoom = nextRoom;
 		cout << currentRoom->longDescription() << endl;
 	}
-}`
+}
