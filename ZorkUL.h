@@ -5,6 +5,8 @@
 #include "Parser.h"
 #include "Room.h"
 #include "item.h"
+#include "Entity.h"
+#include "Player.h"
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -18,6 +20,7 @@ enum Region {SmokingCrater = 1, WindingPath = 2, EtheVillage = 3,
 class ZorkUL {
 private:
 	Parser parser;
+    Player *player;
 	Room *currentRoom;
     Region currentRegion = SmokingCrater;
     bool wizardFought = false;
@@ -36,3 +39,24 @@ public:
 };
 
 #endif /*ZORKUL_H_*/
+
+
+/*
+ *Checklist of things to complete:
+ *
+ *MistyWoods
+ *CastleUnderground
+ *WizardsChambers
+ *
+ *Player
+ *Enemies
+ *Combat System
+ *Bosses
+ *Items
+ *Shop System
+ *NPCs
+ *
+ *Narrative
+ *
+ *
+ */
