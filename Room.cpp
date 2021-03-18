@@ -22,7 +22,7 @@ string Room::shortDescription() {
 }
 
 string Room::longDescription() {
-	return "room = " + description + ".\n" + displayItem() + exitString();
+    return "\nroom = " + description + ".\n" + displayItem() + exitString();
 }
 
 string Room::exitString() {
@@ -47,6 +47,7 @@ void Room::addItem(Item *inItem) {
     itemsInRoom.push_back(*inItem);
 }
 
+
 string Room::displayItem() {
     string tempString = "items in room = ";
     int sizeItems = (itemsInRoom.size());
@@ -67,6 +68,10 @@ int Room::numberOfItems() {
     return itemsInRoom.size();
 }
 
+void Room::removeItemFromRoom(int location) {
+    itemsInRoom.erase(itemsInRoom.begin()+location);
+}
+
 int Room::isItemInRoom(string inString)
 {
     int sizeItems = (itemsInRoom.size());
@@ -79,7 +84,7 @@ int Room::isItemInRoom(string inString)
             // compare inString with short description
             int tempFlag = inString.compare( itemsInRoom[x].getShortDescription());
             if (tempFlag == 0) {
-                itemsInRoom.erase(itemsInRoom.begin()+x);
+
                 return x;
             }
             x++;
