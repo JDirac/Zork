@@ -1,8 +1,9 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
-#include "ZorkUL.h"
+#include "item.h"
 
 #include <string>
+#include <iostream>
 using namespace std;
 #include <vector>
 using std::vector;
@@ -11,6 +12,7 @@ enum Status { Blind, Intimidated, Weakened, Wise, Sturdy, Agile, Webbed}; // mor
 
 class Entity {
     private:
+        string name;
         float HP;
         float ATK;
         float DEF;
@@ -19,6 +21,7 @@ class Entity {
         vector<Status> state; // current debuffs or buffs.
         string description;
     public:
+        Entity(string name, string description, float HP, float ATK, float DEF, float ACC, float CRT);
         float getHP() { return HP; };
         float getATK() { return ATK; };
         float getDEF() { return DEF; };
