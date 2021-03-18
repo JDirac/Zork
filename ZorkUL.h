@@ -19,7 +19,7 @@ class ZorkUL {
 private:
 	Parser parser;
 	Room *currentRoom;
-    Region currentRegion = CastleEntrance;
+    Region currentRegion = SmokingCrater;
     bool wizardFought = false;
 	void createRooms();
 	void printWelcome();
