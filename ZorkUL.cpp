@@ -21,8 +21,9 @@ void ZorkUL::createRooms()  {
     switch(currentRegion) {
         case SmokingCrater:
             a = new Room("Crater");
-                a->addItem(new Item("Broken Phone", 1, 300));
-                a->addItem(new Item("Shattered Glasses", 0, 30));
+                a->addItem(new Item("Broken Phone", KeyItem, 1, 300));
+                a->addItem(new Item("Shattered Glasses", KeyItem, 0, 30));
+                a->addItem(new Item("Stick", Weapon, 0, 0));
             exit = new Room("exit");
 
         //             (N, E, S, W)
@@ -250,10 +251,10 @@ bool ZorkUL::processCommand(Command command) {
         } else {
             int location;
             if (command.hasThirdWord()) {
-                cout << "you're trying to take " + command.getSecondWord() + " " + command.getThirdWord() << endl;
+                cout << "you took the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
                 location = currentRoom->isItemInRoom(command.getSecondWord() + " " + command.getThirdWord());
             } else {
-                cout << "you're trying to take " + command.getSecondWord() <<endl;
+                cout << "you took the " + command.getSecondWord() <<endl;
                 location = currentRoom->isItemInRoom(command.getSecondWord());
             }
                 if (location  < 0 ) cout << "item is not in room" << endl;
@@ -268,6 +269,16 @@ bool ZorkUL::processCommand(Command command) {
 
     else if (commandWord.compare("inventory") == 0) {
         player->showInventory();
+    }
+
+    else if (commandWord.compare("equip") == 0) {
+        if (!command.hasSecondWord()) {
+            cout << "incomplete input"<< endl;
+        } else if (command.hasSecondWord() && !command.hasThirdWord()) {
+            player->equipItem(command.getSecondWord());
+        } else {
+            player->equipItem(command.getSecondWord() + " " + command.getThirdWord());
+        }
     }
 
     else if (commandWord.compare("put") == 0)
