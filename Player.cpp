@@ -8,7 +8,15 @@ Player::Player(string name, string description, float HP, float ATK, float DEF, 
 }
 
 
-void Player::equipItem(Item target) {
+void Player::equipItem(string itemName) {
+        Item target;
+
+        for (Item& item : inv) {
+            if(item.getShortDescription().compare(itemName) == 0) {
+                target = item;
+            }
+        }
+
         switch(target.getType()) {
             case Weapon:
                 setEquippedWeapon(target);
@@ -44,6 +52,5 @@ Item* Player::putItem(string itemName) {
     }
     return itemPtr;
 }
-
 
 
