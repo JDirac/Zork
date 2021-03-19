@@ -1,4 +1,4 @@
-#ifndef ZORKUL_H_
+#ifndef ZORKUL_H_#ifndef ZORKUL_H_
 #define ZORKUL_H_
 
 #include "Command.h"
