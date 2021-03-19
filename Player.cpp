@@ -26,7 +26,7 @@ void Player::equipItem(Item target) {
 void Player::showInventory() {
     char choice = 'A';
     cout << "Inventory size: " << inv.size() << endl;
-    for(Item& item : inv) {
+    for(Item &item : inv) {
         cout << choice << ") " << item.getShortDescription() << endl;
         choice++;
     }
@@ -36,7 +36,7 @@ Item* Player::putItem(string itemName) {
     //inv.erase(std::remove(inv.begin(), inv.end(), target), inv.end()); // Erase-remove idiom
     Item* itemPtr = nullptr;
 
-    for(Item item : inv) {
+    for(Item &item  : inv) {
         if(item.getShortDescription().compare(itemName) == 0){
             itemPtr = &item;
             break;
@@ -44,5 +44,6 @@ Item* Player::putItem(string itemName) {
     }
     return itemPtr;
 }
+
 
 
