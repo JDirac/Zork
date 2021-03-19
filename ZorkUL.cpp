@@ -278,10 +278,13 @@ bool ZorkUL::processCommand(Command command) {
         else if (command.hasSecondWord() && !command.hasThirdWord()) {
             cout << "you're adding " + command.getSecondWord() << endl;
             currentRoom->addItem(player->putItem(command.getSecondWord()));
+
         } else {
             cout << "you're adding " + command.getSecondWord() << " " << command.getThirdWord() << endl;
-            currentRoom->addItem(player->putItem(command.getSecondWord() + " " + command.getSecondWord()));
+            currentRoom->addItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
         }
+        cout << endl;
+        cout << currentRoom->longDescription() << endl;
     }
 
     else if (commandWord.compare("quit") == 0) {
