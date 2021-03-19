@@ -1,7 +1,8 @@
 #include "item.h"
 
-Item::Item (string inDescription, int inWeightGrams, float inValue/**, int weaponCheck*/) {
+Item::Item (string inDescription, Type type, int inWeightGrams, float inValue/**, int weaponCheck*/) {
 	description = inDescription;
+    this->type = type;
 	setWeight(inWeightGrams);
 	value = inValue;
 	/**weaponCheck(isWeapon);*/
@@ -44,4 +45,6 @@ string Item::getLongDescription()
 {
 	return " item(s), " + description + ".\n";
 }
+
+
 
