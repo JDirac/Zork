@@ -14,11 +14,12 @@ class Player: public Entity {
         void takeItem(Item& target) { inv.push_back(target);};
         Item* putItem(string itemName);
         void showInventory();
+        void showStats();
         Item getWeapon() { return *equippedWeapon; }; // returns equipped weapon.
         Item getArmor() { return *equippedArmor; }; // returns equipped armor.
-        void setEquippedWeapon(Item item) { equippedWeapon = &item; };
-        void setEquippedArmor(Item item) { equippedArmor = &item; };
-        int getWealth() { return wealth;}; // returns player's wealth
+        void setEquippedWeapon(Item weapon) { equippedWeapon = &weapon; setATK(weapon.getATK()); };
+        void setEquippedArmor(Item armor) { equippedArmor = &armor; setDEF(armor.getDEF()); };
+        int getWealth() { return wealth; }; // returns player's wealth
         void setWealth(int wealth) { this->wealth = wealth; };
         void equipItem(Item target);
         void equipItem(string name);
