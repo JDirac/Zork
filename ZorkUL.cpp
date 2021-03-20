@@ -21,9 +21,9 @@ void ZorkUL::createRooms()  {
     switch(currentRegion) {
         case SmokingCrater:
             a = new Room("Crater");
-                a->addItem(new Item("Broken Phone", KeyItem, 1, 300));
-                a->addItem(new Item("Shattered Glasses", KeyItem, 0, 30));
-                a->addItem(new Item("Stick", Weapon, 0, 0));
+                a->addItem(new Item("Broken Phone", KeyItem, 1, 300, 0, 0));
+                a->addItem(new Item("Shattered Glasses", KeyItem, 0, 30, 0, 0));
+                a->addItem(new Item("Stick", Weapon, 0, 0, 15, 0));
             exit = new Room("exit");
 
         //             (N, E, S, W)
@@ -269,6 +269,10 @@ bool ZorkUL::processCommand(Command command) {
 
     else if (commandWord.compare("inventory") == 0) {
         player->showInventory();
+    }
+
+    else if (commandWord.compare("stats") == 0) {
+        player->showStats();
     }
 
     else if (commandWord.compare("equip") == 0) {
