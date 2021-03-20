@@ -16,10 +16,12 @@ private:
 	int weightGrams;
 	float value;
 	bool weaponCheck;
+    float ATK = 0;
+    float DEF = 0;
 
 public:
     Item () {};
-    Item (string description, Type type, int inWeight, float inValue);
+    Item (string description, Type type, int inWeight, float inValue, float ATK, float DEF);
     Item (string description);
 	string getShortDescription();
     string getLongDescription();
@@ -27,6 +29,10 @@ public:
 	void setWeight(int weightGrams);
 	float getValue();
 	void setValue(float value);
+    float getATK() { return ATK; };
+    void setATK(float ATK) { this->ATK = ATK; };
+    float getDEF() { return DEF; };
+    void setDEF(float DEF) { this->DEF = DEF; };
 	int getWeaponCheck();
 	void setWeaponCheck(int weaponCheck);
     Type getType() { return type; };
