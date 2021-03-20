@@ -20,11 +20,11 @@ void Player::equipItem(string itemName) {
         switch(target.getType()) {
             case Weapon:
                 setEquippedWeapon(target);
-                cout << "You equipped: " << target.getShortDescription() << "!" << endl;
+                cout << "You equipped: " << target.getShortDescription() << "!\n" << endl;
             break;
             case Armor:
                 setEquippedArmor(target);
-                cout << "You equipped: " << target.getShortDescription() << "!" << endl;
+                cout << "You equipped: " << target.getShortDescription() << "!\n" << endl;
             break;
             default:
             cout << "You cannot equip this item!";
@@ -38,6 +38,13 @@ void Player::showInventory() {
         cout << choice << ") " << item.getShortDescription() << endl;
         choice++;
     }
+}
+
+void Player::showStats() {
+    cout << "\nHP: " << getHP() << endl;
+    cout << "Attack: " << getATK() << endl;
+    cout << "Defence: " << getDEF() << endl;
+    cout << endl;
 }
 
 Item* Player::putItem(string itemName) {
