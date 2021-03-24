@@ -22,6 +22,8 @@ class Entity {
         string description;
     public:
         Entity(string name, string description, float HP, float ATK, float DEF, float ACC, float CRT);
+        Entity(string name);
+        string getName() { return name; };
         float getHP() { return HP; };
         float getATK() { return ATK; };
         float getDEF() { return DEF; };

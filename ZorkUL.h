@@ -7,9 +7,11 @@
 #include "item.h"
 #include "Entity.h"
 #include "Player.h"
+#include "Enemy.h"
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <vector>
 using namespace std;
 
 enum Region {SmokingCrater = 1, WindingPath = 2, EtheVillage = 3,
@@ -22,6 +24,7 @@ private:
 	Parser parser;
     Player *player;
 	Room *currentRoom;
+    vector <Enemy> EnemysInRoom;
     Region currentRegion = SmokingCrater;
     bool wizardFought = false;
 	void createRooms();
@@ -31,6 +34,7 @@ private:
 	void goRoom(Command command);
     void createItems();
     void displayItems();
+    void addEnemy(Enemy *Enemy);
 
 public:
 	ZorkUL();

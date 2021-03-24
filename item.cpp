@@ -11,7 +11,7 @@ Item::Item (string inDescription, Type type, int inWeightGrams, float inValue, f
 }
 
 Item::Item(string inDescription) {
-	description = inDescription;
+    description = inDescription;
 }
 
 void Item::setWeight(int inWeightGrams)

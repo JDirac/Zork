@@ -22,7 +22,7 @@ string Room::shortDescription() {
 }
 
 string Room::longDescription() {
-    return "\nroom = " + description + ".\n" + displayItem() + exitString();
+    return "\nroom = " + description + ".\n" + displayItem() + ".\n" + displayEnemy() + exitString();
 }
 
 string Room::exitString() {
@@ -46,7 +46,6 @@ void Room::addItem(Item *inItem) {
     //cout << "Just added" + inItem->getLongDescription();
     itemsInRoom.push_back(*inItem);
 }
-
 
 string Room::displayItem() {
     string tempString = "items in room = ";
@@ -87,9 +86,73 @@ int Room::isItemInRoom(string inString)
 
                 return x;
             }
+
             x++;
             }
         }
     return -1;
 }
+
+void Room::addEnemy(Enemy *Enemy) {
+    EnemysInRoom.push_back(*Enemy);
+}
+
+string Room::showStats() {
+    string tempString = "Fearsome foes awaiting your blade\n";
+    int sizeEnemies = (EnemysInRoom.size());
+    if (EnemysInRoom.size() < 1) {
+        tempString = "All enemies have been conquered valiant warrior";
+        }
+    else if (EnemysInRoom.size() > 0) {
+       int x = (0);
+        for (int n = sizeEnemies; n > 0; n--) {
+            tempString = tempString + EnemysInRoom[x].showEnemyStats() + "  " ;
+            x++;
+            }
+        }
+    return tempString;
+}
+
+
+string Room::displayEnemy() {
+    string tempString = "Enemies in room = ";
+    int sizeEnemies = (EnemysInRoom.size());
+    if (EnemysInRoom.size() < 1) {
+        tempString = "no Enemies in room";
+        }
+    else if (EnemysInRoom.size() > 0) {
+       int x = (0);
+        for (int n = sizeEnemies; n > 0; n--) {
+            tempString = tempString + EnemysInRoom[x].getEnemyName() + "  " ;
+            x++;
+            }
+        }
+    return tempString;
+    }
+
+void Room::removeEnemyFromRoom(int location) {
+     EnemysInRoom.erase(EnemysInRoom.begin()+location);
+}
+
+int Room::isEnemyInRoom(string inString)
+{
+    int sizeEnemies = (EnemysInRoom.size());
+    if (EnemysInRoom.size() < 1) {
+        return false;
+        }
+    else if (EnemysInRoom.size() > 0) {
+       int x = (0);
+        for (int n = sizeEnemies; n > 0; n--) {
+            // compare inString with short description
+            int tempFlag = inString.compare( EnemysInRoom[x].getEnemyName());
+            if (tempFlag == 0) {
+
+                return x;
+            }
+            x++;
+            }
+        }
+    return -1;
+}
+
 
