@@ -1,4 +1,4 @@
-#ifndef ZORKUL_H_#ifndef ZORKUL_H_
+#ifndef ZORKUL_H_
 #define ZORKUL_H_
 
 #include "Command.h"
@@ -7,6 +7,7 @@
 #include "item.h"
 #include "Entity.h"
 #include "Player.h"
+#include "Enemy.h"
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -22,6 +23,7 @@ private:
 	Parser parser;
     Player *player;
 	Room *currentRoom;
+    vector<Enemy> enemiesInRoom;
     Region currentRegion = SmokingCrater;
     bool wizardFought = false;
 	void createRooms();
@@ -31,7 +33,7 @@ private:
 	void goRoom(Command command);
     void createItems();
     void displayItems();
-
+    void addEnemy(Enemy *Enemy);
 public:
 	ZorkUL();
 	void play();
@@ -44,19 +46,19 @@ public:
 /*
  *Checklist of things to complete:
  *
- *MistyWoods
- *CastleUnderground
- *WizardsChambers
+ *MistyWoods Map - Me
+ *CastleUnderground Map - Denis
+ *WizardsChambers Map - Me
  *
- *Player
- *Enemies
- *Combat System
- *Bosses
- *Items
- *Shop System
- *NPCs
+ *Player - Me and Denis
+ *Enemies - Denis
+ *Combat System - Denis
+ *Bosses - Me And Denis
+ *Items - Me and Denis
+ *Shop System - Denis
+ *NPCs - Me and Denis
  *
- *Narrative
+ *Narrative (LAST) - Me
  *
  *
  */

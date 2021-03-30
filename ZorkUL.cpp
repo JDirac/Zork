@@ -24,6 +24,8 @@ void ZorkUL::createRooms()  {
                 a->addItem(new Item("Broken Phone", KeyItem, 1, 300, 0, 0));
                 a->addItem(new Item("Shattered Glasses", KeyItem, 0, 30, 0, 0));
                 a->addItem(new Item("Stick", Weapon, 0, 0, 15, 0));
+                a->addEnemy(new Enemy("Ape", "Powerful Monkey", 100, 10, 10, 10, 75, 100));
+                a->addEnemy(new Enemy("Wanderer", "Warrior with no name", 100, 10, 10, 10, 75, 100));
             exit = new Room("exit");
 
         //             (N, E, S, W)
@@ -243,6 +245,36 @@ bool ZorkUL::processCommand(Command command) {
 
 	else if (commandWord.compare("go") == 0)
 		goRoom(command);
+
+    else if (commandWord.compare("room") == 0) {
+        cout << currentRoom->longDescription() << endl;
+    }
+
+    else if (commandWord.compare("fight") == 0) {
+        if (!command.hasSecondWord()) {
+            cout << "No target selected"<< endl;
+        } else {
+            int location;
+            if (command.hasThirdWord()) {
+                cout << "you are fighting the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
+                location = currentRoom->isEnemyInRoom(command.getSecondWord() + " " + command.getThirdWord());
+            } else {
+                cout << "you are fighting the " + command.getSecondWord() <<endl;
+                location = currentRoom->isEnemyInRoom(command.getSecondWord());
+            }
+                if (location  < 0 ) cout << "The enemy cannot be found in this room, eager beaver" << endl;
+                else {
+                    currentRoom->removeEnemyFromRoom(location);
+                    cout << "The enemy has been slain, excellent work";
+                    cout << endl;
+                    cout << currentRoom->longDescription() << endl;
+            }
+        }
+    }
+
+    else if (commandWord.compare("enemyStats") == 0) {
+        cout << currentRoom->showStats() << endl;
+    }
 
     else if (commandWord.compare("take") == 0)
     {
