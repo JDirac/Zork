@@ -7,7 +7,6 @@ Enemy::Enemy(string name, string description, float HP, float ATK, float DEF, fl
 {
      this->wealthOnDeath = wealthOnDeath;
      enemyName = name;
-     enemyHP = HP;
 }
 
 
