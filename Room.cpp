@@ -113,7 +113,6 @@ string Room::showStats() {
     return tempString;
 }
 
-
 string Room::displayEnemy() {
     string tempString = "Enemies in room = ";
     int sizeEnemies = (EnemysInRoom.size());
@@ -138,7 +137,7 @@ int Room::isEnemyInRoom(string inString)
 {
     int sizeEnemies = (EnemysInRoom.size());
     if (EnemysInRoom.size() < 1) {
-        return false;
+        return -1;
         }
     else if (EnemysInRoom.size() > 0) {
        int x = (0);
@@ -154,5 +153,49 @@ int Room::isEnemyInRoom(string inString)
         }
     return -1;
 }
+
+float Room::enemyHP(int location)
+{
+     int a = location;
+     return EnemysInRoom[a].getHP();
+}
+
+float Room::setEnemyHP(int location, float newHP)
+{
+    int a = location;
+    EnemysInRoom[a].setHP(newHP);
+    return EnemysInRoom[a].getHP();
+}
+
+float Room::enemyATK(int location)
+{
+     int a = location;
+     return EnemysInRoom[a].getATK();
+}
+
+float Room::enemyDEF(int location)
+{
+     int a = location;
+     return EnemysInRoom[a].getDEF();
+}
+
+float Room::enemyACC(int location)
+{
+     int a = location;
+     return EnemysInRoom[a].getACC();
+}
+
+float Room::enemyCRT(int location)
+{
+     int a = location;
+     return EnemysInRoom[a].getCRT();;
+}
+
+
+
+
+
+
+
 
 

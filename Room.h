@@ -6,8 +6,12 @@
 #include <vector>
 #include "item.h"
 #include "Enemy.h"
+#include <string>
+#include "Entity.h"
+
 using namespace std;
 using std::vector;
+
 
 class Room {
 
@@ -17,7 +21,6 @@ private:
 	string exitString();
     vector <Item> itemsInRoom;
     vector <Enemy> EnemysInRoom;
-
 
 public:
     int numberOfItems();
@@ -36,6 +39,12 @@ public:
     int isEnemyInRoom(string inString);
     void removeEnemyFromRoom(int location);
     string showStats();
+    float enemyHP(int location);
+    float setEnemyHP(int location, float newHP);
+    float enemyATK(int location);
+    float enemyDEF(int location);
+    float enemyCRT(int location);
+    float enemyACC(int location);
 };
 
 #endif

@@ -7,6 +7,7 @@ Enemy::Enemy(string name, string description, float HP, float ATK, float DEF, fl
 {
      this->wealthOnDeath = wealthOnDeath;
      enemyName = name;
+     enemyHP = HP;
 }
 
 
@@ -19,6 +20,11 @@ string Enemy::showEnemyStats()
 {
     return "\nName: " + getName() + "\nDesc: " + getDescription() + "\nHP: " + to_string(getHP()) + "\nATK: " + to_string(getATK()) + "\nDEF: " + to_string(getDEF()) + "\n";
 }
+
+
+
+
+
 
 
 

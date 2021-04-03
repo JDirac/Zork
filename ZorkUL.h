@@ -1,4 +1,4 @@
-#ifndef ZORKUL_H_#ifndef ZORKUL_H_
+#ifndef ZORKUL_H_
 #define ZORKUL_H_
 
 #include "Command.h"
@@ -23,7 +23,8 @@ class ZorkUL {
 private:
 	Parser parser;
     Player *player;
-	Room *currentRoom;
+    Enemy *enemy;
+    Room *currentRoom;
     vector <Enemy> EnemysInRoom;
     Region currentRegion = SmokingCrater;
     bool wizardFought = false;
@@ -39,7 +40,8 @@ private:
 public:
 	ZorkUL();
 	void play();
-	string go(string direction);
+    string go(string direction);
+
 };
 
 #endif /*ZORKUL_H_*/
