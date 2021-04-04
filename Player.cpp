@@ -51,12 +51,14 @@ Item* Player::putItem(string itemName) {
     //inv.erase(std::remove(inv.begin(), inv.end(), target), inv.end()); // Erase-remove idiom
     Item* itemPtr = nullptr;
 
-    for(Item &item  : inv) {
-        if(item.getShortDescription().compare(itemName) == 0){
-            itemPtr = &item;
+    for(auto it = inv.begin(); it != inv.end(); it++) {
+        if((*it).getShortDescription().compare(itemName) == 0){
+            itemPtr = &(*it);
+            inv.erase(it);
             break;
         }
     }
+
     return itemPtr;
 }
 
