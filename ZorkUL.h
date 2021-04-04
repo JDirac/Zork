@@ -23,9 +23,10 @@ private:
 	Parser parser;
     Player *player;
 	Room *currentRoom;
-    vector<Enemy> enemiesInRoom;
-    Region currentRegion = SmokingCrater;
+    Region currentRegion = EtheVillage;
+    vector<Room*> roomsInRegion;
     bool wizardFought = false;
+    bool enteringRoom = true;
 	void createRooms();
 	void printWelcome();
 	bool processCommand(Command command);
@@ -48,7 +49,6 @@ public:
  *
  *MistyWoods Map - Me
  *CastleUnderground Map - Denis
- *WizardsChambers Map - Me
  *
  *Player - Me and Denis
  *Enemies - Denis

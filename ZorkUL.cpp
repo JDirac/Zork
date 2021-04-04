@@ -14,127 +14,124 @@ ZorkUL::ZorkUL() {
 }
 
 void ZorkUL::createRooms()  {
-    Room *a = nullptr, *b = nullptr, *c = nullptr, *d = nullptr,
-         *e = nullptr, *f = nullptr, *g = nullptr, *h = nullptr,
-         *i = nullptr, *entrance = nullptr, *exit = nullptr;
+
+        for(auto it = roomsInRegion.begin(); it < roomsInRegion.end(); it++) {
+            delete *it;
+        }
+        roomsInRegion.clear();
+
 
     switch(currentRegion) {
         case SmokingCrater:
-            a = new Room("Crater");
-                a->addItem(new Item("Broken Phone", KeyItem, 1, 300, 0, 0));
-                a->addItem(new Item("Shattered Glasses", KeyItem, 0, 30, 0, 0));
-                a->addItem(new Item("Stick", Weapon, 0, 0, 15, 0));
-                a->addEnemy(new Enemy("Ape", "Powerful Monkey", 100, 10, 10, 10, 75, 100));
-                a->addEnemy(new Enemy("Wanderer", "Warrior with no name", 100, 10, 10, 10, 75, 100));
-            exit = new Room("exit");
+            roomsInRegion.push_back(new Room("Crater"));
+                roomsInRegion[0]->addItem(new Item("Broken Phone", KeyItem, 1, 300, 0, 0));
+                roomsInRegion[0]->addItem(new Item("Shattered Glasses", KeyItem, 0, 30, 0, 0));
+                roomsInRegion[0]->addItem(new Item("Stick", Weapon, 0, 0, 15, 0));
+                roomsInRegion[0]->addEnemy(new Enemy("Ape", "Powerful Monkey", 100, 10, 10, 10, 75, 100));
+                roomsInRegion[0]->addEnemy(new Enemy("Wanderer", "Warrior with no name", 100, 10, 10, 10, 75, 100));
+            roomsInRegion.push_back(new Room("exit"));
 
         //             (N, E, S, W)
-            a->setExits(NULL, exit, NULL, NULL);
+            roomsInRegion[0]->setExits(NULL, roomsInRegion[1], NULL, NULL);
          break;
 
         case WindingPath:
 
-            entrance = new Room("entrance");
-            a = new Room("Winding Path");
-            b = new Room("Winding Path 2");
-            c = new Room("Winding Path 3");
-            d = new Room("Winding Path 4");
-            e = new Room("Winding Path 5");
-            f = new Room("Winding Path 6");
-            g = new Room("Winding Path 7");
-            h = new Room("Winding Path 8");
-            i = new Room("Winding Path 9");
-            exit = new Room("exit");
+            roomsInRegion.push_back(new Room("Winding Path"));
+            roomsInRegion.push_back(new Room("Winding Path 2"));
+            roomsInRegion.push_back(new Room("Winding Path 3"));
+            roomsInRegion.push_back(new Room("Winding Path 4"));
+            roomsInRegion.push_back(new Room("Winding Path 5"));
+            roomsInRegion.push_back(new Room("Winding Path 6"));
+            roomsInRegion.push_back(new Room("Winding Path 7"));
+            roomsInRegion.push_back(new Room("Winding Path 8"));
+            roomsInRegion.push_back(new Room("Winding Path 9"));
+            roomsInRegion.push_back(new Room("entrance"));
+            roomsInRegion.push_back(new Room("exit"));
 
-            a->setExits(NULL, b, NULL, entrance);
-            b->setExits(NULL, c, NULL, a);
-            c->setExits(d, NULL, NULL, b);
-            d->setExits(NULL, NULL, c, e);
-            e->setExits(NULL, d, NULL, f);
-            f->setExits(g, e, NULL, NULL);
-            g->setExits(NULL, h, f, NULL);
-            h->setExits(NULL, i, NULL, g);
-            i->setExits(exit, NULL, NULL, h);
+            roomsInRegion[0]->setExits(NULL,roomsInRegion[1], NULL, roomsInRegion[9]);
+            roomsInRegion[1]->setExits(NULL, roomsInRegion[2], NULL, roomsInRegion[0]);
+            roomsInRegion[2]->setExits(roomsInRegion[3], NULL, NULL, roomsInRegion[1]);
+            roomsInRegion[3]->setExits(NULL, NULL, roomsInRegion[2], roomsInRegion[4]);
+            roomsInRegion[4]->setExits(NULL, roomsInRegion[3], NULL, roomsInRegion[5]);
+            roomsInRegion[5]->setExits(roomsInRegion[6], roomsInRegion[4], NULL, NULL);
+            roomsInRegion[6]->setExits(NULL, roomsInRegion[7], roomsInRegion[5], NULL);
+            roomsInRegion[7]->setExits(NULL, roomsInRegion[8], NULL, roomsInRegion[6]);
+            roomsInRegion[8]->setExits(roomsInRegion[10], NULL, NULL, roomsInRegion[7]);
         break;
 
         case EtheVillage:
-            delete a; delete b; delete c; delete d;
-            delete e; delete f; delete g; delete h;
-            delete i; delete entrance; delete exit;
+            roomsInRegion.push_back(new Room("Village Square"));
+            roomsInRegion.push_back(new Room("Inn"));
+            roomsInRegion.push_back(new Room("Merchant"));
+            roomsInRegion.push_back(new Room("Blacksmith"));
+            roomsInRegion.push_back(new Room("Blarn Street"));
+            roomsInRegion.push_back(new Room("entrance"));
+            roomsInRegion.push_back(new Room("exit"));
 
-            entrance = new Room("entrance");
-            a = new Room("Village Square");
-            b = new Room("Inn");
-            c = new Room("Merchant");
-            d = new Room("Blarn Street");
-            e = new Room("Blacksmith");
-            exit = new Room("exit");
-
-            a->setExits(c, d, entrance, b);
-            b->setExits(NULL, a, NULL, NULL);
-            c->setExits(NULL, NULL, a, NULL);
-            d->setExits(e, exit, NULL, a);
-            e->setExits(NULL, NULL, e, NULL);
+            roomsInRegion[0]->setExits(roomsInRegion[2], roomsInRegion[4], roomsInRegion[5], roomsInRegion[1]);
+            roomsInRegion[1]->setExits(NULL, roomsInRegion[0], NULL, NULL);
+            roomsInRegion[2]->setExits(NULL, NULL, roomsInRegion[0], NULL);
+            roomsInRegion[3]->setExits(NULL, NULL, roomsInRegion[4], NULL);
+            roomsInRegion[4]->setExits(roomsInRegion[3], roomsInRegion[6], NULL, roomsInRegion[0]);
         break;
 
-        case MistyWoods:
-            delete a; delete b; delete c; delete d;
-            delete e; delete entrance; delete exit;
+        case MistyWoods: // Me
 
-            entrance = new Room("entrance");
-            a = new Room("Forest Entrance");
-            exit = new Room("exit");
+            roomsInRegion.push_back(new Room("Forest Entrance"));
+            roomsInRegion.push_back(new Room("entrance"));
+            roomsInRegion.push_back(new Room("exit"));
 
-            a->setExits(exit, NULL, entrance, NULL);
+            roomsInRegion[0]->setExits(roomsInRegion[2], NULL, roomsInRegion[1], NULL);
         break;
 
         case CastleEntrance:
-            delete a; delete entrance; delete exit;
 
-            entrance = new Room("entrance");
-            a = new Room("Hallway A");
-            b = new Room("Knights");
-            c = new Room("Armory");
-            d = new Room("Hallway B");
-            e = new Room("To King");
-            exit = new Room("exit");
+            roomsInRegion.push_back(new Room("Hallway A"));
+            roomsInRegion.push_back(new Room("Knights"));
+            roomsInRegion.push_back(new Room("Armory"));
+            roomsInRegion.push_back(new Room("Hallway B"));
+            roomsInRegion.push_back(new Room("To King"));
+            roomsInRegion.push_back(new Room("entrance"));
+            roomsInRegion.push_back(new Room("exit"));
 
-            a->setExits(d, b, entrance, NULL);
-            b->setExits(NULL, NULL, c, a);
-            c->setExits(b, NULL, NULL, NULL);
-            d->setExits(NULL, exit, NULL, e);
+            roomsInRegion[0]->setExits(roomsInRegion[3], roomsInRegion[1], roomsInRegion[5], NULL);
+            roomsInRegion[1]->setExits(NULL, NULL, roomsInRegion[2], roomsInRegion[0]);
+            roomsInRegion[2]->setExits(roomsInRegion[1], NULL, NULL, NULL);
+            roomsInRegion[3]->setExits(NULL, roomsInRegion[6], NULL, roomsInRegion[4]);
         break;
 
-        case CastleUnderground:
-            delete a; delete entrance; delete exit;
+        case CastleUnderground: // Denis
 
-            entrance = new Room("entrance");
-            a = new Room("Forest Entrance");
-            exit = new Room("exit");
+            roomsInRegion.push_back(new Room("Forest Entrance"));
+            roomsInRegion.push_back(new Room("entrance"));
+            roomsInRegion.push_back(new Room("exit"));
 
-            a->setExits(exit, NULL, entrance, NULL);
+            roomsInRegion[0]->setExits(roomsInRegion[2], NULL, roomsInRegion[1], NULL);
         break;
 
         case WizardsChambers:
-            delete a; delete entrance; delete exit;
 
-            entrance = new Room("entrance");
-            a = new Room("Forest Entrance");
-            exit = new Room("exit");
+            roomsInRegion.push_back(new Room("entrance"));
+            roomsInRegion.push_back(new Room("Wizard's Chambers"));
+            roomsInRegion.push_back(new Room("secret passage"));
 
-            a->setExits(exit, NULL, entrance, NULL);
+            roomsInRegion[0]->setExits(roomsInRegion[2], NULL, roomsInRegion[1], NULL);
         break;
 
         case KingsChambers:
-            delete a; delete entrance; delete exit;
 
-            entrance = new Room("entrance");
-            a = new Room("King's Chambers");
-            exit = new Room("exit");
+            roomsInRegion.push_back(new Room("entrance"));
+            roomsInRegion.push_back(new Room("King's Chambers"));
+            roomsInRegion.push_back(new Room("exit"));
 
-            a->setExits(exit, NULL, entrance, NULL);
+            roomsInRegion[0]->setExits(roomsInRegion[2], NULL, roomsInRegion[1], NULL);
     }
-            currentRoom = a;
+        if(enteringRoom) {
+            currentRoom = roomsInRegion[0];
+        } else {
+            currentRoom = roomsInRegion[roomsInRegion.size() - 3];
+        }
 }
 
 
@@ -212,6 +209,9 @@ bool ZorkUL::processCommand(Command command) {
             cout << "              [Entrance]                                " << endl;
          break;
 
+         case MistyWoods:
+         break;
+
          case CastleEntrance:
             cout << "  [To King]          [To Wizard]    " << endl;
             cout << "      |                   |         " << endl;
@@ -224,6 +224,24 @@ bool ZorkUL::processCommand(Command command) {
             cout << "                |              |    " << endl;
             cout << "            [Entrance]      [Armory]" << endl;
          break;
+
+         case CastleUnderground:
+            break;
+
+        case WizardsChambers:
+           cout << "      -----------------------       " << endl;
+           cout << "      |                     |       " << endl;
+           cout << "      |                     |       " << endl;
+           cout << "      |                     |       " << endl;
+           cout << "      |  Wizard's Chambers  |       " << endl;
+           cout << "      |                     |       " << endl;
+           cout << "      |                     |       " << endl;
+           cout << "      |                     |       " << endl;
+           cout << "      -----------------------       " << endl;
+           cout << "                |                   " << endl;
+           cout << "                |                   " << endl;
+           cout << "            [Entrance]              " << endl;
+        break;
 
          case KingsChambers:
             cout << "      -----------------------       " << endl;
@@ -381,11 +399,8 @@ void ZorkUL::goRoom(Command command) {
             break;
         case CastleUnderground:
             currentRegion = WizardsChambers;
-            break;
-        case WizardsChambers:
-            currentRegion = CastleEntrance;
-            break;
         }
+        enteringRoom = true;
         createRooms();
         cout << currentRoom->longDescription() << endl;
     } else if(nextRoom->shortDescription() == "entrance") {
@@ -411,6 +426,7 @@ void ZorkUL::goRoom(Command command) {
         case KingsChambers:
             currentRegion = CastleEntrance;
         }
+        enteringRoom = false;
         createRooms();
         cout << currentRoom->longDescription() << endl;
     } else if(nextRoom->shortDescription() == "To King") {
@@ -424,6 +440,7 @@ void ZorkUL::goRoom(Command command) {
 
             if(temp == "yes") {
                 currentRegion = KingsChambers;
+                enteringRoom = true;
                 createRooms();
                 cout << "\nYou are now in the King's chambers." << endl;
                 cout << "His overwhelming aura dominates the room." << endl;
@@ -432,9 +449,21 @@ void ZorkUL::goRoom(Command command) {
             }
         } else {
           currentRegion = KingsChambers;
+          enteringRoom = true;
           createRooms();
           cout << currentRoom->longDescription() << endl;
         }
+
+    } else if(nextRoom->shortDescription() == "secret passage") {
+        if(wizardFought) {
+            currentRegion = CastleEntrance;
+            enteringRoom = true;
+            createRooms();
+            cout << "You follow the secret path... and find yourself back at the castle entrance!\n" << endl;
+        } else {
+            cout << "You spot something weird in the corner of the room, but you must deal with the Wizard first!\n" << endl;
+        }
+        cout << currentRoom->longDescription() << endl;
 
     } else {
 		currentRoom = nextRoom;
