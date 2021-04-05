@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-enum Type {Weapon, Armor, Accessory, Consumable, KeyItem};
+enum Type {Weapon = 0, Armor = 1, Accessory = 2, Consumable = 3, KeyItem = 4};
 
 class Item {
 private:
@@ -16,12 +16,13 @@ private:
 	int weightGrams;
 	float value;
 	bool weaponCheck;
+    bool equipped = false;
     float ATK = 0;
     float DEF = 0;
-
+    string info;
 public:
     Item () {};
-    Item (string description, Type type, int inWeight, float inValue, float ATK, float DEF);
+    Item (string description, string info, Type type, int inWeight, float inValue, float ATK, float DEF);
     Item (string description);
 	string getShortDescription();
     string getLongDescription();
@@ -35,7 +36,10 @@ public:
     void setDEF(float DEF) { this->DEF = DEF; };
 	int getWeaponCheck();
 	void setWeaponCheck(int weaponCheck);
+    bool getEquipped() { return equipped; };
+    void setEquipped(bool equipped) { this->equipped = equipped; };
     Type getType() { return type; };
+    void itemInfo();
 };
 
 #endif /*ITEM_H_*/

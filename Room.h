@@ -36,6 +36,7 @@ public:
     int isEnemyInRoom(string inString);
     void removeEnemyFromRoom(int location);
     string showStats();
+    Enemy* getEnemy(int location) { return &EnemysInRoom[location]; }
 };
 
 #endif

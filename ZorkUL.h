@@ -23,7 +23,7 @@ private:
 	Parser parser;
     Player *player;
 	Room *currentRoom;
-    Region currentRegion = EtheVillage;
+    Region currentRegion = SmokingCrater;
     vector<Room*> roomsInRegion;
     bool wizardFought = false;
     bool enteringRoom = true;
@@ -48,11 +48,9 @@ public:
  *Checklist of things to complete:
  *
  *MistyWoods Map - Me
- *CastleUnderground Map - Denis
  *
  *Player - Me and Denis
  *Enemies - Denis
- *Combat System - Denis
  *Bosses - Me And Denis
  *Items - Me and Denis
  *Shop System - Denis

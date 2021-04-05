@@ -15,18 +15,20 @@ ZorkUL::ZorkUL() {
 
 void ZorkUL::createRooms()  {
 
+        // Delete rooms currently in the vector
         for(auto it = roomsInRegion.begin(); it < roomsInRegion.end(); it++) {
             delete *it;
         }
+        // Double check deletion. Read this was good practice.
         roomsInRegion.clear();
 
-
+    // Room Creation. Will create rooms according to the current Region
     switch(currentRegion) {
         case SmokingCrater:
             roomsInRegion.push_back(new Room("Crater"));
-                roomsInRegion[0]->addItem(new Item("Broken Phone", KeyItem, 1, 300, 0, 0));
-                roomsInRegion[0]->addItem(new Item("Shattered Glasses", KeyItem, 0, 30, 0, 0));
-                roomsInRegion[0]->addItem(new Item("Stick", Weapon, 0, 0, 15, 0));
+                roomsInRegion[0]->addItem(new Item("Broken Phone", "Your Phone. It appears to have been damaged during your fall.", KeyItem, 1, 300, 0, 0));
+                roomsInRegion[0]->addItem(new Item("Shattered Glasses", "Your Glasses. They broke as you hit the ground.", KeyItem, 0, 30, 0, 0));
+                roomsInRegion[0]->addItem(new Item("Stick", "A wooden stick. That's it.", Weapon, 0, 0, 15, 0));
                 roomsInRegion[0]->addEnemy(new Enemy("Ape", "Powerful Monkey", 100, 10, 10, 10, 75, 100));
                 roomsInRegion[0]->addEnemy(new Enemy("Wanderer", "Warrior with no name", 100, 10, 10, 10, 75, 100));
             roomsInRegion.push_back(new Room("exit"));
@@ -103,12 +105,47 @@ void ZorkUL::createRooms()  {
 
         case CastleUnderground: // Denis
 
-            roomsInRegion.push_back(new Room("Forest Entrance"));
-            roomsInRegion.push_back(new Room("entrance"));
+            roomsInRegion.push_back(new Room("Castleunderground Entrance"));
+                roomsInRegion[0]->addItem(new Item("Silver Sword", "A blade which cuts through the darkness with ease", Weapon, 0, 0, 25, 0));
+            roomsInRegion.push_back(new Room("Spider Crypt"));
+                roomsInRegion[1]->addEnemy(new Enemy("Gigantic Spider", "Its a huge spider, duh", 75, 15, 8, 0.6, 0.6, 100));
+                roomsInRegion[1]->addEnemy(new Enemy("Spider", "Its a huge spider, duh", 50, 10, 7, 0.5, 0.4, 100));
+                roomsInRegion[1]->addEnemy(new Enemy("Spider", "Its a huge spider, duh", 50, 10, 7, 0.5, 0.4, 100));
+            roomsInRegion.push_back(new Room("Preculiar Place"));
+            roomsInRegion.push_back(new Room("Underground End"));
+                roomsInRegion[3]->addEnemy(new Enemy("Husk", "A shambling corpse with no sense of direction or time", 68, 12, 7, 0.4, 0.4, 100));
+            roomsInRegion.push_back(new Room("Sewers"));
+                roomsInRegion[4]->addEnemy(new Enemy("Leonardo", "Leads", 100, 20, 15, 0.75, 0.8, 1000));
+                roomsInRegion[4]->addEnemy(new Enemy("Donatello", "Does machines", 100, 20, 15, 0.8, 0.75, 1000));
+                roomsInRegion[4]->addEnemy(new Enemy("Raphael", "Is cool but rude", 100, 20, 15, 0.8, 0.75, 1000));
+                roomsInRegion[4]->addEnemy(new Enemy("Michelangelo", "is A party dude", 100, 20, 15, 0.8, 0.75, 1000));
+            roomsInRegion.push_back(new Room("Cave"));
+            roomsInRegion.push_back(new Room("Rock"));
+                roomsInRegion[6]->addItem(new Item("Power Armor", "You any idea how expensive this armor is son?", Armor, 0, 0, 0, 40));
+            roomsInRegion.push_back(new Room("Dungeon"));
+                roomsInRegion[7]->addItem(new Item("Shattered Skull", "Remenants from a previous captive", KeyItem, 0, 0, 0, 0));
+            roomsInRegion.push_back(new Room("Pit"));
+                roomsInRegion[8]->addItem(new Item("Interesting Dirt", "A useless piece of dirt", KeyItem, 0, 0, 0, 0));
+            roomsInRegion.push_back(new Room("Tranquility Garden"));
+                roomsInRegion[9]->addEnemy(new Enemy("Timid Rabbit", "Arent you lucky you checked the stats first?", 999, 999, 999, 1, 1, 0));
+            roomsInRegion.push_back(new Room("Cavern"));
+            //exit
+            roomsInRegion.push_back(new Room("Way out"));
             roomsInRegion.push_back(new Room("exit"));
+            roomsInRegion.push_back(new Room("entrance"));
 
-            roomsInRegion[0]->setExits(roomsInRegion[2], NULL, roomsInRegion[1], NULL);
-        break;
+            roomsInRegion[0]->setExits(roomsInRegion[13], roomsInRegion[8], roomsInRegion[1], roomsInRegion[4]);
+            roomsInRegion[1]->setExits(roomsInRegion[0], roomsInRegion[9], roomsInRegion[2], roomsInRegion[5]);
+            roomsInRegion[2]->setExits(roomsInRegion[1], roomsInRegion[12], roomsInRegion[3], roomsInRegion[6]);
+            roomsInRegion[3]->setExits(roomsInRegion[2], roomsInRegion[11], NULL, roomsInRegion[7]);
+            roomsInRegion[4]->setExits(NULL, roomsInRegion[0], NULL, NULL);
+            roomsInRegion[5]->setExits(NULL, roomsInRegion[1], NULL, NULL);
+            roomsInRegion[6]->setExits(NULL, roomsInRegion[2], NULL, NULL);
+            roomsInRegion[7]->setExits(NULL, roomsInRegion[3], NULL, NULL);
+            roomsInRegion[8]->setExits(NULL, NULL, NULL, roomsInRegion[0]);
+            roomsInRegion[9]->setExits(NULL, NULL, NULL, roomsInRegion[1]);
+            roomsInRegion[11]->setExits(NULL, NULL, NULL, roomsInRegion[3]);
+       break;
 
         case WizardsChambers:
 
@@ -226,21 +263,30 @@ bool ZorkUL::processCommand(Command command) {
          break;
 
          case CastleUnderground:
+            cout << "                      [Entrance]                           " << endl;
+            cout << "                          |                                " << endl;
+            cout << " [Sewers] --- [Castleunderground Entrance] --- [Pit]       " << endl;
+            cout << "                          |                                " << endl;
+            cout << "                          |                                " << endl;
+            cout << "        [Cave] --- [Spider Crypt] --- [Tranquility Garden] " << endl;
+            cout << "                          |                                " << endl;
+            cout << "                          |                                " << endl;
+            cout << "       [Rock] --- [Preculiar Place] --- [Cavern]           " << endl;
+            cout << "                          |                                " << endl;
+            cout << "                          |                                " << endl;
+            cout << "    [Dungeon] --- [Underground End] --- [Way out]          " << endl;
             break;
 
         case WizardsChambers:
-           cout << "      -----------------------       " << endl;
-           cout << "      |                     |       " << endl;
-           cout << "      |                     |       " << endl;
-           cout << "      |                     |       " << endl;
-           cout << "      |  Wizard's Chambers  |       " << endl;
-           cout << "      |                     |       " << endl;
-           cout << "      |                     |       " << endl;
-           cout << "      |                     |       " << endl;
-           cout << "      -----------------------       " << endl;
-           cout << "                |                   " << endl;
-           cout << "                |                   " << endl;
-           cout << "            [Entrance]              " << endl;
+            cout << "                  -----------------------       " << endl;
+            cout << "                  |                     |       " << endl;
+            cout << "                  |                     |       " << endl;
+            cout << "                  |                     |       " << endl;
+            cout << "  [Entrance] ---- |  Wizard's Chambers  |       " << endl;
+            cout << "                  |                     |       " << endl;
+            cout << "                  |                     |       " << endl;
+            cout << "                  |                     |       " << endl;
+            cout << "                  -----------------------       " << endl;
         break;
 
          case KingsChambers:
@@ -269,26 +315,96 @@ bool ZorkUL::processCommand(Command command) {
     }
 
     else if (commandWord.compare("fight") == 0) {
-        if (!command.hasSecondWord()) {
-            cout << "No target selected"<< endl;
-        } else {
-            int location;
-            if (command.hasThirdWord()) {
-                cout << "you are fighting the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
-                location = currentRoom->isEnemyInRoom(command.getSecondWord() + " " + command.getThirdWord());
+
+            if (!command.hasSecondWord()) {
+                cout << "No target selected"<< endl;
             } else {
-                cout << "you are fighting the " + command.getSecondWord() <<endl;
-                location = currentRoom->isEnemyInRoom(command.getSecondWord());
-            }
-                if (location  < 0 ) cout << "The enemy cannot be found in this room, eager beaver" << endl;
-                else {
-                    currentRoom->removeEnemyFromRoom(location);
-                    cout << "The enemy has been slain, excellent work";
-                    cout << endl;
-                    cout << currentRoom->longDescription() << endl;
+                int location;
+                cout << endl;
+                if (command.hasThirdWord()) {
+                    cout << "you are fighting the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
+                    location = currentRoom->isEnemyInRoom(command.getSecondWord() + " " + command.getThirdWord());
+                } else {
+                    cout << "you are fighting the " + command.getSecondWord() <<endl;
+                    location = currentRoom->isEnemyInRoom(command.getSecondWord());
+                }
+                  if (location  < 0 ) cout << "The enemy cannot be found in this room, eager beaver" << endl;
+                  else {
+                       Enemy* currentEnemy = currentRoom->getEnemy(location);
+                       if(player->getACC() >= (double)(rand())/RAND_MAX) {
+                          if(player->getCRT() >= (double)(rand())/RAND_MAX) {
+                              cout << "Critial Hit";
+                              currentEnemy->setHP(currentEnemy->getHP() - (player->getATK()*2));
+                          }
+                          else {
+                              if(currentEnemy->getDEF() >= player->getATK()) {
+                              cout << "Your Attack hit but damage dealt has been halved due to armor";
+                              currentEnemy->setHP(currentEnemy->getHP() - (player->getATK()/2));
+                              }
+                              else {
+                              cout << "Your Attack hit";
+                              currentEnemy->setHP(currentEnemy->getHP() - player->getATK());
+                              }
+                          }
+                          cout << endl;
+                          cout << "Enemy HP: " << currentEnemy->getHP();
+                          cout << endl;
+                          cout << endl;
+                      }
+                       else {
+                           cout << "Your attack missed";
+                           cout << endl;
+                           cout << "Enemy HP: " << currentEnemy->getHP();
+                           cout << endl;
+                           cout << endl;
+                       }
+                       if(currentEnemy->getHP() > 0) {
+                           if(currentEnemy->getACC() >=  (double)(rand())/RAND_MAX) {
+                                if(currentEnemy->getCRT() >= (double)(rand())/RAND_MAX) {
+                                    cout << "Enemy hit, Critical damage";
+                                    cout<<endl;
+                                    player->setHP(player->getHP() - (currentEnemy->getATK()*2));
+
+                                }
+                                else {
+                                    if(player->getDEF() >= currentEnemy->getATK()) {
+                                    cout << "Enemy Attack was successful but damage you recieved has been halved due to armor";
+                                    player->setHP(player->getHP() - (currentEnemy->getATK()/2));
+                                }
+                                    else {
+                                    cout << "Enemy Attack was successful";
+                                    cout << endl;
+                                    player->setHP(player->getHP() - (currentEnemy->getATK()));
+                                    }
+                                }
+                                cout << "Your HP: " << player->getHP();
+                                cout << endl;
+                                cout << endl;
+                           }
+                           else {
+                              cout << "Enemy missed";
+                              cout << endl;
+                              cout << "Your HP: " << player->getHP();
+                              cout << endl;
+                              cout << endl;
+                           }
+                       }
+                       else {
+                            currentRoom->removeEnemyFromRoom(location);
+                            cout << "The enemy has been slain, excellent work";
+                            cout << endl;
+                            cout << currentRoom->longDescription() << endl;
+                       }
+
+
+
+                      if(player->getHP() <= 0) {
+                           cout << "you died";
+                           return true;
+                      }
+                 }
             }
         }
-    }
 
     else if (commandWord.compare("enemyStats") == 0) {
         cout << currentRoom->showStats() << endl;
