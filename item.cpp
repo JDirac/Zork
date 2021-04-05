@@ -1,17 +1,24 @@
 #include "item.h"
 
-Item::Item (string inDescription, Type type, int inWeightGrams, float inValue, float ATK = 0, float DEF = 0) {
+Item::Item (string inDescription, string info, Type type, int inWeightGrams, float inValue, float ATK = 0, float DEF = 0) {
     description = inDescription;
     this->type = type;
     setWeight(inWeightGrams);
     value = inValue;
     this->ATK = ATK;
     this->DEF = DEF;
+    this->info = info;
+    this->type = type;
     /**weaponCheck(isWeapon);*/
 }
 
 Item::Item(string inDescription) {
     description = inDescription;
+}
+
+void Item::itemInfo() {
+    cout << info;
+    cout << endl;
 }
 
 void Item::setWeight(int inWeightGrams)

@@ -18,10 +18,11 @@ private:
 	bool weaponCheck;
     float ATK = 0;
     float DEF = 0;
+    string info;
 
 public:
     Item () {};
-    Item (string description, Type type, int inWeight, float inValue, float ATK, float DEF);
+    Item (string description, string info, Type type, int inWeight, float inValue, float ATK, float DEF);
     Item (string description);
 	string getShortDescription();
     string getLongDescription();
@@ -36,6 +37,8 @@ public:
 	int getWeaponCheck();
 	void setWeaponCheck(int weaponCheck);
     Type getType() { return type; };
+    void itemInfo();
+
 };
 
 #endif /*ITEM_H_*/

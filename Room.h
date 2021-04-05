@@ -45,6 +45,10 @@ public:
     float enemyDEF(int location);
     float enemyCRT(int location);
     float enemyACC(int location);
+    int isItemWeapon(int location);
+    int isItemArmor(int location);
+    int getItemATK(int location);
+    int getItemDEF(int location);
 };
 
 #endif

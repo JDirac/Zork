@@ -1,7 +1,6 @@
 #include "Room.h"
 #include "Command.h"
 
-
 Room::Room(string description) {
 	this->description = description;
 }
@@ -92,6 +91,30 @@ int Room::isItemInRoom(string inString)
         }
     return -1;
 }
+
+int Room::isItemWeapon(int location) {
+    if(itemsInRoom[location].getATK() != 0) {
+        return 1;
+    }
+    else return -1;
+
+}
+
+int Room::isItemArmor(int location) {
+    if(itemsInRoom[location].getDEF() != 0) {
+        return 1;
+    }
+    else return -1;
+}
+
+int Room::getItemATK(int location) {
+    return itemsInRoom[location].getATK();
+}
+
+int Room::getItemDEF(int location) {
+    return itemsInRoom[location].getDEF();
+}
+
 
 void Room::addEnemy(Enemy *Enemy) {
     EnemysInRoom.push_back(*Enemy);

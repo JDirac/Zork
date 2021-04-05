@@ -23,12 +23,12 @@ class ZorkUL {
 private:
 	Parser parser;
     Player *player;
-    Enemy *enemy;
     Room *currentRoom;
-    vector <Enemy> EnemysInRoom;
-    Region currentRegion = SmokingCrater;
+    Region currentRegion = CastleUnderground;
+    vector<Room*> roomsInRegion;
     bool wizardFought = false;
-	void createRooms();
+    bool enteringRoom = true;
+    void createRooms();
 	void printWelcome();
 	bool processCommand(Command command);
 	void printHelp();
@@ -50,19 +50,19 @@ public:
 /*
  *Checklist of things to complete:
  *
- *MistyWoods
- *CastleUnderground
- *WizardsChambers
+ *MistyWoods Map - Me
+ *CastleUnderground Map - Denis
  *
- *Player
- *Enemies
- *Combat System
- *Bosses
- *Items
- *Shop System
- *NPCs
+ *Player - Me and Denis
+ *Enemies - Denis
+ *Combat System - Denis
+ *Bosses - Me And Denis
+ *Items - Me and Denis
+ *Shop System - Denis
+ *NPCs - Me and Denis
  *
- *Narrative
+ *Narrative (LAST) - Me
  *
  *
  */
+
