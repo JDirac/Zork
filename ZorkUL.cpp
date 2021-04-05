@@ -29,8 +29,8 @@ void ZorkUL::createRooms()  {
                 roomsInRegion[0]->addItem(new Item("Broken Phone", "Your Phone. It appears to have been damaged during your fall.", KeyItem, 1, 300, 0, 0));
                 roomsInRegion[0]->addItem(new Item("Shattered Glasses", "Your Glasses. They broke as you hit the ground.", KeyItem, 0, 30, 0, 0));
                 roomsInRegion[0]->addItem(new Item("Stick", "A wooden stick. That's it.", Weapon, 0, 0, 15, 0));
-                roomsInRegion[0]->addEnemy(new Enemy("Ape", "Powerful Monkey", 100, 10, 10, 10, 75, 100));
-                roomsInRegion[0]->addEnemy(new Enemy("Wanderer", "Warrior with no name", 100, 10, 10, 10, 75, 100));
+                roomsInRegion[0]->addEnemy(new Enemy("Ape", "Powerful Monkey", 100, 10, 10, 0.10, 0.75, 100));
+                roomsInRegion[0]->addEnemy(new Enemy("Wanderer", "Warrior with no name", 100, 10, 10, 0.10, 0.75, 100));
             roomsInRegion.push_back(new Room("exit"));
 
         //             (N, E, S, W)
@@ -177,7 +177,7 @@ void ZorkUL::createRooms()  {
  */
 void ZorkUL::play() {
 	printWelcome();
-    player = new Player("Craig", "Our Valiant Hero", 100, 10, 10, 100, 15, 0);
+    player = new Player("Craig", "Our Valiant Hero", 100, 10, 10, 1, 0.5, 0);
 
 	// Enter the main command loop.  Here we repeatedly read commands and
 	// execute them until the ZorkUL game is over.
@@ -361,18 +361,18 @@ bool ZorkUL::processCommand(Command command) {
                        if(currentEnemy->getHP() > 0) {
                            if(currentEnemy->getACC() >=  (double)(rand())/RAND_MAX) {
                                 if(currentEnemy->getCRT() >= (double)(rand())/RAND_MAX) {
-                                    cout << "Enemy hit, Critical damage";
+                                    cout << "Enemy's attack hit you, Critical damage!";
                                     cout<<endl;
                                     player->setHP(player->getHP() - (currentEnemy->getATK()*2));
 
                                 }
                                 else {
                                     if(player->getDEF() >= currentEnemy->getATK()) {
-                                    cout << "Enemy Attack was successful but damage you recieved has been halved due to armor";
+                                    cout << "Enemy Attack was successful but damage you recieved has been halved due to armor!";
                                     player->setHP(player->getHP() - (currentEnemy->getATK()/2));
                                 }
                                     else {
-                                    cout << "Enemy Attack was successful";
+                                    cout << "Enemy's attack hit!";
                                     cout << endl;
                                     player->setHP(player->getHP() - (currentEnemy->getATK()));
                                     }
@@ -382,7 +382,7 @@ bool ZorkUL::processCommand(Command command) {
                                 cout << endl;
                            }
                            else {
-                              cout << "Enemy missed";
+                              cout << "Enemy's attack missed!";
                               cout << endl;
                               cout << "Your HP: " << player->getHP();
                               cout << endl;
