@@ -1,13 +1,18 @@
 #ifndef NPC_H
 #define NPC_H
-#include "ZorkUL.h"
+#include "Entity.h"
+#include <string>
 
-class NPC {
+class NPC{
     private:
-        string description;
+        string npcDescription;
+        string npcName;
+        float npcHP;
     public:
-        string getDesc();
-        void talk();
+        NPC(string name, string description);
+        string showNPCStats();
+        string getNPCName();
+        string getNPCDescription();
 };
 
-#endif // NPC_H
+#endif // ENEMY_H

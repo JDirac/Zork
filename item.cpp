@@ -2,13 +2,12 @@
 
 Item::Item (string inDescription, string info, Type type, int inWeightGrams, float inValue, float ATK = 0, float DEF = 0) {
     description = inDescription;
+    this->info = info;
     this->type = type;
     setWeight(inWeightGrams);
     value = inValue;
     this->ATK = ATK;
     this->DEF = DEF;
-    this->info = info;
-    this->type = type;
     /**weaponCheck(isWeapon);*/
 }
 
@@ -26,7 +25,7 @@ void Item::setWeight(int inWeightGrams)
     if (inWeightGrams > 9999 || inWeightGrams < 0)
        cout << "weight invalid, must be 0<weight<9999" ;
     else
-	   weightGrams = inWeightGrams;
+       weightGrams = inWeightGrams;
 }
 
 void Item::setValue(float inValue)
@@ -34,7 +33,7 @@ void Item::setValue(float inValue)
     if (inValue > 9999 || inValue < 0)
        cout << "value invalid, must be 0<value<9999" ;
     else
-	   value = inValue;
+       value = inValue;
 }
 
 /**void Item::setWeaponCheck(int isWeapon)
@@ -47,11 +46,10 @@ void Item::setValue(float inValue)
 
 string Item::getShortDescription()
 {
-	return description;
+    return description;
 }
 
 string Item::getLongDescription()
 {
-	return " item(s), " + description + ".\n";
+    return " item(s), " + description + ".\n";
 }
-

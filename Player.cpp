@@ -9,35 +9,27 @@ Player::Player(string name, string description, float HP, float ATK, float DEF, 
 
 
 void Player::equipItem(string itemName) {
-        Item target;
+        Item* target = nullptr;
 
         for (Item& item : inv) {
             if(item.getShortDescription().compare(itemName) == 0) {
-                target = item;
+                target = &item;
             }
         }
 
-        switch(target.getType()) {
+        switch(target->getType()) {
             case Weapon:
-                if(target.getShortDescription() != "") {
-                setEquippedWeapon(target);
-                cout << "You equipped: " << target.getShortDescription() << "!\n" << endl;
-                }
-                else {
-                cout << "Item not found";
-                }
+                setEquippedWeapon(*target);
+                target->setEquipped(true);
+                cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
             break;
             case Armor:
-                if(target.getShortDescription() != "") {
-                setEquippedArmor(target);
-                cout << "You equipped: " << target.getShortDescription() << "!\n" << endl;
-                }
-                else {
-                cout << "Item not found";
-                }
+                setEquippedArmor(*target);
+                target->setEquipped(true);
+                cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
             break;
             default:
-            cout << "You cannot equip this item!" << "\n";
+            cout << "You cannot equip this item!";
         }
 }
 
@@ -62,16 +54,23 @@ Item* Player::putItem(string itemName) {
     Item* itemPtr = nullptr;
 
     for(auto it = inv.begin(); it != inv.end(); it++) {
-            if((*it).getShortDescription().compare(itemName) == 0){
-                itemPtr = &(*it);
-                inv.erase(it);
+        if((*it).getShortDescription().compare(itemName) == 0){
+            itemPtr = &(*it);
+
+            if(itemPtr->getEquipped()) {
+                switch(itemPtr->getType()) {
+                    case Weapon:
+                        setATK(10);
+                        break;
+                    case Armor:
+                        setDEF(10);
+                }
+                itemPtr->setEquipped(false);
+            }
+
+            inv.erase(it);
             break;
         }
     }
-
     return itemPtr;
 }
-
-
-
-

@@ -15,7 +15,8 @@ SOURCES += \
         Room.cpp \
         Vendor.cpp \
         ZorkUL.cpp \
-        item.cpp
+        item.cpp \
+        weapon.cpp
 
 DISTFILES += \
     CMakeLists.txt.user \
@@ -33,4 +34,5 @@ HEADERS += \
     Room.h \
     Vendor.h \
     ZorkUL.h \
-    item.h
+    item.h \
+    weapon.h

@@ -8,6 +8,7 @@
 #include "Enemy.h"
 #include <string>
 #include "Entity.h"
+#include "NPC.h"
 
 using namespace std;
 using std::vector;
@@ -21,6 +22,7 @@ private:
 	string exitString();
     vector <Item> itemsInRoom;
     vector <Enemy> EnemysInRoom;
+    vector <NPC> NPCSInRoom;
 
 public:
     int numberOfItems();
@@ -39,16 +41,12 @@ public:
     int isEnemyInRoom(string inString);
     void removeEnemyFromRoom(int location);
     string showStats();
-    float enemyHP(int location);
-    float setEnemyHP(int location, float newHP);
-    float enemyATK(int location);
-    float enemyDEF(int location);
-    float enemyCRT(int location);
-    float enemyACC(int location);
-    int isItemWeapon(int location);
-    int isItemArmor(int location);
-    int getItemATK(int location);
-    int getItemDEF(int location);
+    Enemy* getEnemy(int location) { return &EnemysInRoom[location]; }
+    void addNPC(NPC *NPC);
+    string displayNPC();
+    NPC* getNPC(int location) { return &NPCSInRoom[location]; }
+    int isNPCInRoom(string inString);
+
 };
 
 #endif
