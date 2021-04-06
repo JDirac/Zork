@@ -22,6 +22,17 @@ void ZorkUL::createRooms()  {
         // Double check deletion. Read this was good practice.
         roomsInRegion.clear();
 
+        int roomNumber;
+        int chanceOfExit = -1;
+        int numNewRooms = -1;
+        int chanceOfItem;
+        int chanceOfEnemy;
+        int prevNumNewRooms = 1; // track where latest rooms are being made
+        string directions[4] = {"north", "east", "south", "west"};
+        bool exitMade = false;
+        bool directionChosen = false;
+        int random;
+
     // Room Creation. Will create rooms according to the current Region
     switch(currentRegion) {
         case SmokingCrater:
@@ -80,11 +91,97 @@ void ZorkUL::createRooms()  {
 
         case MistyWoods: // Me
 
-            roomsInRegion.push_back(new Room("Forest Entrance"));
+            srand(time(NULL));
+            roomNumber = 1;
             roomsInRegion.push_back(new Room("entrance"));
-            roomsInRegion.push_back(new Room("exit"));
+            roomsInRegion.push_back(new Room("Forest Entrance"));
+            roomsInRegion[1]->setExits(NULL, NULL, NULL, roomsInRegion[0]);
 
-            roomsInRegion[0]->setExits(roomsInRegion[2], NULL, roomsInRegion[1], NULL);
+            while(!exitMade) {
+                random = rand() % 10 + 1; // Determine number of new rooms
+
+                if(random <= 5) {
+                    numNewRooms = 1;
+                } else if(random <= 8) {
+                    numNewRooms = 2;
+                } else if (random == 9) {
+                    numNewRooms = 3;
+                } else {
+                    numNewRooms = 0;
+                }
+
+                for(int i = 1; i <= numNewRooms; i++) {
+                    random = rand() % 4; // Determine direction
+                    chanceOfExit = rand() % 8;
+                    chanceOfItem = rand() % 57;
+                    chanceOfEnemy = rand() % 24;
+
+                    directionChosen = false;
+
+                    if(chanceOfExit != 7) { // Create Room
+                        roomsInRegion.push_back(new Room("forest path"));
+
+                        if((rand() % 3) == 0) { // Item spawn
+                            if(chanceOfItem < 3) {
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Frozen Blade", "Cold to the touch. What's The story with this sword? It carries a very ominous aura", Weapon, 5, 1000, 100, 0));
+                            } else if(chanceOfItem < 6) {
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Frozen Rose", "A curious object that has the form of a Rose while being made only of hardened ice.", Accessory, 1, 10, 5, 5));
+                            } else if(chanceOfItem < 12) {
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("mist-in-bottle", "A bottle of condensed mist. Can be used to escape an encounter with an enemy, or lower the accuracy of a boss", Consumable, 1, 0, 0, 0));
+                            } else if(chanceOfItem < 19) {
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Frozen Blade?"));
+                            } else if(chanceOfItem < 28) {
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Bag-O-Coins"));
+                            } else {
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Healing Potion", "Heals the player for 50 HP", Consumable, 1, 30, 0, 0));
+                            }
+                        }
+
+                        if((rand() % 3) == 0) {
+                            if(chanceOfEnemy < 10) {
+                                roomsInRegion[prevNumNewRooms + i]->addEnemy(new Enemy("Reanimated Skeleton", "The skeleton of a long lost adventurer, brought to life by a mysterious will", 100, 20, 10, 0.7, 0.3, 20));
+                            } else if(chanceOfEnemy < 18) {
+                                roomsInRegion[prevNumNewRooms + i]->addEnemy(new Enemy("Frozen Ape", "A familiar foe. Must have wandered into the forest, never to come back out", 300, 30, 40, 0.5, 0.1, 50));
+                            } else {
+                                roomsInRegion[prevNumNewRooms + i]->addEnemy(new Enemy("Frozen Zombie", "The reanimated corpse of a poor soul that got lost in the woods", 200, 20, 20, 0.7, 0.3, 40));
+                            }
+                        }
+
+                    } else {
+                        roomsInRegion.push_back(new Room("exit"));
+                        exitMade = true;
+                    }
+
+                    while(!directionChosen) {
+                        Room* nextRoom = roomsInRegion[roomNumber]->nextRoom(directions[random]);
+                        if(nextRoom != NULL) { // Check if this direction has a room already
+                            random = (random + 1) % 4; // Go to next direction and try again
+                            continue;
+                        } else {
+                            switch(random) { // Set the exits for both rooms
+                                case 0:
+                                    roomsInRegion[roomNumber]->setExits(roomsInRegion[prevNumNewRooms + i], NULL, NULL, NULL);
+                                    roomsInRegion[prevNumNewRooms + i]->setExits(NULL, NULL, roomsInRegion[roomNumber], NULL);
+                                    break;
+                                case 1:
+                                    roomsInRegion[roomNumber]->setExits(NULL, roomsInRegion[prevNumNewRooms + i], NULL, NULL);
+                                    roomsInRegion[prevNumNewRooms + i]->setExits(NULL, NULL, NULL, roomsInRegion[roomNumber]);
+                                    break;
+                                case 2:
+                                    roomsInRegion[roomNumber]->setExits(NULL, NULL, roomsInRegion[prevNumNewRooms + i], NULL);
+                                    roomsInRegion[prevNumNewRooms + i]->setExits(roomsInRegion[roomNumber], NULL, NULL, NULL);
+                                    break;
+                                default:
+                                    roomsInRegion[roomNumber]->setExits(NULL, NULL, NULL, roomsInRegion[prevNumNewRooms + i]);
+                                    roomsInRegion[prevNumNewRooms + i]->setExits(NULL, roomsInRegion[roomNumber], NULL, NULL);
+                            }
+                            directionChosen = true;
+                        }
+                    }
+                }
+                roomNumber++;
+                prevNumNewRooms += numNewRooms;
+            }
         break;
 
         case CastleEntrance:
@@ -165,7 +262,8 @@ void ZorkUL::createRooms()  {
             roomsInRegion[0]->setExits(roomsInRegion[2], NULL, roomsInRegion[1], NULL);
     }
         if(enteringRoom) {
-            currentRoom = roomsInRegion[0];
+            if(currentRegion == MistyWoods) currentRoom = roomsInRegion[1];
+            else currentRoom = roomsInRegion[0];
         } else {
             currentRoom = roomsInRegion[roomsInRegion.size() - 3];
         }
@@ -220,6 +318,7 @@ bool ZorkUL::processCommand(Command command) {
 
 	else if (commandWord.compare("map") == 0)
 		{
+        Room* nextRoom;
         switch(currentRegion) {
         case SmokingCrater:
             cout << "[Crater] --- [Exit]" << endl;
@@ -247,6 +346,34 @@ bool ZorkUL::processCommand(Command command) {
          break;
 
          case MistyWoods:
+            cout << "\nLooking around, you can faintly see: " << endl;
+            nextRoom = currentRoom->nextRoom("north");
+            if(nextRoom != NULL) {
+                cout << "North: " <<nextRoom->shortDescription() << endl;
+            } else {
+                cout << "North: Nothing." << endl;
+            }
+
+            nextRoom = currentRoom->nextRoom("east");
+            if(nextRoom != NULL) {
+                cout << "East: " <<nextRoom->shortDescription() << endl;
+            } else {
+                cout << "East: Nothing." << endl;
+            }
+
+            nextRoom = currentRoom->nextRoom("south");
+            if(nextRoom != NULL) {
+                cout << "South: " <<nextRoom->shortDescription() << endl;
+            } else {
+                cout << "South: Nothing." << endl;
+            }
+
+            nextRoom = currentRoom->nextRoom("west");
+            if(nextRoom != NULL) {
+                cout << "West: " <<nextRoom->shortDescription() << endl;
+            } else {
+                cout << "West: Nothing." << endl;
+            }
          break;
 
          case CastleEntrance:

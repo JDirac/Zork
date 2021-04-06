@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <time.h>
 using namespace std;
 
 enum Region {SmokingCrater = 1, WindingPath = 2, EtheVillage = 3,
@@ -23,7 +24,7 @@ private:
 	Parser parser;
     Player *player;
 	Room *currentRoom;
-    Region currentRegion = SmokingCrater;
+    Region currentRegion = EtheVillage;
     vector<Room*> roomsInRegion;
     bool wizardFought = false;
     bool enteringRoom = true;
@@ -47,7 +48,6 @@ public:
 /*
  *Checklist of things to complete:
  *
- *MistyWoods Map - Me
  *
  *Player - Me and Denis
  *Enemies - Denis
