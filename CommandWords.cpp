@@ -21,6 +21,9 @@ CommandWords::CommandWords() {
         validCommands.push_back("fight");
         validCommands.push_back("room");
         validCommands.push_back("talk");
+        validCommands.push_back("shop");
+        validCommands.push_back("buy");
+        validCommands.push_back("sell");
 	}
 }
 

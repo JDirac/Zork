@@ -75,4 +75,39 @@ Item* Player::putItem(string itemName) {
     return itemPtr;
 }
 
+int Player::itemPresentInInventory() {
+    if (inv.size() < 1) {
+        return -1;
+    }
+    else {
+        return 1;
+    }
+}
+
+int Player::isItemInInventory(string inString)
+{
+    int sizeItems = (inv.size());
+    if (inv.size() < 1) {
+        return -1;
+        }
+    else if (inv.size() > 0) {
+       int x = 0;
+        for (int n = sizeItems; n > 0; n--) {
+            // compare inString with short description
+            int tempFlag = inString.compare( inv[x].getShortDescription());
+            if (tempFlag == 0) {
+
+                return x;
+            }
+            x++;
+            }
+        }
+    return -1;
+}
+
+void Player::showWealth() {
+    cout << "Money: " << getWealth() << endl;
+    cout << endl;
+}
+
 

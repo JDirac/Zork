@@ -11,7 +11,7 @@ class Player: public Entity {
         State status; // In combat? No? Ok.
     public:
         Player(string name, string description, float HP, float ATK, float DEF, float ACC, float CRT, int wealth);
-        void takeItem(Item& target) { inv.push_back(target);};
+        void takeItem(Item& target) { inv.push_back(target); };
         Item* putItem(string itemName);
         void showInventory();
         void showStats();
@@ -25,6 +25,11 @@ class Player: public Entity {
         void equipItem(string name);
         void defend(); // combat
         void escape(); // Non boss combat
+        void buyItem(Item* target) { inv.push_back(*target); };
+        int itemPresentInInventory();
+        void showWealth();
+        int isItemInInventory(string inString);
+        Item& getItemInventory(int index) {return inv[index]; };
         /*
         *  Special skills?
         */

@@ -9,6 +9,13 @@ class Vendor: public NPC {
         Item buy();
         int sell();
         string getInventory();
+        Vendor(string name, string description);
+        void addVendorItem(Item *Item);
+        void removeItemFromVendor(int location);
+        string showVendorInventory();
+        int isItemInVendor(string inString);
+        Item* getItem(int index) { return &inventory[index]; };
+
 };
 
 #endif // VENDOR_H

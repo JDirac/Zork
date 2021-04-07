@@ -8,6 +8,7 @@
 #include "Enemy.h"
 #include "Entity.h"
 #include "NPC.h"
+#include "Vendor.h"
 using namespace std;
 using std::vector;
 
@@ -20,6 +21,7 @@ private:
     vector <Item> itemsInRoom;
     vector<Enemy> EnemysInRoom;
     vector<NPC> NPCSInRoom;
+    vector<Vendor> vendorsInRoom;
 
 public:
     int numberOfItems();
@@ -43,6 +45,11 @@ public:
     string displayNPC();
     NPC* getNPC(int location) {return &NPCSInRoom[location]; };
     int isNPCInRoom(string inString);
+    void addVendor(Vendor *Vendor);
+    string displayVendor();
+    Vendor* getVendor(int location) { return &vendorsInRoom[location]; }
+    int isVendorInRoom(string inString);
+    int vendorPresent();
 };
 
 #endif

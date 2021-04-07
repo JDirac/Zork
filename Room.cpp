@@ -22,7 +22,7 @@ string Room::shortDescription() {
 }
 
 string Room::longDescription() {
-    return "\nroom = " + description + ".\n" + displayItem() + ".\n" + displayEnemy() + exitString();
+    return "\nroom = " + description + ".\n" + displayItem() + ".\n" + displayEnemy() + ".\n" + displayNPC() + ".\n" + displayVendor() + exitString();
 }
 
 string Room::exitString() {
@@ -187,6 +187,56 @@ int Room::isNPCInRoom(string inString)
         for (int n = sizeItems; n > 0; n--) {
             // compare inString with short description
             int tempFlag = inString.compare( NPCSInRoom[x].getNPCName());
+            if (tempFlag == 0) {
+
+                return x;
+            }
+            x++;
+            }
+        }
+    return -1;
+}
+
+void Room::addVendor(Vendor *Vendor) {
+    vendorsInRoom.push_back(*Vendor);
+}
+
+string Room::displayVendor() {
+    string tempString = "Vendors in room = ";
+    int sizeItems = (vendorsInRoom.size());
+    if ((vendorsInRoom.size() < 1)) {
+        tempString = "no Vendors in room";
+        }
+    else if ((vendorsInRoom.size() > 0)) {
+       int x = (0);
+        for (int n = sizeItems; n > 0; n--) {
+            tempString = tempString + (vendorsInRoom[x].getNPCName() + "  ");
+            x++;
+            }
+        }
+    return tempString;
+    }
+
+int Room::vendorPresent() {
+    if (vendorsInRoom.size() < 1) {
+        return -1;
+    }
+    else {
+        return 1;
+    }
+}
+
+int Room::isVendorInRoom(string inString)
+{
+    int sizeItems = (vendorsInRoom.size());
+    if (vendorsInRoom.size() < 1) {
+        return -1;
+        }
+    else if (vendorsInRoom.size() > 0) {
+       int x = 0;
+        for (int n = sizeItems; n > 0; n--) {
+            // compare inString with short description
+            int tempFlag = inString.compare( vendorsInRoom[x].getNPCName());
             if (tempFlag == 0) {
 
                 return x;

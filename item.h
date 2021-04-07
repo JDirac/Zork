@@ -28,7 +28,7 @@ public:
     string getLongDescription();
 	int getWeight();
 	void setWeight(int weightGrams);
-	float getValue();
+    float getValue() { return value;};
 	void setValue(float value);
     float getATK() { return ATK; };
     void setATK(float ATK) { this->ATK = ATK; };
@@ -40,6 +40,7 @@ public:
     void setEquipped(bool equipped) { this->equipped = equipped; };
     Type getType() { return type; };
     void itemInfo();
+    string getVendorDescription();
 };
 
 #endif /*ITEM_H_*/

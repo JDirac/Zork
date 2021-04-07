@@ -53,3 +53,16 @@ string Item::getLongDescription()
 {
 	return " item(s), " + description + ".\n";
 }
+
+string Item::getVendorDescription()
+{
+    int ATK = getATK();
+    int DEF = getDEF();
+    if(ATK > 0) {
+       return description + " " + "ATK: " + to_string(getATK()) + " " + "Value: " + to_string(value);
+    }
+    else if(DEF > 0) {
+       return description + " " + "DEF: " + to_string(getDEF()) + " " + "Value: " + to_string(value);
+    }
+    return NULL;
+}
