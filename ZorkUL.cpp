@@ -75,10 +75,17 @@ void ZorkUL::createRooms()  {
 
         case EtheVillage:
             roomsInRegion.push_back(new Room("Village Square"));
+                roomsInRegion[0]->addNPC(new NPC("Cow", "Moo"));
+                roomsInRegion[0]->addNPC(new NPC("Sheep", "Baa"));
+                roomsInRegion[0]->addNPC(new NPC("Moose", "Moo"));
             roomsInRegion.push_back(new Room("Inn"));
+                roomsInRegion[1]->addNPC(new NPC("Innkeeper", "There is change in the air"));
             roomsInRegion.push_back(new Room("Merchant"));
+                roomsInRegion[2]->addNPC(new NPC("Merchant", "All these deals waiting for a lucky customer"));
             roomsInRegion.push_back(new Room("Blacksmith"));
+                roomsInRegion[3]->addNPC(new NPC("Blacksmith", "Greetings stranger, have you come far?"));
             roomsInRegion.push_back(new Room("Blarn Street"));
+                roomsInRegion[4]->addNPC(new NPC("The Beyonder", "Craig, you are almost at the Kings and Wizards castle, \nMake sure you are prepared for the battles to come"));
             roomsInRegion.push_back(new Room("entrance"));
             roomsInRegion.push_back(new Room("exit"));
 
@@ -441,6 +448,26 @@ bool ZorkUL::processCommand(Command command) {
         cout << currentRoom->longDescription() << endl;
     }
 
+    else if(commandWord.compare("talk") == 0) {
+
+        int location;
+        if (command.hasThirdWord()) {
+            location = currentRoom->isNPCInRoom(command.getSecondWord() + " " + command.getThirdWord());
+        } else {
+            location = currentRoom->isNPCInRoom(command.getSecondWord());
+        }
+
+        if (location > -1) {
+            cout << currentRoom->getNPC(location)->getNPCDescription();
+            cout << endl;
+        }
+        else {
+            cout << "There was no response";
+            cout << endl;
+        }
+
+    }
+
     else if (commandWord.compare("fight") == 0) {
 
             if (!command.hasSecondWord()) {
@@ -458,6 +485,8 @@ bool ZorkUL::processCommand(Command command) {
                   if (location  < 0 ) cout << "The enemy cannot be found in this room, eager beaver" << endl;
                   else {
                        Enemy* currentEnemy = currentRoom->getEnemy(location);
+                       //currentEnemy.combat();
+
                        if(player->getACC() >= (double)(rand())/RAND_MAX) {
                           if(player->getCRT() >= (double)(rand())/RAND_MAX) {
                               cout << "Critial Hit";

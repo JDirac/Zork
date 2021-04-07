@@ -154,3 +154,45 @@ int Room::isEnemyInRoom(string inString)
         }
     return -1;
 }
+
+void Room::addNPC(NPC *NPC) {
+    NPCSInRoom.push_back(*NPC);
+}
+
+string Room::displayNPC() {
+    string tempString = "NPCs in room = ";
+    int sizeItems = (NPCSInRoom.size());
+    if (NPCSInRoom.size() < 1) {
+        tempString = "no NPCS in room";
+        }
+    else if (NPCSInRoom.size() > 0) {
+       int x = (0);
+        for (int n = sizeItems; n > 0; n--) {
+            tempString = tempString + NPCSInRoom[x].getNPCName() + "  " ;
+            x++;
+            }
+        }
+    return tempString;
+    }
+
+
+int Room::isNPCInRoom(string inString)
+{
+    int sizeItems = (NPCSInRoom.size());
+    if (NPCSInRoom.size() < 1) {
+        return -1;
+        }
+    else if (NPCSInRoom.size() > 0) {
+       int x = 0;
+        for (int n = sizeItems; n > 0; n--) {
+            // compare inString with short description
+            int tempFlag = inString.compare( NPCSInRoom[x].getNPCName());
+            if (tempFlag == 0) {
+
+                return x;
+            }
+            x++;
+            }
+        }
+    return -1;
+}

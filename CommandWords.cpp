@@ -20,6 +20,7 @@ CommandWords::CommandWords() {
         validCommands.push_back("enemyStats");
         validCommands.push_back("fight");
         validCommands.push_back("room");
+        validCommands.push_back("talk");
 	}
 }
 

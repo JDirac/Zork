@@ -6,6 +6,8 @@
 #include <vector>
 #include "item.h"
 #include "Enemy.h"
+#include "Entity.h"
+#include "NPC.h"
 using namespace std;
 using std::vector;
 
@@ -17,7 +19,7 @@ private:
 	string exitString();
     vector <Item> itemsInRoom;
     vector<Enemy> EnemysInRoom;
-
+    vector<NPC> NPCSInRoom;
 
 public:
     int numberOfItems();
@@ -36,7 +38,11 @@ public:
     int isEnemyInRoom(string inString);
     void removeEnemyFromRoom(int location);
     string showStats();
-    Enemy* getEnemy(int location) { return &EnemysInRoom[location]; }
+    Enemy* getEnemy(int location) { return &EnemysInRoom[location]; };
+    void addNPC(NPC* NPC);
+    string displayNPC();
+    NPC* getNPC(int location) {return &NPCSInRoom[location]; };
+    int isNPCInRoom(string inString);
 };
 
 #endif
