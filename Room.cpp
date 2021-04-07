@@ -3,42 +3,42 @@
 
 
 Room::Room(string description) {
-    this->description = description;
+	this->description = description;
 }
 
 void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
-    if (north != NULL)
-        exits["north"] = north;
-    if (east != NULL)
-        exits["east"] = east;
-    if (south != NULL)
-        exits["south"] = south;
-    if (west != NULL)
-        exits["west"] = west;
+	if (north != NULL)
+		exits["north"] = north;
+	if (east != NULL)
+		exits["east"] = east;
+	if (south != NULL)
+		exits["south"] = south;
+	if (west != NULL)
+		exits["west"] = west;
 }
 
 string Room::shortDescription() {
-    return description;
+	return description;
 }
 
 string Room::longDescription() {
-    return "\nroom = " + description + "\n" + displayItem() + "\n" + displayEnemy() + "\n" + displayNPC() + "\n" + displayVendor() + exitString();
+    return "\nroom = " + description + ".\n" + displayItem() + ".\n" + displayEnemy() + ".\n" + displayNPC() + ".\n" + displayVendor() + exitString();
 }
 
 string Room::exitString() {
-    string returnString = "\nexits =";
-    for (map<string, Room*>::iterator i = exits.begin(); i != exits.end(); i++)
-        // Loop through map
-        returnString += "  " + i->first;	// access the "first" element of the pair (direction as a string)
-    return returnString;
+	string returnString = "\nexits =";
+	for (map<string, Room*>::iterator i = exits.begin(); i != exits.end(); i++)
+		// Loop through map
+		returnString += "  " + i->first;	// access the "first" element of the pair (direction as a string)
+	return returnString;
 }
 
 Room* Room::nextRoom(string direction) {
-    map<string, Room*>::iterator next = exits.find(direction); //returns an iterator for the "pair"
-    if (next == exits.end())
-        return NULL; // if exits.end() was returned, there's no room in that direction.
-    return next->second; // If there is a room, remove the "second" (Room*)
-                // part of the "pair" (<string, Room*>) and return it.
+	map<string, Room*>::iterator next = exits.find(direction); //returns an iterator for the "pair"
+	if (next == exits.end())
+		return NULL; // if exits.end() was returned, there's no room in that direction.
+	return next->second; // If there is a room, remove the "second" (Room*)
+				// part of the "pair" (<string, Room*>) and return it.
 }
 
 void Room::addItem(Item *inItem) {
@@ -46,6 +46,7 @@ void Room::addItem(Item *inItem) {
     //cout << "Just added" + inItem->getLongDescription();
     itemsInRoom.push_back(*inItem);
 }
+
 
 string Room::displayItem() {
     string tempString = "items in room = ";
@@ -137,7 +138,7 @@ int Room::isEnemyInRoom(string inString)
 {
     int sizeEnemies = (EnemysInRoom.size());
     if (EnemysInRoom.size() < 1) {
-        return -1;
+        return false;
         }
     else if (EnemysInRoom.size() > 0) {
        int x = (0);
@@ -153,8 +154,6 @@ int Room::isEnemyInRoom(string inString)
         }
     return -1;
 }
-
-
 
 void Room::addNPC(NPC *NPC) {
     NPCSInRoom.push_back(*NPC);
@@ -198,7 +197,6 @@ int Room::isNPCInRoom(string inString)
     return -1;
 }
 
-
 void Room::addVendor(Vendor *Vendor) {
     vendorsInRoom.push_back(*Vendor);
 }
@@ -212,7 +210,7 @@ string Room::displayVendor() {
     else if ((vendorsInRoom.size() > 0)) {
        int x = (0);
         for (int n = sizeItems; n > 0; n--) {
-            tempString = tempString + (vendorsInRoom[x].getVendorName() + "  ");
+            tempString = tempString + (vendorsInRoom[x].getNPCName() + "  ");
             x++;
             }
         }
@@ -238,7 +236,7 @@ int Room::isVendorInRoom(string inString)
        int x = 0;
         for (int n = sizeItems; n > 0; n--) {
             // compare inString with short description
-            int tempFlag = inString.compare( vendorsInRoom[x].getVendorName());
+            int tempFlag = inString.compare( vendorsInRoom[x].getNPCName());
             if (tempFlag == 0) {
 
                 return x;
@@ -248,55 +246,3 @@ int Room::isVendorInRoom(string inString)
         }
     return -1;
 }
-
-void Room::addVendorItem(Item *Item) {
-     shopInventory.push_back(*Item);
-}
-
-void Room::removeItemFromVendor(int location) {
-    shopInventory.erase(shopInventory.begin()+location);
-}
-
-string Room::showVendorInventory() {
-    string tempString = "Shop Inventory\n\n";
-    int sizeInventory = (shopInventory.size());
-    if (shopInventory.size() < 1) {
-        tempString = "Nothing to Buy";
-        }
-    else if (shopInventory.size() > 0) {
-       int x = (0);
-        for (int n = sizeInventory; n > 0; n--) {
-            tempString = tempString + shopInventory[x].getVendorDescription() + "\n" ;
-            x++;
-            }
-
-        }
-    return tempString;
-}
-
-int Room::isItemInVendor(string inString)
-{
-    int sizeItems = (shopInventory.size());
-    if (shopInventory.size() < 1) {
-        return -1;
-        }
-    else if (shopInventory.size() > 0) {
-       int x = (0);
-        for (int n = sizeItems; n > 0; n--) {
-            // compare inString with short description
-            int tempFlag = inString.compare( shopInventory[x].getShortDescription());
-            if (tempFlag == 0) {
-
-                return x;
-            }
-            x++;
-            }
-        }
-    return -1;
-}
-
-
-
-
-
-

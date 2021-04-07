@@ -42,6 +42,39 @@ void Player::showInventory() {
     }
 }
 
+void Player::showStats() {
+    cout << "\nHP: " << getHP() << endl;
+    cout << "Attack: " << getATK() << endl;
+    cout << "Defence: " << getDEF() << endl;
+    cout << endl;
+}
+
+Item* Player::putItem(string itemName) {
+    //inv.erase(std::remove(inv.begin(), inv.end(), target), inv.end()); // Erase-remove idiom
+    Item* itemPtr = nullptr;
+
+    for(auto it = inv.begin(); it != inv.end(); it++) {
+        if((*it).getShortDescription().compare(itemName) == 0){
+            itemPtr = &(*it);
+
+            if(itemPtr->getEquipped()) {
+                switch(itemPtr->getType()) {
+                    case Weapon:
+                        setATK(10);
+                        break;
+                    case Armor:
+                        setDEF(10);
+                }
+                itemPtr->setEquipped(false);
+            }
+
+            inv.erase(it);
+            break;
+        }
+    }
+    return itemPtr;
+}
+
 int Player::itemPresentInInventory() {
     if (inv.size() < 1) {
         return -1;
@@ -72,40 +105,9 @@ int Player::isItemInInventory(string inString)
     return -1;
 }
 
-void Player::showStats() {
-    cout << "\nHP: " << getHP() << endl;
-    cout << "Attack: " << getATK() << endl;
-    cout << "Defence: " << getDEF() << endl;
-    cout << endl;
-}
-
 void Player::showWealth() {
     cout << "Money: " << getWealth() << endl;
     cout << endl;
 }
 
-Item* Player::putItem(string itemName) {
-    //inv.erase(std::remove(inv.begin(), inv.end(), target), inv.end()); // Erase-remove idiom
-    Item* itemPtr = nullptr;
 
-    for(auto it = inv.begin(); it != inv.end(); it++) {
-        if((*it).getShortDescription().compare(itemName) == 0){
-            itemPtr = &(*it);
-
-            if(itemPtr->getEquipped()) {
-                switch(itemPtr->getType()) {
-                    case Weapon:
-                        setATK(10);
-                        break;
-                    case Armor:
-                        setDEF(10);
-                }
-                itemPtr->setEquipped(false);
-            }
-
-            inv.erase(it);
-            break;
-        }
-    }
-    return itemPtr;
-}

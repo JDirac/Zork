@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <time.h>
 using namespace std;
 
 enum Region {SmokingCrater = 1, WindingPath = 2, EtheVillage = 3,
@@ -20,25 +21,26 @@ enum Region {SmokingCrater = 1, WindingPath = 2, EtheVillage = 3,
 
 class ZorkUL {
 private:
-    Parser parser;
+	Parser parser;
     Player *player;
-    Room *currentRoom;
+	Room *currentRoom;
+    Vendor* currentVend;
     Region currentRegion = EtheVillage;
     vector<Room*> roomsInRegion;
     bool wizardFought = false;
     bool enteringRoom = true;
-    void createRooms();
-    void printWelcome();
-    bool processCommand(Command command);
-    void printHelp();
-    void goRoom(Command command);
+	void createRooms();
+	void printWelcome();
+	bool processCommand(Command command);
+	void printHelp();
+	void goRoom(Command command);
     void createItems();
     void displayItems();
     void addEnemy(Enemy *Enemy);
 public:
-    ZorkUL();
-    void play();
-    string go(string direction);
+	ZorkUL();
+	void play();
+	string go(string direction);
 };
 
 #endif /*ZORKUL_H_*/
@@ -47,7 +49,6 @@ public:
 /*
  *Checklist of things to complete:
  *
- *MistyWoods Map - Me
  *
  *Player - Me and Denis
  *Enemies - Denis
@@ -60,4 +61,3 @@ public:
  *
  *
  */
-

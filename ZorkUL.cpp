@@ -4,13 +4,13 @@ using namespace std;
 #include "ZorkUL.h"
 
 int main() {
-    ZorkUL temp;
-    temp.play();
-    return 0;
+	ZorkUL temp;
+	temp.play();
+	return 0;
 }
 
 ZorkUL::ZorkUL() {
-    createRooms();
+	createRooms();
 }
 
 void ZorkUL::createRooms()  {
@@ -22,6 +22,17 @@ void ZorkUL::createRooms()  {
         // Double check deletion. Read this was good practice.
         roomsInRegion.clear();
 
+        int roomNumber;
+        int chanceOfExit = -1;
+        int numNewRooms = -1;
+        int chanceOfItem;
+        int chanceOfEnemy;
+        int prevNumNewRooms = 1; // track where latest rooms are being made
+        string directions[4] = {"north", "east", "south", "west"};
+        bool exitMade = false;
+        bool directionChosen = false;
+        int random;
+
     // Room Creation. Will create rooms according to the current Region
     switch(currentRegion) {
         case SmokingCrater:
@@ -29,9 +40,8 @@ void ZorkUL::createRooms()  {
                 roomsInRegion[0]->addItem(new Item("Broken Phone", "Your Phone. It appears to have been damaged during your fall.", KeyItem, 1, 300, 0, 0));
                 roomsInRegion[0]->addItem(new Item("Shattered Glasses", "Your Glasses. They broke as you hit the ground.", KeyItem, 0, 30, 0, 0));
                 roomsInRegion[0]->addItem(new Item("Stick", "A wooden stick. That's it.", Weapon, 0, 0, 15, 0));
-                roomsInRegion[0]->addEnemy(new Enemy("Ape", "Powerful Monkey", 60, 10, 5, 0.5, 0.5, 100));
-                roomsInRegion[0]->addEnemy(new Enemy("Wanderer", "Warrior with no name", 55, 10, 5, 0.5, 0.5, 100));
-                roomsInRegion[0]->addNPC(new NPC("The Beyonder", "Greeting Craig Egan of the west \nYou must save the kingdom from the Wizard and King's tyrannical rule \nit is your destiny!"));
+                roomsInRegion[0]->addEnemy(new Enemy("Ape", "Powerful Monkey", 100, 10, 10, 0.10, 0.75, 100));
+                roomsInRegion[0]->addEnemy(new Enemy("Wanderer", "Warrior with no name", 100, 10, 10, 0.10, 0.75, 100));
             roomsInRegion.push_back(new Room("exit"));
 
         //             (N, E, S, W)
@@ -41,7 +51,6 @@ void ZorkUL::createRooms()  {
         case WindingPath:
 
             roomsInRegion.push_back(new Room("Winding Path"));
-
             roomsInRegion.push_back(new Room("Winding Path 2"));
             roomsInRegion.push_back(new Room("Winding Path 3"));
             roomsInRegion.push_back(new Room("Winding Path 4"));
@@ -66,20 +75,17 @@ void ZorkUL::createRooms()  {
 
         case EtheVillage:
             roomsInRegion.push_back(new Room("Village Square"));
-            roomsInRegion[0]->addNPC(new NPC("Cow", "Moo"));
-            roomsInRegion[0]->addNPC(new NPC("Sheep", "Baa"));
-            roomsInRegion[0]->addNPC(new NPC("Moose", "Moo"));
+                roomsInRegion[0]->addNPC(new NPC("Cow", "Moo"));
+                roomsInRegion[0]->addNPC(new NPC("Sheep", "Baa"));
+                roomsInRegion[0]->addNPC(new NPC("Moose", "Moo"));
             roomsInRegion.push_back(new Room("Inn"));
-            roomsInRegion[1]->addNPC(new NPC("Innkeeper", "There is change in the air"));
+                roomsInRegion[1]->addNPC(new NPC("Innkeeper", "There is change in the air"));
             roomsInRegion.push_back(new Room("Merchant"));
-            roomsInRegion[2]->addVendor(new Vendor("Merchant"));
-            roomsInRegion[2]->addVendorItem(new Item("Leather Armor", "Cheap and cheerful", Armor, 0, 10, 0, 12));
+                roomsInRegion[2]->addVendor(new Vendor("Merchant", "Well met traveller, you look to be quite the eccentric customer, I'd be delighted to have your business!"));
             roomsInRegion.push_back(new Room("Blacksmith"));
-            roomsInRegion[3]->addVendor(new Vendor("Blacksmith"));;
-            roomsInRegion[3]->addVendorItem(new Item("Iron Armor", "Shiny, Reliable", Armor, 0, 25, 0, 20));
-            roomsInRegion[3]->addVendorItem(new Item("Iron Sword", "The definition of wont let you down", Weapon, 0, 20, 15, 0));
+                roomsInRegion[3]->addVendor(new Vendor("Blacksmith", "Planning on heading to the forst? Best stock up on gear first, and that's where I come in!"));
             roomsInRegion.push_back(new Room("Blarn Street"));
-            roomsInRegion[4]->addNPC(new NPC("The Beyonder", "Craig, you are almost at the Kings and Wizards castle, \nMake sure you are prepared for the battles to come"));
+                roomsInRegion[4]->addNPC(new NPC("The Beyonder", "Craig, you are almost at the Kings and Wizards castle, \nMake sure you are prepared for the battles to come"));
             roomsInRegion.push_back(new Room("entrance"));
             roomsInRegion.push_back(new Room("exit"));
 
@@ -92,11 +98,97 @@ void ZorkUL::createRooms()  {
 
         case MistyWoods: // Me
 
-            roomsInRegion.push_back(new Room("Forest Entrance"));
+            srand(time(NULL));
+            roomNumber = 1;
             roomsInRegion.push_back(new Room("entrance"));
-            roomsInRegion.push_back(new Room("exit"));
+            roomsInRegion.push_back(new Room("Forest Entrance"));
+            roomsInRegion[1]->setExits(NULL, NULL, NULL, roomsInRegion[0]);
 
-            roomsInRegion[0]->setExits(roomsInRegion[2], NULL, roomsInRegion[1], NULL);
+            while(!exitMade) {
+                random = rand() % 10 + 1; // Determine number of new rooms
+
+                if(random <= 5) {
+                    numNewRooms = 1;
+                } else if(random <= 8) {
+                    numNewRooms = 2;
+                } else if (random == 9) {
+                    numNewRooms = 3;
+                } else {
+                    numNewRooms = 0;
+                }
+
+                for(int i = 1; i <= numNewRooms; i++) {
+                    random = rand() % 4; // Determine direction
+                    chanceOfExit = rand() % 8;
+                    chanceOfItem = rand() % 57;
+                    chanceOfEnemy = rand() % 24;
+
+                    directionChosen = false;
+
+                    if(chanceOfExit != 7) { // Create Room
+                        roomsInRegion.push_back(new Room("forest path"));
+
+                        if((rand() % 3) == 0) { // Item spawn
+                            if(chanceOfItem < 3) {
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Frozen Blade", "Cold to the touch. What's The story with this sword? It carries a very ominous aura", Weapon, 5, 1000, 100, 0));
+                            } else if(chanceOfItem < 6) {
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Frozen Rose", "A curious object that has the form of a Rose while being made only of hardened ice.", Accessory, 1, 10, 5, 5));
+                            } else if(chanceOfItem < 12) {
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("mist-in-bottle", "A bottle of condensed mist. Can be used to escape an encounter with an enemy, or lower the accuracy of a boss", Consumable, 1, 0, 0, 0));
+                            } else if(chanceOfItem < 19) {
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Frozen Blade?"));
+                            } else if(chanceOfItem < 28) {
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Bag-O-Coins"));
+                            } else {
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Healing Potion", "Heals the player for 50 HP", Consumable, 1, 30, 0, 0));
+                            }
+                        }
+
+                        if((rand() % 3) == 0) {
+                            if(chanceOfEnemy < 10) {
+                                roomsInRegion[prevNumNewRooms + i]->addEnemy(new Enemy("Reanimated Skeleton", "The skeleton of a long lost adventurer, brought to life by a mysterious will", 100, 20, 10, 0.7, 0.3, 20));
+                            } else if(chanceOfEnemy < 18) {
+                                roomsInRegion[prevNumNewRooms + i]->addEnemy(new Enemy("Frozen Ape", "A familiar foe. Must have wandered into the forest, never to come back out", 300, 30, 40, 0.5, 0.1, 50));
+                            } else {
+                                roomsInRegion[prevNumNewRooms + i]->addEnemy(new Enemy("Frozen Zombie", "The reanimated corpse of a poor soul that got lost in the woods", 200, 20, 20, 0.7, 0.3, 40));
+                            }
+                        }
+
+                    } else {
+                        roomsInRegion.push_back(new Room("exit"));
+                        exitMade = true;
+                    }
+
+                    while(!directionChosen) {
+                        Room* nextRoom = roomsInRegion[roomNumber]->nextRoom(directions[random]);
+                        if(nextRoom != NULL) { // Check if this direction has a room already
+                            random = (random + 1) % 4; // Go to next direction and try again
+                            continue;
+                        } else {
+                            switch(random) { // Set the exits for both rooms
+                                case 0:
+                                    roomsInRegion[roomNumber]->setExits(roomsInRegion[prevNumNewRooms + i], NULL, NULL, NULL);
+                                    roomsInRegion[prevNumNewRooms + i]->setExits(NULL, NULL, roomsInRegion[roomNumber], NULL);
+                                    break;
+                                case 1:
+                                    roomsInRegion[roomNumber]->setExits(NULL, roomsInRegion[prevNumNewRooms + i], NULL, NULL);
+                                    roomsInRegion[prevNumNewRooms + i]->setExits(NULL, NULL, NULL, roomsInRegion[roomNumber]);
+                                    break;
+                                case 2:
+                                    roomsInRegion[roomNumber]->setExits(NULL, NULL, roomsInRegion[prevNumNewRooms + i], NULL);
+                                    roomsInRegion[prevNumNewRooms + i]->setExits(roomsInRegion[roomNumber], NULL, NULL, NULL);
+                                    break;
+                                default:
+                                    roomsInRegion[roomNumber]->setExits(NULL, NULL, NULL, roomsInRegion[prevNumNewRooms + i]);
+                                    roomsInRegion[prevNumNewRooms + i]->setExits(NULL, roomsInRegion[roomNumber], NULL, NULL);
+                            }
+                            directionChosen = true;
+                        }
+                    }
+                }
+                roomNumber++;
+                prevNumNewRooms += numNewRooms;
+            }
         break;
 
         case CastleEntrance:
@@ -137,7 +229,7 @@ void ZorkUL::createRooms()  {
             roomsInRegion.push_back(new Room("Dungeon"));
                 roomsInRegion[7]->addItem(new Item("Shattered Skull", "Remenants from a previous captive", KeyItem, 0, 0, 0, 0));
             roomsInRegion.push_back(new Room("Pit"));
-                 roomsInRegion[8]->addNPC(new NPC("Cow", "Moo"));
+                roomsInRegion[8]->addItem(new Item("Interesting Dirt", "A useless piece of dirt", KeyItem, 0, 0, 0, 0));
             roomsInRegion.push_back(new Room("Tranquility Garden"));
                 roomsInRegion[9]->addEnemy(new Enemy("Timid Rabbit", "Arent you lucky you checked the stats first?", 999, 999, 999, 1, 1, 0));
             roomsInRegion.push_back(new Room("Cavern"));
@@ -177,7 +269,8 @@ void ZorkUL::createRooms()  {
             roomsInRegion[0]->setExits(roomsInRegion[2], NULL, roomsInRegion[1], NULL);
     }
         if(enteringRoom) {
-            currentRoom = roomsInRegion[0];
+            if(currentRegion == MistyWoods) currentRoom = roomsInRegion[1];
+            else currentRoom = roomsInRegion[0];
         } else {
             currentRoom = roomsInRegion[roomsInRegion.size() - 3];
         }
@@ -188,31 +281,31 @@ void ZorkUL::createRooms()  {
  *  Main play routine.  Loops until end of play.
  */
 void ZorkUL::play() {
-    printWelcome();
-    player = new Player("Craig", "Our Valiant Hero", 100, 10, 10, 0.6, 0.5, 50);
+	printWelcome();
+    player = new Player("Craig", "Our Valiant Hero", 100, 10, 10, 1, 0.5, 0);
 
-    // Enter the main command loop.  Here we repeatedly read commands and
-    // execute them until the ZorkUL game is over.
+	// Enter the main command loop.  Here we repeatedly read commands and
+	// execute them until the ZorkUL game is over.
 
-    bool finished = false;
-    while (!finished) {
-        // Create pointer to command and give it a command.
-        Command* command = parser.getCommand();
-        // Pass dereferenced command and check for end of game.
-        finished = processCommand(*command);
-        // Free the memory allocated by "parser.getCommand()"
-        //   with ("return new Command(...)")
-        delete command;
-    }
-    cout << endl;
-    cout << "end" << endl;
+	bool finished = false;
+	while (!finished) {
+		// Create pointer to command and give it a command.
+		Command* command = parser.getCommand();
+		// Pass dereferenced command and check for end of game.
+		finished = processCommand(*command);
+		// Free the memory allocated by "parser.getCommand()"
+		//   with ("return new Command(...)")
+		delete command;
+	}
+	cout << endl;
+	cout << "end" << endl;
 }
 
 void ZorkUL::printWelcome() {
-    cout << "start"<< endl;
-    cout << "info for help"<< endl;
-    cout << endl;
-    cout << currentRoom->longDescription() << endl;
+	cout << "start"<< endl;
+	cout << "info for help"<< endl;
+	cout << endl;
+	cout << currentRoom->longDescription() << endl;
 }
 
 /**
@@ -221,17 +314,18 @@ void ZorkUL::printWelcome() {
  * returned.
  */
 bool ZorkUL::processCommand(Command command) {
-    if (command.isUnknown()) {
-        cout << "invalid input"<< endl;
-        return false;
-    }
+	if (command.isUnknown()) {
+		cout << "invalid input"<< endl;
+		return false;
+	}
 
-    string commandWord = command.getCommandWord();
-    if (commandWord.compare("info") == 0)
-        printHelp();
+	string commandWord = command.getCommandWord();
+	if (commandWord.compare("info") == 0)
+		printHelp();
 
-    else if (commandWord.compare("map") == 0)
-        {
+	else if (commandWord.compare("map") == 0)
+		{
+        Room* nextRoom;
         switch(currentRegion) {
         case SmokingCrater:
             cout << "[Crater] --- [Exit]" << endl;
@@ -259,6 +353,34 @@ bool ZorkUL::processCommand(Command command) {
          break;
 
          case MistyWoods:
+            cout << "\nLooking around, you can faintly see: " << endl;
+            nextRoom = currentRoom->nextRoom("north");
+            if(nextRoom != NULL) {
+                cout << "North: " <<nextRoom->shortDescription() << endl;
+            } else {
+                cout << "North: Nothing." << endl;
+            }
+
+            nextRoom = currentRoom->nextRoom("east");
+            if(nextRoom != NULL) {
+                cout << "East: " <<nextRoom->shortDescription() << endl;
+            } else {
+                cout << "East: Nothing." << endl;
+            }
+
+            nextRoom = currentRoom->nextRoom("south");
+            if(nextRoom != NULL) {
+                cout << "South: " <<nextRoom->shortDescription() << endl;
+            } else {
+                cout << "South: Nothing." << endl;
+            }
+
+            nextRoom = currentRoom->nextRoom("west");
+            if(nextRoom != NULL) {
+                cout << "West: " <<nextRoom->shortDescription() << endl;
+            } else {
+                cout << "West: Nothing." << endl;
+            }
          break;
 
          case CastleEntrance:
@@ -317,10 +439,10 @@ bool ZorkUL::processCommand(Command command) {
          break;
         }
 
-        }
+		}
 
-    else if (commandWord.compare("go") == 0)
-        goRoom(command);
+	else if (commandWord.compare("go") == 0)
+		goRoom(command);
 
     else if (commandWord.compare("room") == 0) {
         cout << currentRoom->longDescription() << endl;
@@ -331,8 +453,10 @@ bool ZorkUL::processCommand(Command command) {
         player->showWealth();
         int location;
         location = currentRoom->isVendorInRoom(command.getSecondWord());
+
+        currentVend = currentRoom->getVendor(location);
         if(location > -1) {
-            cout << currentRoom->showVendorInventory();
+            cout << currentVend->showVendorInventory();
             cout << endl;
         }
         else {
@@ -348,17 +472,17 @@ bool ZorkUL::processCommand(Command command) {
         int location;
         if (command.hasThirdWord()) {
             cout << "you bought the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
-            location = currentRoom->isItemInVendor(command.getSecondWord() + " " + command.getThirdWord());
+            location = currentVend->isItemInVendor(command.getSecondWord() + " " + command.getThirdWord());
         } else {
             cout << "you bought the " + command.getSecondWord() <<endl;
-            location = currentRoom->isItemInVendor(command.getSecondWord());
+            location = currentVend->isItemInVendor(command.getSecondWord());
         }
         if (location  < 0 ) cout << "No such item can be bought" << endl;
         else {
-              if(player->getWealth() >= currentRoom->getItemShop(location).getValue()) {
-              player->buyItem(currentRoom->getItemShop(location));
-              player->setWealth(player->getWealth() - currentRoom->getItemShop(location).getValue());
-              currentRoom->removeItemFromVendor(location);
+              if(player->getWealth() >= currentVend->getItem(location)->getValue()) {
+              player->buyItem(currentVend->getItem(location));
+              player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue()*1.2);
+              currentVend->removeItemFromVendor(location);
               player->showWealth();
               } else {
                   cout << "you do not have enough money to purchase that";
@@ -377,15 +501,15 @@ bool ZorkUL::processCommand(Command command) {
         if (command.hasThirdWord()) {
             cout << "you sold the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
             location = player->isItemInInventory(command.getSecondWord() + " " + command.getThirdWord());
-            currentRoom->addVendorItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
+            currentVend->addVendorItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
         } else {
             cout << "you sold the " + command.getSecondWord() <<endl;
             location = player->isItemInInventory(command.getSecondWord());
-            currentRoom->addVendorItem(player->putItem(command.getSecondWord()));
+            currentVend->addVendorItem(player->putItem(command.getSecondWord()));
         }
         if (location  < 0 ) cout << "You do not have this item to sell" << endl;
         else {
-            player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue()*0.8));
+            player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue()));
             player->showWealth();
         }
         } else {
@@ -396,29 +520,6 @@ bool ZorkUL::processCommand(Command command) {
           cout << "that item cannot be found in your inventory";
           cout << endl;
       }
-    }
-
-    else if (commandWord.compare("take") == 0)
-    {
-        if (!command.hasSecondWord()) {
-            cout << "incomplete input"<< endl;
-        } else {
-            int location;
-            if (command.hasThirdWord()) {
-                cout << "you took the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
-                location = currentRoom->isItemInRoom(command.getSecondWord() + " " + command.getThirdWord());
-            } else {
-                cout << "you took the " + command.getSecondWord() <<endl;
-                location = currentRoom->isItemInRoom(command.getSecondWord());
-            }
-                if (location  < 0 ) cout << "item is not in room" << endl;
-                else {
-                    player->takeItem(currentRoom->getItem(location));
-                    currentRoom->removeItemFromRoom(location);
-                    cout << endl;
-                    cout << currentRoom->longDescription() << endl;
-            }
-        }
     }
 
     else if(commandWord.compare("talk") == 0) {
@@ -447,19 +548,6 @@ bool ZorkUL::processCommand(Command command) {
                 cout << "No target selected"<< endl;
             } else {
                 int location;
-                if (command.hasThirdWord()) {
-                    location = currentRoom->isNPCInRoom(command.getSecondWord() + " " + command.getThirdWord());
-                } else {
-                    location = currentRoom->isNPCInRoom(command.getSecondWord());
-                }
-                if(location > -1) {
-                    cout << "Jeez for a hero you are pretty bloodthirsty";
-                    cout << endl;
-                    cout << "How about saving that for the enemies chief?";
-                    cout << endl;
-                    cout << currentRoom->longDescription() << endl;
-                    cout << endl;
-                } else {
                 cout << endl;
                 if (command.hasThirdWord()) {
                     cout << "you are fighting the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
@@ -471,6 +559,8 @@ bool ZorkUL::processCommand(Command command) {
                   if (location  < 0 ) cout << "The enemy cannot be found in this room, eager beaver" << endl;
                   else {
                        Enemy* currentEnemy = currentRoom->getEnemy(location);
+                       //currentEnemy.combat();
+
                        if(player->getACC() >= (double)(rand())/RAND_MAX) {
                           if(player->getCRT() >= (double)(rand())/RAND_MAX) {
                               cout << "Critial Hit";
@@ -486,23 +576,10 @@ bool ZorkUL::processCommand(Command command) {
                               currentEnemy->setHP(currentEnemy->getHP() - player->getATK());
                               }
                           }
-                          if(currentEnemy->getHP() > 0 ) {
                           cout << endl;
                           cout << "Enemy HP: " << currentEnemy->getHP();
                           cout << endl;
                           cout << endl;
-                          } else {
-                          cout << endl;
-                          cout << "Enemy HP: 0";
-                          cout << endl;
-                          cout << endl;
-                          cout << "You got some money from the foe";
-                          player->setWealth(player->getWealth() + currentEnemy->getWealth());
-                          cout << endl;
-                          player->showWealth();
-                          cout << endl;
-                          cout << endl;
-                          }
                       }
                        else {
                            cout << "Your attack missed";
@@ -514,18 +591,18 @@ bool ZorkUL::processCommand(Command command) {
                        if(currentEnemy->getHP() > 0) {
                            if(currentEnemy->getACC() >=  (double)(rand())/RAND_MAX) {
                                 if(currentEnemy->getCRT() >= (double)(rand())/RAND_MAX) {
-                                    cout << "Enemy hit, Critical damage";
+                                    cout << "Enemy's attack hit you, Critical damage!";
                                     cout<<endl;
                                     player->setHP(player->getHP() - (currentEnemy->getATK()*2));
 
                                 }
                                 else {
                                     if(player->getDEF() >= currentEnemy->getATK()) {
-                                    cout << "Enemy Attack was successful but damage you recieved has been halved due to armor";
+                                    cout << "Enemy Attack was successful but damage you recieved has been halved due to armor!";
                                     player->setHP(player->getHP() - (currentEnemy->getATK()/2));
                                 }
                                     else {
-                                    cout << "Enemy Attack was successful";
+                                    cout << "Enemy's attack hit!";
                                     cout << endl;
                                     player->setHP(player->getHP() - (currentEnemy->getATK()));
                                     }
@@ -535,7 +612,7 @@ bool ZorkUL::processCommand(Command command) {
                                 cout << endl;
                            }
                            else {
-                              cout << "Enemy missed";
+                              cout << "Enemy's attack missed!";
                               cout << endl;
                               cout << "Your HP: " << player->getHP();
                               cout << endl;
@@ -558,12 +635,33 @@ bool ZorkUL::processCommand(Command command) {
                  }
             }
         }
-}
 
     else if (commandWord.compare("enemyStats") == 0) {
         cout << currentRoom->showStats() << endl;
     }
 
+    else if (commandWord.compare("take") == 0)
+    {
+       	if (!command.hasSecondWord()) {
+            cout << "incomplete input"<< endl;
+        } else {
+            int location;
+            if (command.hasThirdWord()) {
+                cout << "you took the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
+                location = currentRoom->isItemInRoom(command.getSecondWord() + " " + command.getThirdWord());
+            } else {
+                cout << "you took the " + command.getSecondWord() <<endl;
+                location = currentRoom->isItemInRoom(command.getSecondWord());
+            }
+                if (location  < 0 ) cout << "item is not in room" << endl;
+                else {
+                    player->takeItem(currentRoom->getItem(location));
+                    currentRoom->removeItemFromRoom(location);
+                    cout << endl;
+                    cout << currentRoom->longDescription() << endl;
+            }
+        }
+    }
 
     else if (commandWord.compare("inventory") == 0) {
         player->showInventory();
@@ -585,9 +683,8 @@ bool ZorkUL::processCommand(Command command) {
 
     else if (commandWord.compare("put") == 0)
     {
-    if(player->itemPresentInInventory() != -1) {
     if (!command.hasSecondWord()) {
-        cout << "incomplete input"<< endl;
+		cout << "incomplete input"<< endl;
         }
         else if (command.hasSecondWord() && !command.hasThirdWord()) {
             cout << "you're adding " + command.getSecondWord() << endl;
@@ -599,41 +696,36 @@ bool ZorkUL::processCommand(Command command) {
         }
         cout << endl;
         cout << currentRoom->longDescription() << endl;
-    } else {
-        cout << "No item in inventory to put down";
-        cout << endl;
     }
-    }
-
 
     else if (commandWord.compare("quit") == 0) {
-        if (command.hasSecondWord())
-            cout << "overdefined input"<< endl;
-        else
-            return true; /**signal to quit*/
-    }
-    return false;
+		if (command.hasSecondWord())
+			cout << "overdefined input"<< endl;
+		else
+			return true; /**signal to quit*/
+	}
+	return false;
 }
 /** COMMANDS **/
 void ZorkUL::printHelp() {
-    cout << "valid inputs are; " << endl;
-    parser.showCommands();
+	cout << "valid inputs are; " << endl;
+	parser.showCommands();
 
 }
 
 void ZorkUL::goRoom(Command command) {
-    if (!command.hasSecondWord()) {
-        cout << "incomplete input"<< endl;
-        return;
-    }
+	if (!command.hasSecondWord()) {
+		cout << "incomplete input"<< endl;
+		return;
+	}
 
-    string direction = command.getSecondWord();
+	string direction = command.getSecondWord();
 
-    // Try to leave current room.
-    Room* nextRoom = currentRoom->nextRoom(direction);
+	// Try to leave current room.
+	Room* nextRoom = currentRoom->nextRoom(direction);
 
     if (nextRoom == NULL) {
-        cout << "underdefined input"<< endl;
+		cout << "underdefined input"<< endl;
     } else if(nextRoom->shortDescription() == "exit") {
         switch(currentRegion) {
         case SmokingCrater:
@@ -720,7 +812,7 @@ void ZorkUL::goRoom(Command command) {
         cout << currentRoom->longDescription() << endl;
 
     } else {
-        currentRoom = nextRoom;
-        cout << currentRoom->longDescription() << endl;
-    }
+		currentRoom = nextRoom;
+		cout << currentRoom->longDescription() << endl;
+	}
 }

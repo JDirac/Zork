@@ -1,14 +1,15 @@
-#ifndef NPC_H
-#define NPC_H
-#include "Entity.h"
-#include <string>
+#ifndef NPC_H_
+#define NPC_H_
 
-class NPC{
+#include <vector>
+#include "item.h"
+using namespace std;
+
+class NPC {
     private:
-        string npcDescription;
+        string description;
         string npcName;
         float npcHP;
-
     public:
         NPC(string name, string description);
         string showNPCStats();
@@ -16,4 +17,4 @@ class NPC{
         string getNPCDescription();
 };
 
-#endif // ENEMY_H
+#endif // NPC_H
