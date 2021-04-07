@@ -2,13 +2,15 @@
 #define VENDOR_H
 #include "NPC.h"
 
-class Vendor: public NPC {
+class Vendor{
     private:
-        vector<Item> inventory;
+        vector<Item> shopInventory;
+        string vendorName;
     public:
-        Item buy();
-        int sell();
-        string getInventory();
+
+        Vendor(string name);
+        string getVendorName();
+
 };
 
 #endif // VENDOR_H

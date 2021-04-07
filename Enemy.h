@@ -17,6 +17,7 @@ class Enemy: public Entity {
         Status getState();
         string showEnemyStats();
         string getEnemyName();
+        int getWealth() { return wealthOnDeath; }
 };
 
 #endif // ENEMY_H

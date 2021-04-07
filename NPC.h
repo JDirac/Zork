@@ -8,6 +8,7 @@ class NPC{
         string npcDescription;
         string npcName;
         float npcHP;
+
     public:
         NPC(string name, string description);
         string showNPCStats();

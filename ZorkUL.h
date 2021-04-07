@@ -23,7 +23,7 @@ private:
     Parser parser;
     Player *player;
     Room *currentRoom;
-    Region currentRegion = SmokingCrater;
+    Region currentRegion = EtheVillage;
     vector<Room*> roomsInRegion;
     bool wizardFought = false;
     bool enteringRoom = true;

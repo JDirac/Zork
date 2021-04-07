@@ -22,7 +22,7 @@ string Room::shortDescription() {
 }
 
 string Room::longDescription() {
-    return "\nroom = " + description + "\n" + displayItem() + "\n" + displayEnemy() + "\n" + displayNPC() +  exitString();
+    return "\nroom = " + description + "\n" + displayItem() + "\n" + displayEnemy() + "\n" + displayNPC() + "\n" + displayVendor() + exitString();
 }
 
 string Room::exitString() {
@@ -46,8 +46,6 @@ void Room::addItem(Item *inItem) {
     //cout << "Just added" + inItem->getLongDescription();
     itemsInRoom.push_back(*inItem);
 }
-
-
 
 string Room::displayItem() {
     string tempString = "items in room = ";
@@ -199,6 +197,104 @@ int Room::isNPCInRoom(string inString)
         }
     return -1;
 }
+
+
+void Room::addVendor(Vendor *Vendor) {
+    vendorsInRoom.push_back(*Vendor);
+}
+
+string Room::displayVendor() {
+    string tempString = "Vendors in room = ";
+    int sizeItems = (vendorsInRoom.size());
+    if ((vendorsInRoom.size() < 1)) {
+        tempString = "no Vendors in room";
+        }
+    else if ((vendorsInRoom.size() > 0)) {
+       int x = (0);
+        for (int n = sizeItems; n > 0; n--) {
+            tempString = tempString + (vendorsInRoom[x].getVendorName() + "  ");
+            x++;
+            }
+        }
+    return tempString;
+    }
+
+int Room::vendorPresent() {
+    if (vendorsInRoom.size() < 1) {
+        return -1;
+    }
+    else {
+        return 1;
+    }
+}
+
+int Room::isVendorInRoom(string inString)
+{
+    int sizeItems = (vendorsInRoom.size());
+    if (vendorsInRoom.size() < 1) {
+        return -1;
+        }
+    else if (vendorsInRoom.size() > 0) {
+       int x = 0;
+        for (int n = sizeItems; n > 0; n--) {
+            // compare inString with short description
+            int tempFlag = inString.compare( vendorsInRoom[x].getVendorName());
+            if (tempFlag == 0) {
+
+                return x;
+            }
+            x++;
+            }
+        }
+    return -1;
+}
+
+void Room::addVendorItem(Item *Item) {
+     shopInventory.push_back(*Item);
+}
+
+void Room::removeItemFromVendor(int location) {
+    shopInventory.erase(shopInventory.begin()+location);
+}
+
+string Room::showVendorInventory() {
+    string tempString = "Shop Inventory\n\n";
+    int sizeInventory = (shopInventory.size());
+    if (shopInventory.size() < 1) {
+        tempString = "Nothing to Buy";
+        }
+    else if (shopInventory.size() > 0) {
+       int x = (0);
+        for (int n = sizeInventory; n > 0; n--) {
+            tempString = tempString + shopInventory[x].getVendorDescription() + "\n" ;
+            x++;
+            }
+
+        }
+    return tempString;
+}
+
+int Room::isItemInVendor(string inString)
+{
+    int sizeItems = (shopInventory.size());
+    if (shopInventory.size() < 1) {
+        return -1;
+        }
+    else if (shopInventory.size() > 0) {
+       int x = (0);
+        for (int n = sizeItems; n > 0; n--) {
+            // compare inString with short description
+            int tempFlag = inString.compare( shopInventory[x].getShortDescription());
+            if (tempFlag == 0) {
+
+                return x;
+            }
+            x++;
+            }
+        }
+    return -1;
+}
+
 
 
 
