@@ -1,12 +1,10 @@
 #include "NPC.h"
 
-// Enter methods for enemy
-
+// Enter methods for NPC
 NPC::NPC(string name, string description)
-
 {
      npcName = name;
-     npcDescription = description;
+     this->description = description;
 
 }
 
@@ -18,17 +16,5 @@ string NPC::getNPCName()
 
 string NPC::getNPCDescription()
 {
-    return npcDescription;
+    return description;
 }
-
-
-
-
-
-
-
-
-
-
-
-

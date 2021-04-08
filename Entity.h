@@ -22,13 +22,11 @@ class Entity {
         string description;
     public:
         Entity(string name, string description, float HP, float ATK, float DEF, float ACC, float CRT);
-        Entity(string name);
-        string getName() { return name; };
-        float getHP() { return HP; };
-        float getATK() { return ATK; };
-        float getDEF() { return DEF; };
-        float getACC() { return ACC; };
-        float getCRT() { return CRT; };
+        int getHP() { return HP; };
+        int getATK() { return ATK; };
+        int getDEF() { return DEF; };
+        int getACC() { return ACC; };
+        int getCRT() { return CRT; };
         string getDescription() { return description; };
         void setHP(float HP) { this->HP = HP; };
         void setATK(float ATK) { this->ATK = ATK; };

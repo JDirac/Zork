@@ -8,16 +8,14 @@ class Enemy: public Entity {
         Item equippedWeapon;
         int wealthOnDeath; // wealth dropped by the enemy on death
         Status ability; // debuff this enemy can apply to you
-        string description;
         string enemyName;
-        float enemyHP;
     public:
         Enemy(string name, string description, float HP, float ATK, float DEF, float ACC, float CRT, int wealthOnDeath);
         void attack();
         Status getState();
-        string showEnemyStats();
         string getEnemyName();
-        int getWealth() { return wealthOnDeath; }
+        int getWealth() { return wealthOnDeath; };
+        string showEnemyStats();
 };
 
 #endif // ENEMY_H
