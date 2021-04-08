@@ -109,5 +109,3 @@ void Player::showWealth() {
     cout << "Money: " << getWealth() << endl;
     cout << endl;
 }
-
-
