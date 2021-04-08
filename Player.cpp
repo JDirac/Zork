@@ -74,7 +74,7 @@ Item* Player::putItem(string itemName) {
             if((*it).getEquipped()) {
                 switch((*it).getType()) {
                     case Weapon:
-                        setATK(getATK() - (*it).getATK());
+                        setATK((getATK() - (*it).getATK()) + 10);
                         break;
                     case Accessory:
                         setATK(getATK() - (*it).getATK());
@@ -85,7 +85,7 @@ Item* Player::putItem(string itemName) {
                     case KeyItem:
                         break;
                     case Armor:
-                        setDEF(getDEF() - (*it).getDEF());
+                        setDEF((getDEF() - (*it).getDEF()) +10);
                 }
                 (*it).setEquipped(false);
             }
