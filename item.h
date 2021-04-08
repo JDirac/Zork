@@ -23,6 +23,7 @@ private:
 public:
     Item () {};
     Item (string description, string info, Type type, int inWeight, float inValue, float ATK, float DEF);
+    Item(const Item& oldItem);
     Item (string description);
 	string getShortDescription();
     string getLongDescription();

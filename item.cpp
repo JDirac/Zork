@@ -15,6 +15,17 @@ Item::Item(string inDescription) {
 	description = inDescription;
 }
 
+Item::Item(const Item& oldItem) {
+    this->ATK = oldItem.ATK;
+    this->DEF = oldItem.DEF;
+    this->type = oldItem.type;
+    this->weightGrams = oldItem.weightGrams;
+    this->value = oldItem.value;
+    this->description = oldItem.description;
+    this->longDescription = oldItem.longDescription;
+    this->info = oldItem.info;
+}
+
 void Item::itemInfo() {
     cout << info;
     cout << endl;
