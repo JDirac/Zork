@@ -41,7 +41,7 @@ void ZorkUL::createRooms()  {
                 roomsInRegion[0]->addItem(new Item("Shattered Glasses", "Your Glasses. They broke as you hit the ground.", KeyItem, 0, 30, 0, 0));
             roomsInRegion.push_back(new Room("exit"));
 
-        //             (N, E, S, W)
+        //                                    (N, E, S, W)
             roomsInRegion[0]->setExits(NULL, roomsInRegion[1], NULL, NULL);
          break;
 
@@ -60,6 +60,7 @@ void ZorkUL::createRooms()  {
             roomsInRegion.push_back(new Room("Winding Path 6"));
                 roomsInRegion[5]->addEnemy(new Enemy("Orc", "This guy looks like he can pack a punch", 200, 25, 25, 0.5, 0.1, 40));
             roomsInRegion.push_back(new Room("Winding Path 7"));
+                roomsInRegion[6]->addItem(new Item("Helmet", "Your bike Helmet! Must have flown off during the fall. Provides +5 ATK and DEF", Accessory, 2, 5, 5, 5));
             roomsInRegion.push_back(new Room("Winding Path 8"));
             roomsInRegion.push_back(new Room("Winding Path 9"));
             roomsInRegion.push_back(new Room("entrance"));
@@ -639,7 +640,7 @@ bool ZorkUL::processCommand(Command command) {
             }
         }
 
-    else if (commandWord.compare("enemyStats") == 0) {
+    else if (commandWord.compare("enemy") == 0) {
         cout << currentRoom->showStats() << endl;
     }
 
@@ -709,6 +710,22 @@ bool ZorkUL::processCommand(Command command) {
         cout << endl;
         cout << currentRoom->longDescription() << endl;
     }
+
+    else if (commandWord.compare("use") == 0) {
+        if (player->getInvSize() <= 0) {
+            cout << "No items in Inventory!" << endl;
+        } else {
+            if (!command.hasSecondWord()) {
+                cout << "incomplete input"<< endl;
+                }
+                else if (command.hasSecondWord() && !command.hasThirdWord()) {
+                    player->use(command.getSecondWord());
+                } else {
+                    player->use(command.getSecondWord() + " " + command.getThirdWord());
+                }
+        }
+    }
+
 
     else if (commandWord.compare("quit") == 0) {
         if (command.hasSecondWord())

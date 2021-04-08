@@ -27,6 +27,7 @@ public:
     Item (string description);
 	string getShortDescription();
     string getLongDescription();
+    string getTypeAsString();
 	int getWeight();
 	void setWeight(int weightGrams);
     float getValue() { return value;};

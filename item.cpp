@@ -77,3 +77,18 @@ string Item::getVendorDescription()
     }
     return NULL;
 }
+
+string Item::getTypeAsString() {
+    switch(getType()) {
+        case Weapon:
+            return "Weapon";
+        case Armor:
+            return "Armor";
+        case Consumable:
+            return "Consumable";
+        case KeyItem:
+            return "Key Item";
+        default:
+            return "Accessory";
+    }
+}

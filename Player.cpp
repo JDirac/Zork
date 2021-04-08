@@ -32,6 +32,10 @@ void Player::equipItem(string itemName) {
                     target->setEquipped(true);
                     cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
                 break;
+                case Accessory:
+                    setEquippedAccessory(*target);
+                    cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
+                break;
                 default:
                 cout << "You cannot equip this item!";
             }
@@ -40,9 +44,13 @@ void Player::equipItem(string itemName) {
 
 void Player::showInventory() {
     char choice = 'A';
-    cout << "Inventory size: " << inv.size() << endl;
+    cout << "\nInventory size: " << inv.size() << endl;
     for(Item &item : inv) {
-        cout << choice << ") " << item.getShortDescription() << endl;
+        cout << choice << ") " << item.getShortDescription() << " - " << item.getTypeAsString();
+        if(item.getEquipped()) {
+            cout << " - " << "equipped";
+        }
+        cout << endl;
         choice++;
     }
 }
@@ -121,6 +129,30 @@ int Player::isItemInInventory(string inString)
 void Player::showWealth() {
     cout << "Money: " << getWealth() << endl;
     cout << endl;
+}
+
+void Player::use(string itemName) {
+    for(auto it = inv.begin(); it != inv.end(); it++) {
+        if((*it).getShortDescription().compare(itemName) == 0){
+            if((*it).getType() != Consumable) {
+                cout << "Cannot use this item!" << endl;
+                break;
+            } else {
+               // ITEM BY ITEM SCENARIOS
+                if(itemName.compare("Health Potion") == 0) {
+                    if(getHP() == 100) {
+                        cout << "You already have full HP!" << endl;
+                        break;
+                    } else {
+                        float newHP = getHP() + 50;
+                        setHP(min(newHP, float(100)));
+                        cout << "Health restored! HP: " << getHP() << endl;
+                        inv.erase(it);
+                    }
+                }
+            }
+        }
+    }
 }
 
 
