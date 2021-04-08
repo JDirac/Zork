@@ -14,6 +14,7 @@ class Enemy: public Entity {
         void attack();
         Status getState();
         string getEnemyName();
+        int getWealth() { return wealthOnDeath; };
         string showEnemyStats();
 };
 

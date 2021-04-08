@@ -17,19 +17,24 @@ void Player::equipItem(string itemName) {
             }
         }
 
-        switch(target->getType()) {
-            case Weapon:
-                setEquippedWeapon(*target);
-                target->setEquipped(true);
-                cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
-            break;
-            case Armor:
-                setEquippedArmor(*target);
-                target->setEquipped(true);
-                cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
-            break;
-            default:
-            cout << "You cannot equip this item!";
+        if(target == nullptr) {
+            cout << "No such Item." << endl;
+        } else {
+
+            switch(target->getType()) {
+                case Weapon:
+                    setEquippedWeapon(*target);
+                    target->setEquipped(true);
+                    cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
+                break;
+                case Armor:
+                    setEquippedArmor(*target);
+                    target->setEquipped(true);
+                    cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
+                break;
+                default:
+                cout << "You cannot equip this item!";
+            }
         }
 }
 
@@ -46,6 +51,7 @@ void Player::showStats() {
     cout << "\nHP: " << getHP() << endl;
     cout << "Attack: " << getATK() << endl;
     cout << "Defence: " << getDEF() << endl;
+    cout << "Money: " << getWealth() << endl;
     cout << endl;
 }
 

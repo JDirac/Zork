@@ -24,6 +24,7 @@ private:
 	Parser parser;
     Player *player;
 	Room *currentRoom;
+    Vendor* currentVend;
     Region currentRegion = SmokingCrater;
     vector<Room*> roomsInRegion;
     bool wizardFought = false;
