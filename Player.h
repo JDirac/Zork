@@ -30,6 +30,7 @@ class Player: public Entity {
         void showWealth();
         int isItemInInventory(string inString);
         Item& getItemInventory(int index) {return inv[index]; };
+        int getInvSize() { return inv.size(); };
         /*
         *  Special skills?
         */

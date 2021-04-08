@@ -690,30 +690,33 @@ bool ZorkUL::processCommand(Command command) {
         }
     }
 
-    else if (commandWord.compare("put") == 0)
-    {
-    if (!command.hasSecondWord()) {
-		cout << "incomplete input"<< endl;
-        }
-        else if (command.hasSecondWord() && !command.hasThirdWord()) {
-            cout << "you're adding " + command.getSecondWord() << endl;
-            currentRoom->addItem(player->putItem(command.getSecondWord()));
-
+    else if (commandWord.compare("put") == 0) {
+        if (player->getInvSize() <= 0) {
+            cout << "No items in Inventory!" << endl;
         } else {
-            cout << "you're adding " + command.getSecondWord() << " " << command.getThirdWord() << endl;
-            currentRoom->addItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
+            if (!command.hasSecondWord()) {
+                cout << "incomplete input"<< endl;
+                }
+                else if (command.hasSecondWord() && !command.hasThirdWord()) {
+                    cout << "you're adding " + command.getSecondWord() << endl;
+                    currentRoom->addItem(player->putItem(command.getSecondWord()));
+
+                } else {
+                    cout << "you're adding " + command.getSecondWord() << " " << command.getThirdWord() << endl;
+                    currentRoom->addItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
+                }
         }
         cout << endl;
         cout << currentRoom->longDescription() << endl;
     }
 
     else if (commandWord.compare("quit") == 0) {
-		if (command.hasSecondWord())
-			cout << "overdefined input"<< endl;
-		else
-			return true; /**signal to quit*/
-	}
-	return false;
+        if (command.hasSecondWord())
+            cout << "overdefined input"<< endl;
+        else
+            return true; /**signal to quit*/
+    }
+    return false;
 }
 /** COMMANDS **/
 void ZorkUL::printHelp() {
@@ -754,12 +757,18 @@ void ZorkUL::goRoom(Command command) {
             break;
         case CastleUnderground:
             currentRegion = WizardsChambers;
+        case WizardsChambers:
+            break;
+        case KingsChambers:
+            break;
         }
         enteringRoom = true;
         createRooms();
         cout << currentRoom->longDescription() << endl;
     } else if(nextRoom->shortDescription() == "entrance") {
         switch(currentRegion) {
+        case SmokingCrater:
+            break;
         case WindingPath:
             cout << "There's no reason to go back there now." << endl;
             break;

@@ -57,7 +57,7 @@ void Player::showStats() {
 
 Item* Player::putItem(string itemName) {
     //inv.erase(std::remove(inv.begin(), inv.end(), target), inv.end()); // Erase-remove idiom
-    Item* itemPtr;
+    Item* itemPtr = nullptr;
 
     for(auto it = inv.begin(); it != inv.end(); it++) {
         if((*it).getShortDescription().compare(itemName) == 0){
@@ -66,10 +66,18 @@ Item* Player::putItem(string itemName) {
             if((*it).getEquipped()) {
                 switch((*it).getType()) {
                     case Weapon:
-                        setATK(10);
+                        setATK(getATK() - (*it).getATK());
+                        break;
+                    case Accessory:
+                        setATK(getATK() - (*it).getATK());
+                        setDEF(getDEF() - (*it).getDEF());
+                        break;
+                    case Consumable:
+                        break;
+                    case KeyItem:
                         break;
                     case Armor:
-                        setDEF(10);
+                        setDEF(getDEF() - (*it).getDEF());
                 }
                 (*it).setEquipped(false);
             }
