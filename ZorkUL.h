@@ -51,12 +51,9 @@ public:
  *
  *
  *Player - Me and Denis (Almost complete, might add special skills or something)
- *item command -> gives info on the item the player requests info for.
- *Enemies - (More or less done)
  *Bosses - Me  (Probably do this towards the end)
- *Items - Me and Denis (More or less done)
- *Shop System - Denis
- *NPCs - Me and Denis (Probably add them in as I work on narrative)
+ *NPCs - Me (Probably add them in as I work on narrative)
+ *GUI - Denis
  *
  *Narrative (LAST) - Me
  *
