@@ -32,27 +32,27 @@ void Player::equipItem(string itemName) {
                     target->setEquipped(true);
                     cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
                 break;
-                case Consumable:
-                 cout << "You equipped: " << target->getShortDescription() << "!\n";
-                 if(getHP() < 100) {
-                 setEquippedHealth(*target);
-                 target->setEquipped(true);
-                 putItem(target->getShortDescription());
-                 } else {
-                     cout << "Already at full health" << endl;;
-                 }
+            break;
+                case Accessory:
+                    setEquippedAccessory(*target);
+                    target->setEquipped(true);
+                    cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
                 break;
                 default:
-                cout << "You cannot equip this item!";
+                cout << "You cannot equip this item!" << endl;;
             }
         }
 }
 
 void Player::showInventory() {
     char choice = 'A';
-    cout << "Inventory size: " << inv.size() << endl;
+    cout << "\nInventory size: " << inv.size() << endl;
     for(Item &item : inv) {
-        cout << choice << ") " << item.getShortDescription() << endl;
+        cout << choice << ") " << item.getShortDescription() << " - " << item.getTypeAsString();
+        if(item.getEquipped()) {
+            cout << " - " << "equipped";
+        }
+        cout << endl;
         choice++;
     }
 }
@@ -76,7 +76,7 @@ Item* Player::putItem(string itemName) {
             if((*it).getEquipped()) {
                 switch((*it).getType()) {
                     case Weapon:
-                        setATK(getATK() - (*it).getATK());
+                        setATK((getATK() - (*it).getATK()) + 10);
                         break;
                     case Accessory:
                         setATK(getATK() - (*it).getATK());
@@ -87,7 +87,7 @@ Item* Player::putItem(string itemName) {
                     case KeyItem:
                         break;
                     case Armor:
-                        setDEF(getDEF() - (*it).getDEF());
+                        setDEF((getDEF() - (*it).getDEF()) +10);
                 }
                 (*it).setEquipped(false);
             }
@@ -132,5 +132,33 @@ void Player::showWealth() {
     cout << "Money: " << getWealth() << endl;
     cout << endl;
 }
+
+void Player::use(string itemName) {
+        Item* target = nullptr;
+
+        for (Item& item : inv) {
+            if(item.getShortDescription().compare(itemName) == 0) {
+                target = &item;
+            }
+        }
+
+        if(target == nullptr) {
+            cout << "No such Item found" << endl;
+        } else {
+            if(target->getType() == Consumable) {
+                 cout << "You used: " << target->getShortDescription() << "!\n";
+                 if(getHP() < 100) {
+                 setEquippedHealth(*target);
+                 target->setEquipped(true);
+                 putItem(target->getShortDescription());
+                 } else {
+                     cout << "Already at full health" << endl;;
+                 }
+            } else {
+                cout << "You cannot use this item!" << endl;;
+            }
+    }
+}
+
 
 

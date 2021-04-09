@@ -25,8 +25,8 @@ class Entity {
         int getHP() { return HP; };
         int getATK() { return ATK; };
         int getDEF() { return DEF; };
-        int getACC() { return ACC; };
-        int getCRT() { return CRT; };
+        float getACC() { return ACC; };
+        float getCRT() { return CRT; };
         string getDescription() { return description; };
         void setHP(float HP) { this->HP = HP; };
         void setATK(float ATK) { this->ATK = ATK; };
