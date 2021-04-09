@@ -16,6 +16,8 @@ Command* Parser::getCommand() {
 
 	getline(cin, buffer, '\n');	// read a line from cin to "buffer"
 
+    cout << endl;
+
 	string::size_type pos = 0, last_pos = 0;
 
 	// Break "buffer" up by spaces

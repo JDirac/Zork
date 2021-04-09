@@ -22,7 +22,7 @@ string Room::shortDescription() {
 }
 
 string Room::longDescription() {
-    return "\nroom = " + description + ".\n" + displayItem() + ".\n" + displayEnemy() + ".\n" + displayNPC() + ".\n" + displayVendor() + exitString();
+    return "room = " + description + ".\n" + displayItem() + ".\n" + displayEnemy() + ".\n" + displayNPC() + ".\n" + displayVendor() + exitString() + "\n";
 }
 
 string Room::exitString() {

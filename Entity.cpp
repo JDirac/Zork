@@ -1,7 +1,7 @@
 #include "Entity.h"
 
 //Enter Methods for Entity
-Entity::Entity(string name, string description, float HP, float ATK, float DEF, float ACC, float CRT) {
+Entity::Entity(string name, string description, int HP, int ATK, int DEF, float ACC, float CRT) {
     this->name = name;
     this->description = description;
     this->HP = HP;

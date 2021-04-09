@@ -1,6 +1,6 @@
 #include "item.h"
 
-Item::Item (string inDescription, string info, Type type, int inWeightGrams, float inValue, float HP, float ATK = 0, float DEF = 0) {
+Item::Item (string inDescription, string info, Type type, int inWeightGrams, int inValue, int HP, int ATK = 0, int DEF = 0) {
     description = inDescription;
     this->info = info;
     this->type = type;

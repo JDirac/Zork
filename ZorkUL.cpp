@@ -335,8 +335,10 @@ bool ZorkUL::processCommand(Command command) {
 	}
 
 	string commandWord = command.getCommandWord();
-	if (commandWord.compare("info") == 0)
+    if (commandWord.compare("info") == 0) {
 		printHelp();
+        cout << endl;
+    }
 
 	else if (commandWord.compare("map") == 0)
 		{
@@ -453,7 +455,7 @@ bool ZorkUL::processCommand(Command command) {
             cout << "            [Entrance]              " << endl;
          break;
         }
-
+        cout << endl;
 		}
 
 	else if (commandWord.compare("go") == 0)
@@ -475,7 +477,7 @@ bool ZorkUL::processCommand(Command command) {
             cout << endl;
         }
         else {
-            cout << "There are no vendors present to buy wares off of";
+            cout << "There are no vendors present to buy wares off of" << endl;
             cout << endl;
         }
 
@@ -506,15 +508,15 @@ bool ZorkUL::processCommand(Command command) {
                 }
             }
         } else {
-            cout << "no Merchant can be found" << endl;
+            cout << "no Merchant can be found" << endl << endl;
         }
 
     }
 
     else if (commandWord.compare("sell") == 0) {
 
-      if(player->itemPresentInInventory() != -1) {
-        if(currentRoom->vendorPresent() != -1) {
+      if(currentRoom->vendorPresent() != -1) {
+        if(player->itemPresentInInventory() != -1) {
             player->showWealth();
             int location;
             if (command.hasThirdWord()) {
@@ -532,11 +534,11 @@ bool ZorkUL::processCommand(Command command) {
                 player->showWealth();
             }
         } else {
-            cout << "no Merchant can be found";
+            cout << "that item cannot be found in your inventory" << endl;
             cout << endl;
         }
       } else {
-          cout << "that item cannot be found in your inventory";
+          cout << "no Merchant can be found" << endl;
           cout << endl;
       }
     }
@@ -567,7 +569,6 @@ bool ZorkUL::processCommand(Command command) {
                 cout << "No target selected"<< endl;
             } else {
                 int location;
-                cout << endl;
                 if (command.hasThirdWord()) {
                     cout << "you are fighting the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
                     location = currentRoom->isEnemyInRoom(command.getSecondWord() + " " + command.getThirdWord());
@@ -583,16 +584,16 @@ bool ZorkUL::processCommand(Command command) {
                        if(player->getACC() >= (double)(rand())/RAND_MAX) {
                           if(player->getCRT() >= (double)(rand())/RAND_MAX) {
                               cout << "Critial Hit" << endl;
-                              currentEnemy->setHP(max(float(0), currentEnemy->getHP() - (player->getATK()*2)));
+                              currentEnemy->setHP(max(0, currentEnemy->getHP() - (player->getATK()*2)));
                           }
                           else {
                               if(currentEnemy->getDEF() >= player->getATK()) {
                               cout << "Your Attack hit but damage dealt has been halved due to armor" << endl;
-                              currentEnemy->setHP(max(float(0), currentEnemy->getHP() - (player->getATK()/2)));
+                              currentEnemy->setHP(max(0, currentEnemy->getHP() - (player->getATK()/2)));
                               }
                               else {
                               cout << "Your Attack hit" << endl;
-                              currentEnemy->setHP(max(float(0), currentEnemy->getHP() - player->getATK()));
+                              currentEnemy->setHP(max(0, currentEnemy->getHP() - player->getATK()));
                               }
                           }
                       }
@@ -606,17 +607,17 @@ bool ZorkUL::processCommand(Command command) {
                            if(currentEnemy->getACC() >=  (double)(rand())/RAND_MAX) {
                                 if(currentEnemy->getCRT() >= (double)(rand())/RAND_MAX) {
                                     cout << "Enemy's attack hit you, Critical damage!" << endl;
-                                    player->setHP(max(float(0), player->getHP() - (currentEnemy->getATK()*2)));
+                                    player->setHP(max(0, player->getHP() - (currentEnemy->getATK()*2)));
 
                                 }
                                 else {
                                     if(player->getDEF() >= currentEnemy->getATK()) {
                                     cout << "Enemy Attack was successful but damage you recieved has been halved due to armor!" << endl;
-                                    player->setHP(max(float(0), player->getHP() - (currentEnemy->getATK()/2)));
+                                    player->setHP(max(0, player->getHP() - (currentEnemy->getATK()/2)));
                                 }
                                     else {
                                     cout << "Enemy's attack hit!" << endl;
-                                    player->setHP(max(float(0), player->getHP() - (currentEnemy->getATK())));
+                                    player->setHP(max(0, player->getHP() - (currentEnemy->getATK())));
                                     }
                                 }
                            }
@@ -627,7 +628,7 @@ bool ZorkUL::processCommand(Command command) {
                            cout << endl;
                        } else {
                             cout << "The enemy has been slain, excellent work" << endl;
-                            cout << "Money dropped by enemy: " << currentEnemy->getWealth() << endl;
+                            cout << "Money dropped by enemy: " << currentEnemy->getWealth() << endl << endl;
                             player->setWealth(player->getWealth() + currentEnemy->getWealth());
                             currentRoom->removeEnemyFromRoom(location);
                             cout << currentRoom->longDescription() << endl;
@@ -708,6 +709,7 @@ bool ZorkUL::processCommand(Command command) {
 
     else if (commandWord.compare("inventory") == 0) {
         player->showInventory();
+        cout << endl;
     }
 
     else if (commandWord.compare("stats") == 0) {

@@ -14,15 +14,15 @@ private:
 	string longDescription;
     Type type;
 	int weightGrams;
-	float value;
+    int value;
     bool equipped = false;
-    float ATK = 0;
-    float DEF = 0;
-    float HP = 0;
+    int ATK = 0;
+    int DEF = 0;
+    int HP = 0;
     string info;
 public:
     Item () {};
-    Item (string description, string info, Type type, int inWeight, float inValue, float HP, float ATK, float DEF);
+    Item (string description, string info, Type type, int inWeight, int inValue, int HP, int ATK, int DEF);
     Item(const Item& oldItem);
     Item (string description);
 	string getShortDescription();
@@ -30,13 +30,13 @@ public:
     string getTypeAsString();
 	int getWeight();
 	void setWeight(int weightGrams);
-    float getValue() { return value;};
+    int getValue() { return value;};
 	void setValue(float value);
-    float getATK() { return ATK; };
+    int getATK() { return ATK; };
     void setATK(float ATK) { this->ATK = ATK; };
-    float getDEF() { return DEF; };
+    int getDEF() { return DEF; };
     void setDEF(float DEF) { this->DEF = DEF; };
-    float getHP() { return HP; };
+    int getHP() { return HP; };
     void setHP(float HP) { this->HP = HP; };
     bool getEquipped() { return equipped; };
     void setEquipped(bool equipped) { this->equipped = equipped; };

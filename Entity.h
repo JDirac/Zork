@@ -21,10 +21,10 @@ class Entity {
         vector<Status> state; // current debuffs or buffs.
         string description;
     public:
-        Entity(string name, string description, float HP, float ATK, float DEF, float ACC, float CRT);
-        float getHP() { return HP; };
-        float getATK() { return ATK; };
-        float getDEF() { return DEF; };
+        Entity(string name, string description, int HP, int ATK, int DEF, float ACC, float CRT);
+        int getHP() { return HP; };
+        int getATK() { return ATK; };
+        int getDEF() { return DEF; };
         float getACC() { return ACC; };
         float getCRT() { return CRT; };
         string getDescription() { return description; };
