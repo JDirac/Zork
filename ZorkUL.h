@@ -50,7 +50,7 @@ public:
  *Checklist of things to complete:
  *
  *
- *Player - Me and Denis (Almost complete, might add special skills or something)
+ *Player - Me (Almost complete, might add special skills or something)
  *Bosses - Me  (Probably do this towards the end)
  *NPCs - Me (Probably add them in as I work on narrative)
  *GUI - Denis
