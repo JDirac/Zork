@@ -41,8 +41,8 @@ public:
     bool getEquipped() { return equipped; };
     void setEquipped(bool equipped) { this->equipped = equipped; };
     Type getType() { return type; };
-    void itemInfo();
     string getVendorDescription();
+    string getItemInfo();
 };
 
 #endif /*ITEM_H_*/

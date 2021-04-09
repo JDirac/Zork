@@ -645,6 +645,38 @@ bool ZorkUL::processCommand(Command command) {
         cout << currentRoom->showStats() << endl;
     }
 
+    else if (commandWord.compare("item") == 0) {
+        if(player->getInvSize() < 1 && currentRoom->numberOfItems() < 1) {
+            cout << "No items in Room or Inventory!" << endl;
+        } else {
+            if (!command.hasSecondWord()) {
+                 cout << "incomplete input"<< endl;
+             } else {
+             int location;
+             if (command.hasThirdWord()) {
+                 location = player->isItemInInventory(command.getSecondWord() + " " + command.getThirdWord());
+             } else {
+                 location = player->isItemInInventory(command.getSecondWord());
+             }
+             if(location == -1) {
+                 if(command.hasThirdWord()) {
+                     location = currentRoom->isItemInRoom(command.getSecondWord() + " " + command.getThirdWord());
+                 } else {
+                     location = currentRoom->isItemInRoom(command.getSecondWord());
+                 }
+                 if(location != -1) {
+                     cout << currentRoom->getItem(location).getItemInfo() << endl;
+                 } else {
+                     cout << "No such Item in Room or Inventory!" << endl;
+                 }
+             } else {
+                 cout << player->getItemInventory(location).getItemInfo() << endl;
+             }
+            }
+        }
+
+    }
+
     else if (commandWord.compare("take") == 0)
     {
         if(currentRoom->numberOfItems() <= 0) {

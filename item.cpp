@@ -27,11 +27,6 @@ Item::Item(const Item& oldItem) {
     this->info = oldItem.info;
 }
 
-void Item::itemInfo() {
-    cout << info;
-    cout << endl;
-}
-
 void Item::setWeight(int inWeightGrams)
 {
     if (inWeightGrams > 9999 || inWeightGrams < 0)
@@ -47,14 +42,6 @@ void Item::setValue(float inValue)
     else
 	   value = inValue;
 }
-
-/**void Item::setWeaponCheck(int isWeapon)
-{
-    if(isWeapon > 0 || isWeapon < 0)
-        cout << "Item not a weapon" ;
-    else
-        cout << "Item is a weapon" ;
-}*/
 
 string Item::getShortDescription()
 {
@@ -78,6 +65,22 @@ string Item::getVendorDescription()
        desc += "HP: " + to_string(HP) + " ";
     }
     desc += "Value: " + to_string(value);
+    return desc;
+}
+
+string Item::getItemInfo()
+{
+    string desc = description + "\n";
+    desc += info + "\n";
+    if(ATK > 0) {
+       desc += "ATK: " + to_string(getATK()) + "\n";
+    }
+    else if(DEF > 0) {
+       desc += "DEF: " + to_string(getDEF()) + "\n";
+    } else if(HP > 0) {
+       desc += "HP: " + to_string(HP) + "\n";
+    }
+    desc += "Value: " + to_string(value) + "\n";
     return desc;
 }
 
