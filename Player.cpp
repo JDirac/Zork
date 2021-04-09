@@ -57,6 +57,11 @@ void Player::showInventory() {
     }
 }
 
+void Player::showItemInInventory(int location) {
+
+    cout << inv[location].getInventoryInfo();
+}
+
 void Player::showStats() {
     cout << "\nHP: " << getHP() << endl;
     cout << "Attack: " << getATK() << endl;

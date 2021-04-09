@@ -27,6 +27,7 @@ public:
     Item (string description);
     Item(const Item& oldItem);
     string getShortDescription();
+    string getInventoryInfo();
     string getVendorDescription();
     string getLongDescription();
     string getTypeAsString();

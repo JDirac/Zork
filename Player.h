@@ -16,6 +16,7 @@ class Player: public Entity {
         void takeItem(Item& target) { inv.push_back(target); };
         Item* putItem(string itemName);
         void showInventory();
+        void showItemInInventory(int location);
         void showStats();
         Item getWeapon() { return *equippedWeapon; }; // returns equipped weapon.
         Item getArmor() { return *equippedArmor; }; // returns equipped armor.

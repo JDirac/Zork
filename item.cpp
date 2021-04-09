@@ -63,6 +63,25 @@ string Item::getShortDescription()
     return description;
 }
 
+string Item::getInventoryInfo()
+{
+    if(ATK > 0 && DEF > 0) {
+    return info + "\nATK: " + to_string(getATK()) + "\nDEF: " + to_string(getDEF()) + "\nValue: " + to_string(value) + "\n";
+    }
+    else if(ATK > 0) {
+    return info + "\nATK: " + to_string(getATK()) + "\nValue: " + to_string(value) + "\n";
+    }
+    else if(DEF > 0) {
+    return info + "\nDEF: " + to_string(getDEF()) + "\nValue: " + to_string(value) + "\n";
+    }
+    else if(HP > 0) {
+    return info + "\nHP: " + to_string(getHP()) + "\nValue: " + to_string(value) + "\n";
+    }
+    else {
+    return info + "\nValue: " + to_string(value) + "\n";
+    }
+}
+
 string Item::getVendorDescription()
 {
     int ATK = getATK();

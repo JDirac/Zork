@@ -25,6 +25,7 @@ CommandWords::CommandWords() {
         validCommands.push_back("buy");
         validCommands.push_back("sell");
         validCommands.push_back("use");
+        validCommands.push_back("item");
 	}
 }
 

@@ -41,7 +41,6 @@ void ZorkUL::createRooms()  {
                 roomsInRegion[0]->addItem(new Item("Shattered Glasses", "Your Glasses. They broke as you hit the ground.", KeyItem, 0, 30, 0, 0, 0));
                 roomsInRegion[0]->addEnemy(new Enemy("Goblin", "3 Ft tall. Fast. Semi-intelligent", 50, 10, 10, 0.6, 0.2, 15));
                 roomsInRegion[0]->addItem(new Item("Small Potion", "recovers 15 HP", Consumable, 0, 10, 15, 0, 0));
-                 roomsInRegion[0]->addItem(new Item("Helmet", "Your bike Helmet! Must have flown off during the fall. Provides +5 ATK and DEF", Accessory, 2, 5, 0, 5, 5));
             roomsInRegion.push_back(new Room("exit"));
 
         //                                    (N, E, S, W)
@@ -99,8 +98,8 @@ void ZorkUL::createRooms()  {
                 currentVend = new Vendor("Blacksmith", "Planning on heading to the forst? Best stock up on gear first, and that's where I come in!");
                 currentVend ->addVendorItem(new Item("Iron Armor", "Shiny, Reliable", Armor, 0, 15, 0, 0, 20));
                 currentVend ->addVendorItem(new Item("Iron Sword", "The definition of wont let you down", Weapon, 0, 20, 0, 15, 0));
-                currentVend ->addVendorItem(new Item("Steel Sword", "Shiny, Reliable", Armor, 0, 25, 0, 0, 25));
-                currentVend->addVendorItem(new Item("Steel Armor", "Powerful and dangerous", Weapon, 0, 20, 0, 20, 0));
+                currentVend ->addVendorItem(new Item("Steel Armor", "Shiny, Reliable", Armor, 0, 25, 0, 0, 25));
+                currentVend->addVendorItem(new Item("Steel Sword", "Powerful and dangerous", Weapon, 0, 20, 0, 20, 0));
                 roomsInRegion[3]->addVendor(currentVend);
             roomsInRegion.push_back(new Room("Blarn Street"));
                 roomsInRegion[4]->addNPC(new NPC("The Beyonder", "Craig, you are almost at the Kings and Wizards castle, \nMake sure you are prepared for the battles to come"));
@@ -300,7 +299,7 @@ void ZorkUL::createRooms()  {
  */
 void ZorkUL::play() {
     printWelcome();
-    player = new Player("Craig", "Our Valiant Hero", 100, 10, 10, 0.6, 0.5, 0);
+    player = new Player("Craig", "Our Valiant Hero", 100, 10, 10, 0.6, 0.5, 50);
 
     // Enter the main command loop.  Here we repeatedly read commands and
     // execute them until the ZorkUL game is over.
@@ -482,6 +481,24 @@ bool ZorkUL::processCommand(Command command) {
             cout << endl;
         }
 
+    }
+
+    else if (commandWord.compare("item") == 0) {
+       if (!command.hasSecondWord()) {
+            cout << "incomplete input"<< endl;
+        } else {
+        int location;
+        if (command.hasThirdWord()) {
+            location = player->isItemInInventory(command.getSecondWord() + " " + command.getThirdWord());
+        } else {
+            location = player->isItemInInventory(command.getSecondWord());
+        }
+        if(location != -1) {
+            player->showItemInInventory(location);
+        } else {
+            cout << "Item cannot be found in your inventory" << endl;
+        }
+       }
     }
 
     else if (commandWord.compare("buy") == 0) {
