@@ -484,82 +484,100 @@ bool ZorkUL::processCommand(Command command) {
     }
 
     else if (commandWord.compare("buy") == 0) {
-
-        if(currentRoom->vendorPresent() != -1) {
-            player->showWealth();
-            int location;
-            if (command.hasThirdWord()) {
-                cout << "you bought the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
-                location = currentVend->isItemInVendor(command.getSecondWord() + " " + command.getThirdWord());
-            } else {
-                cout << "you bought the " + command.getSecondWord() <<endl;
-                location = currentVend->isItemInVendor(command.getSecondWord());
-            }
-            if (location  < 0 ) cout << "No such item can be bought" << endl;
-            else {
-                if(player->getWealth() >= currentVend->getItem(location)->getValue()) {
-                     player->buyItem(currentVend->getItem(location));
-                     player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue()*1.2);
-                     currentVend->removeItemFromVendor(location);
-                     player->showWealth();
+        if(command.hasSecondWord()) {
+            if(currentRoom->vendorPresent() != -1) {
+                player->showWealth();
+                int location;
+                if (command.hasThirdWord()) {
+                    cout << "you bought the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
+                    location = currentVend->isItemInVendor(command.getSecondWord() + " " + command.getThirdWord());
                 } else {
-                    cout << "you do not have enough money to purchase that";
-                    cout << endl;
+                    cout << "you bought the " + command.getSecondWord() <<endl;
+                    location = currentVend->isItemInVendor(command.getSecondWord());
                 }
+                if (location  < 0 ) cout << "No such item can be bought" << endl;
+                else {
+                    if(player->getWealth() >= currentVend->getItem(location)->getValue()) {
+                         player->buyItem(currentVend->getItem(location));
+                         player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue()*1.2);
+                         currentVend->removeItemFromVendor(location);
+                         player->showWealth();
+                    } else {
+                        cout << "you do not have enough money to purchase that";
+                        cout << endl;
+                    }
+                }
+            } else {
+                cout << "no Merchant can be found" << endl << endl;
             }
         } else {
-            cout << "no Merchant can be found" << endl << endl;
+            cout << "incomplete input!" << endl;
         }
+
+
 
     }
 
     else if (commandWord.compare("sell") == 0) {
-
-      if(currentRoom->vendorPresent() != -1) {
-        if(player->itemPresentInInventory() != -1) {
-            player->showWealth();
-            int location;
-            if (command.hasThirdWord()) {
-                cout << "you sold the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
-                location = player->isItemInInventory(command.getSecondWord() + " " + command.getThirdWord());
-                currentVend->addVendorItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
+        if(command.hasSecondWord()) {
+            if(currentRoom->vendorPresent() != -1) {
+              if(player->itemPresentInInventory() != -1) {
+                  player->showWealth();
+                  int location;
+                  if (command.hasThirdWord()) {
+                      cout << "you sold the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
+                      location = player->isItemInInventory(command.getSecondWord() + " " + command.getThirdWord());
+                      currentVend->addVendorItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
+                  } else {
+                      cout << "you sold the " + command.getSecondWord() <<endl;
+                      location = player->isItemInInventory(command.getSecondWord());
+                      currentVend->addVendorItem(player->putItem(command.getSecondWord()));
+                  }
+                  if (location  < 0 ) cout << "You do not have this item to sell" << endl;
+                  else {
+                      player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue()));
+                      player->showWealth();
+                  }
+              } else {
+                  cout << "that item cannot be found in your inventory" << endl;
+                  cout << endl;
+              }
             } else {
-                cout << "you sold the " + command.getSecondWord() <<endl;
-                location = player->isItemInInventory(command.getSecondWord());
-                currentVend->addVendorItem(player->putItem(command.getSecondWord()));
-            }
-            if (location  < 0 ) cout << "You do not have this item to sell" << endl;
-            else {
-                player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue()));
-                player->showWealth();
+                cout << "no Merchant can be found" << endl;
+                cout << endl;
             }
         } else {
-            cout << "that item cannot be found in your inventory" << endl;
-            cout << endl;
+            cout << "incomplete input!" << endl;
         }
-      } else {
-          cout << "no Merchant can be found" << endl;
-          cout << endl;
-      }
+
+
+
     }
 
     else if(commandWord.compare("talk") == 0) {
-
         int location;
-        if (command.hasThirdWord()) {
-            location = currentRoom->isNPCInRoom(command.getSecondWord() + " " + command.getThirdWord());
+
+        if(command.hasSecondWord()) {
+            if (command.hasThirdWord()) {
+                location = currentRoom->isNPCInRoom(command.getSecondWord() + " " + command.getThirdWord());
+            } else {
+                location = currentRoom->isNPCInRoom(command.getSecondWord());
+            }
+
+            if (location > -1) {
+                cout << currentRoom->getNPC(location)->getNPCDescription();
+                cout << endl;
+            }
+            else {
+                cout << "There was no response";
+                cout << endl;
+            }
         } else {
-            location = currentRoom->isNPCInRoom(command.getSecondWord());
+            cout << "incomplete input!" << endl;
         }
 
-        if (location > -1) {
-            cout << currentRoom->getNPC(location)->getNPCDescription();
-            cout << endl;
-        }
-        else {
-            cout << "There was no response";
-            cout << endl;
-        }
+
+
 
     }
 
@@ -643,39 +661,46 @@ bool ZorkUL::processCommand(Command command) {
         }
 
     else if (commandWord.compare("enemy") == 0) {
-        cout << currentRoom->showStats() << endl;
+        if (command.hasSecondWord())
+            cout << "overdefined input"<< endl;
+        else
+            cout << currentRoom->showStats() << endl;
+
     }
 
     else if (commandWord.compare("item") == 0) {
-        if(player->getInvSize() < 1 && currentRoom->numberOfItems() < 1) {
-            cout << "No items in Room or Inventory!" << endl;
-        } else {
-            if (!command.hasSecondWord()) {
-                 cout << "incomplete input"<< endl;
-             } else {
-             int location;
-             if (command.hasThirdWord()) {
-                 location = player->isItemInInventory(command.getSecondWord() + " " + command.getThirdWord());
-             } else {
-                 location = player->isItemInInventory(command.getSecondWord());
-             }
-             if(location == -1) {
-                 if(command.hasThirdWord()) {
-                     location = currentRoom->isItemInRoom(command.getSecondWord() + " " + command.getThirdWord());
+        if(command.hasSecondWord()) {
+            if(player->getInvSize() < 1 && currentRoom->numberOfItems() < 1) {
+                cout << "No items in Room or Inventory!" << endl;
+            } else {
+                if (!command.hasSecondWord()) {
+                     cout << "incomplete input"<< endl;
                  } else {
-                     location = currentRoom->isItemInRoom(command.getSecondWord());
-                 }
-                 if(location != -1) {
-                     cout << currentRoom->getItem(location).getItemInfo() << endl;
+                 int location;
+                 if (command.hasThirdWord()) {
+                     location = player->isItemInInventory(command.getSecondWord() + " " + command.getThirdWord());
                  } else {
-                     cout << "No such Item in Room or Inventory!" << endl;
+                     location = player->isItemInInventory(command.getSecondWord());
                  }
-             } else {
-                 cout << player->getItemInventory(location).getItemInfo() << endl;
-             }
+                 if(location == -1) {
+                     if(command.hasThirdWord()) {
+                         location = currentRoom->isItemInRoom(command.getSecondWord() + " " + command.getThirdWord());
+                     } else {
+                         location = currentRoom->isItemInRoom(command.getSecondWord());
+                     }
+                     if(location != -1) {
+                         cout << currentRoom->getItem(location).getItemInfo() << endl;
+                     } else {
+                         cout << "No such Item in Room or Inventory!" << endl;
+                     }
+                 } else {
+                     cout << player->getItemInventory(location).getItemInfo() << endl;
+                 }
+                }
             }
+        } else {
+            cout << "incomplete input!" << endl << endl;
         }
-
     }
 
     else if (commandWord.compare("take") == 0)
