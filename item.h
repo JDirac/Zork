@@ -15,14 +15,14 @@ private:
     Type type;
 	int weightGrams;
 	float value;
-	bool weaponCheck;
     bool equipped = false;
     float ATK = 0;
     float DEF = 0;
+    float HP = 0;
     string info;
 public:
     Item () {};
-    Item (string description, string info, Type type, int inWeight, float inValue, float ATK, float DEF);
+    Item (string description, string info, Type type, int inWeight, float inValue, float HP, float ATK, float DEF);
     Item(const Item& oldItem);
     Item (string description);
 	string getShortDescription();
@@ -36,8 +36,8 @@ public:
     void setATK(float ATK) { this->ATK = ATK; };
     float getDEF() { return DEF; };
     void setDEF(float DEF) { this->DEF = DEF; };
-	int getWeaponCheck();
-	void setWeaponCheck(int weaponCheck);
+    float getHP() { return HP; };
+    void setHP(float HP) { this->HP = HP; };
     bool getEquipped() { return equipped; };
     void setEquipped(bool equipped) { this->equipped = equipped; };
     Type getType() { return type; };

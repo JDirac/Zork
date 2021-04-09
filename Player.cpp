@@ -37,7 +37,7 @@ void Player::equipItem(string itemName) {
                     cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
                 break;
                 default:
-                cout << "You cannot equip this item!";
+                cout << "You cannot equip this item!" << endl;
             }
         }
 }

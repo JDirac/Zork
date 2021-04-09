@@ -37,8 +37,8 @@ void ZorkUL::createRooms()  {
     switch(currentRegion) {
         case SmokingCrater:
             roomsInRegion.push_back(new Room("Crater"));
-                roomsInRegion[0]->addItem(new Item("Broken Phone", "Your Phone. It appears to have been damaged during your fall.", KeyItem, 1, 300, 0, 0));
-                roomsInRegion[0]->addItem(new Item("Shattered Glasses", "Your Glasses. They broke as you hit the ground.", KeyItem, 0, 30, 0, 0));
+                roomsInRegion[0]->addItem(new Item("Broken Phone", "Your Phone. It appears to have been damaged during your fall.", KeyItem, 1, 300, 0, 0, 0));
+                roomsInRegion[0]->addItem(new Item("Shattered Glasses", "Your Glasses. They broke as you hit the ground.", KeyItem, 0, 30, 0, 0, 0));
             roomsInRegion.push_back(new Room("exit"));
 
         //                                    (N, E, S, W)
@@ -48,19 +48,19 @@ void ZorkUL::createRooms()  {
         case WindingPath:
 
             roomsInRegion.push_back(new Room("Winding Path"));
-                roomsInRegion[0]->addItem(new Item("Rusty Sword", "The blade seems dull and has minor chips here and there, but it still looks usable", Weapon, 5, 20, 20, 0));
+                roomsInRegion[0]->addItem(new Item("Rusty Sword", "The blade seems dull and has minor chips here and there, but it still looks usable", Weapon, 5, 20, 0, 20, 0));
             roomsInRegion.push_back(new Room("Winding Path 2"));
                 roomsInRegion[1]->addEnemy(new Enemy("Goblin", "3 Ft tall. Fast. Semi-intelligent", 50, 10, 10, 0.6, 0.2, 15));
             roomsInRegion.push_back(new Room("Winding Path 3"));
-                roomsInRegion[2]->addItem(new Item("Health Potion", "Heals you for 50 HP", Consumable, 1, 20, 0, 0));
+                roomsInRegion[2]->addItem(new Item("Potion", "Heals you for 50 HP", Consumable, 1, 20, 0, 0, 0));
             roomsInRegion.push_back(new Room("Winding Path 4"));
                 roomsInRegion[3]->addEnemy(new Enemy("Goblin", "3 Ft tall. Fast. Semi-intelligent", 50, 10, 10, 0.6, 0.2, 15));
             roomsInRegion.push_back(new Room("Winding Path 5"));
-                roomsInRegion[4]->addItem(new Item("Rusty Chestplate", "Seen better days. Still usable by the looks of it", Armor, 10, 30, 0, 20));
+                roomsInRegion[4]->addItem(new Item("Rusty Chestplate", "Seen better days. Still usable by the looks of it", Armor, 10, 30, 0, 0, 20));
             roomsInRegion.push_back(new Room("Winding Path 6"));
                 roomsInRegion[5]->addEnemy(new Enemy("Orc", "This guy looks like he can pack a punch", 200, 25, 25, 0.5, 0.1, 40));
             roomsInRegion.push_back(new Room("Winding Path 7"));
-                roomsInRegion[6]->addItem(new Item("Helmet", "Your bike Helmet! Must have flown off during the fall. Provides +5 ATK and DEF", Accessory, 2, 5, 5, 5));
+                roomsInRegion[6]->addItem(new Item("Helmet", "Your bike Helmet! Must have flown off during the fall. Provides +5 ATK and DEF", Accessory, 2, 5, 0, 5, 5));
             roomsInRegion.push_back(new Room("Winding Path 8"));
             roomsInRegion.push_back(new Room("Winding Path 9"));
             roomsInRegion.push_back(new Room("entrance"));
@@ -85,9 +85,20 @@ void ZorkUL::createRooms()  {
             roomsInRegion.push_back(new Room("Inn"));
                 roomsInRegion[1]->addNPC(new NPC("Innkeeper", "There is change in the air"));
             roomsInRegion.push_back(new Room("Merchant"));
-                roomsInRegion[2]->addVendor(new Vendor("Merchant", "Well met traveller, you look to be quite the eccentric customer, I'd be delighted to have your business!"));
+                currentVend = new Vendor("Merchant", "Well met traveller, you look to be quite the eccentric customer,\nI'd be delighted to have your business!");
+                currentVend->addVendorItem(new Item("Leather Armor", "Cheap and cheerful", Armor, 0, 10, 0, 0, 12));
+                currentVend->addVendorItem(new Item("Potion", "recovers 50 HP", Consumable, 0, 25, 50, 0, 0));
+                currentVend->addVendorItem(new Item("Potion", "recovers 50 HP", Consumable, 0, 25, 50, 0, 0));
+                currentVend->addVendorItem(new Item("Half Potion", "recovers 25 HP", Consumable, 0, 14, 25, 0, 0));
+                currentVend->addVendorItem(new Item("Half Potion", "recovers 25 HP", Consumable, 0, 14, 25, 0, 0));
+                roomsInRegion[2]->addVendor(currentVend);
             roomsInRegion.push_back(new Room("Blacksmith"));
-                roomsInRegion[3]->addVendor(new Vendor("Blacksmith", "Planning on heading to the forst? Best stock up on gear first, and that's where I come in!"));
+                currentVend = new Vendor("Blacksmith", "Planning on heading to the forst? Best stock up on gear first, and that's where I come in!");
+                currentVend ->addVendorItem(new Item("Iron Armor", "Shiny, Reliable", Armor, 0, 15, 0, 0, 20));
+                currentVend ->addVendorItem(new Item("Iron Sword", "The definition of wont let you down", Weapon, 0, 20, 0, 15, 0));
+                currentVend ->addVendorItem(new Item("Steel Armor", "Shiny, Reliable", Armor, 0, 25, 0, 0, 25));
+                currentVend->addVendorItem(new Item("Steel Sword", "Powerful and dangerous", Weapon, 0, 20, 0, 20, 0));
+                roomsInRegion[3]->addVendor(currentVend);
             roomsInRegion.push_back(new Room("Blarn Street"));
                 roomsInRegion[4]->addNPC(new NPC("The Beyonder", "Craig, you are almost at the Kings and Wizards castle, \nMake sure you are prepared for the battles to come"));
             roomsInRegion.push_back(new Room("entrance"));
@@ -134,17 +145,17 @@ void ZorkUL::createRooms()  {
 
                         if((rand() % 3) == 0) { // Item spawn
                             if(chanceOfItem < 3) {
-                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Frozen Blade", "Cold to the touch. What's The story with this sword? It carries a very ominous aura", Weapon, 5, 1000, 100, 0));
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Frozen Blade", "Cold to the touch. What's The story with this sword? It carries a very ominous aura", Weapon, 5, 1000, 0, 100, 0));
                             } else if(chanceOfItem < 6) {
-                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Frozen Rose", "A curious object that has the form of a Rose while being made only of hardened ice.", Accessory, 1, 10, 5, 5));
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Frozen Rose", "A curious object that has the form of a Rose while being made only of hardened ice.", Accessory, 1, 10, 0, 10, 10));
                             } else if(chanceOfItem < 12) {
-                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("mist-in-bottle", "A bottle of condensed mist. Can be used to escape an encounter with an enemy, or lower the accuracy of a boss", Consumable, 1, 0, 0, 0));
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("mist-in-bottle", "A bottle of condensed mist. Can be used to escape an encounter with an enemy, or lower the accuracy of a boss", Consumable, 1, 0, 0, 0, 0));
                             } else if(chanceOfItem < 19) {
                                 roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Frozen Blade?"));
                             } else if(chanceOfItem < 28) {
                                 roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Bag-O-Coins"));
                             } else {
-                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Healing Potion", "Heals the player for 50 HP", Consumable, 1, 30, 0, 0));
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Potion", "Heals the player for 50 HP", Consumable, 1, 30, 0, 0, 0));
                             }
                         }
 
@@ -214,7 +225,7 @@ void ZorkUL::createRooms()  {
         case CastleUnderground: // Denis
 
             roomsInRegion.push_back(new Room("Castleunderground Entrance"));
-                roomsInRegion[0]->addItem(new Item("Silver Sword", "A blade which cuts through the darkness with ease", Weapon, 0, 0, 25, 0));
+                roomsInRegion[0]->addItem(new Item("Silver Sword", "A blade which cuts through the darkness with ease", Weapon, 0, 0, 0, 25, 0));
             roomsInRegion.push_back(new Room("Spider Crypt"));
                 roomsInRegion[1]->addEnemy(new Enemy("Gigantic Spider", "Its a huge spider, duh", 75, 15, 8, 0.6, 0.6, 100));
                 roomsInRegion[1]->addEnemy(new Enemy("Spider", "Its a huge spider, duh", 50, 10, 7, 0.5, 0.4, 100));
@@ -229,11 +240,11 @@ void ZorkUL::createRooms()  {
                 roomsInRegion[4]->addEnemy(new Enemy("Michelangelo", "is A party dude", 100, 20, 15, 0.8, 0.75, 1000));
             roomsInRegion.push_back(new Room("Cave"));
             roomsInRegion.push_back(new Room("Rock"));
-                roomsInRegion[6]->addItem(new Item("Power Armor", "You any idea how expensive this armor is son?", Armor, 0, 0, 0, 40));
+                roomsInRegion[6]->addItem(new Item("Power Armor", "You any idea how expensive this armor is son?", Armor, 0, 0, 0, 0, 40));
             roomsInRegion.push_back(new Room("Dungeon"));
-                roomsInRegion[7]->addItem(new Item("Shattered Skull", "Remenants from a previous captive", KeyItem, 0, 0, 0, 0));
+                roomsInRegion[7]->addItem(new Item("Shattered Skull", "Remenants from a previous captive", KeyItem, 0, 0, 0, 0, 0));
             roomsInRegion.push_back(new Room("Pit"));
-                roomsInRegion[8]->addItem(new Item("Interesting Dirt", "A useless piece of dirt", KeyItem, 0, 0, 0, 0));
+                roomsInRegion[8]->addItem(new Item("Interesting Dirt", "A useless piece of dirt", KeyItem, 0, 0, 0, 0, 0));
             roomsInRegion.push_back(new Room("Tranquility Garden"));
                 roomsInRegion[9]->addEnemy(new Enemy("Timid Rabbit", "Arent you lucky you checked the stats first?", 999, 999, 999, 1, 1, 0));
             roomsInRegion.push_back(new Room("Cavern"));
@@ -286,7 +297,7 @@ void ZorkUL::createRooms()  {
  */
 void ZorkUL::play() {
 	printWelcome();
-    player = new Player("Craig", "Our Valiant Hero", 100, 10, 10, 1, 0.5, 0);
+    player = new Player("Craig", "Our Valiant Hero", 100, 10, 10, 0.8, 0.5, 0);
 
 	// Enter the main command loop.  Here we repeatedly read commands and
 	// execute them until the ZorkUL game is over.
@@ -472,27 +483,31 @@ bool ZorkUL::processCommand(Command command) {
 
     else if (commandWord.compare("buy") == 0) {
 
-        player->showWealth();
-        int location;
-        if (command.hasThirdWord()) {
-            cout << "you bought the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
-            location = currentVend->isItemInVendor(command.getSecondWord() + " " + command.getThirdWord());
+        if(currentRoom->vendorPresent() != -1) {
+            player->showWealth();
+            int location;
+            if (command.hasThirdWord()) {
+                cout << "you bought the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
+                location = currentVend->isItemInVendor(command.getSecondWord() + " " + command.getThirdWord());
+            } else {
+                cout << "you bought the " + command.getSecondWord() <<endl;
+                location = currentVend->isItemInVendor(command.getSecondWord());
+            }
+            if (location  < 0 ) cout << "No such item can be bought" << endl;
+            else {
+                if(player->getWealth() >= currentVend->getItem(location)->getValue()) {
+                     player->buyItem(currentVend->getItem(location));
+                     player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue()*1.2);
+                     currentVend->removeItemFromVendor(location);
+                     player->showWealth();
+                } else {
+                    cout << "you do not have enough money to purchase that";
+                    cout << endl;
+                }
+            }
         } else {
-            cout << "you bought the " + command.getSecondWord() <<endl;
-            location = currentVend->isItemInVendor(command.getSecondWord());
+            cout << "no Merchant can be found" << endl;
         }
-        if (location  < 0 ) cout << "No such item can be bought" << endl;
-        else {
-              if(player->getWealth() >= currentVend->getItem(location)->getValue()) {
-              player->buyItem(currentVend->getItem(location));
-              player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue()*1.2);
-              currentVend->removeItemFromVendor(location);
-              player->showWealth();
-              } else {
-                  cout << "you do not have enough money to purchase that";
-                  cout << endl;
-              }
-             }
 
     }
 
@@ -500,22 +515,22 @@ bool ZorkUL::processCommand(Command command) {
 
       if(player->itemPresentInInventory() != -1) {
         if(currentRoom->vendorPresent() != -1) {
-        player->showWealth();
-        int location;
-        if (command.hasThirdWord()) {
-            cout << "you sold the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
-            location = player->isItemInInventory(command.getSecondWord() + " " + command.getThirdWord());
-            currentVend->addVendorItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
-        } else {
-            cout << "you sold the " + command.getSecondWord() <<endl;
-            location = player->isItemInInventory(command.getSecondWord());
-            currentVend->addVendorItem(player->putItem(command.getSecondWord()));
-        }
-        if (location  < 0 ) cout << "You do not have this item to sell" << endl;
-        else {
-            player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue()));
             player->showWealth();
-        }
+            int location;
+            if (command.hasThirdWord()) {
+                cout << "you sold the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
+                location = player->isItemInInventory(command.getSecondWord() + " " + command.getThirdWord());
+                currentVend->addVendorItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
+            } else {
+                cout << "you sold the " + command.getSecondWord() <<endl;
+                location = player->isItemInInventory(command.getSecondWord());
+                currentVend->addVendorItem(player->putItem(command.getSecondWord()));
+            }
+            if (location  < 0 ) cout << "You do not have this item to sell" << endl;
+            else {
+                player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue()));
+                player->showWealth();
+            }
         } else {
             cout << "no Merchant can be found";
             cout << endl;
@@ -568,69 +583,55 @@ bool ZorkUL::processCommand(Command command) {
                        if(player->getACC() >= (double)(rand())/RAND_MAX) {
                           if(player->getCRT() >= (double)(rand())/RAND_MAX) {
                               cout << "Critial Hit" << endl;
-                              currentEnemy->setHP(currentEnemy->getHP() - (player->getATK()*2));
+                              currentEnemy->setHP(max(float(0), currentEnemy->getHP() - (player->getATK()*2)));
                           }
                           else {
                               if(currentEnemy->getDEF() >= player->getATK()) {
                               cout << "Your Attack hit but damage dealt has been halved due to armor" << endl;
-                              currentEnemy->setHP(currentEnemy->getHP() - (player->getATK()/2));
+                              currentEnemy->setHP(max(float(0), currentEnemy->getHP() - (player->getATK()/2)));
                               }
                               else {
                               cout << "Your Attack hit" << endl;
-                              currentEnemy->setHP(currentEnemy->getHP() - player->getATK());
+                              currentEnemy->setHP(max(float(0), currentEnemy->getHP() - player->getATK()));
                               }
                           }
-                          if(currentEnemy->getHP() < 0) {
-                            cout << "Enemy HP: 0" << endl;
-                          } else {
-                            cout << "Enemy HP: " << currentEnemy->getHP() << endl;
-                          }
-                          cout << endl;
                       }
                        else {
                            cout << "Your attack missed" << endl;
-                           cout << "Enemy HP: " << currentEnemy->getHP() << endl;
-                           cout << endl;
                        }
+                       cout << "Enemy HP: " << currentEnemy->getHP() << endl;
+                       cout << endl;
+
                        if(currentEnemy->getHP() > 0) {
                            if(currentEnemy->getACC() >=  (double)(rand())/RAND_MAX) {
                                 if(currentEnemy->getCRT() >= (double)(rand())/RAND_MAX) {
                                     cout << "Enemy's attack hit you, Critical damage!" << endl;
-                                    player->setHP(player->getHP() - (currentEnemy->getATK()*2));
+                                    player->setHP(max(float(0), player->getHP() - (currentEnemy->getATK()*2)));
 
                                 }
                                 else {
                                     if(player->getDEF() >= currentEnemy->getATK()) {
                                     cout << "Enemy Attack was successful but damage you recieved has been halved due to armor!" << endl;
-                                    player->setHP(player->getHP() - (currentEnemy->getATK()/2));
+                                    player->setHP(max(float(0), player->getHP() - (currentEnemy->getATK()/2)));
                                 }
                                     else {
                                     cout << "Enemy's attack hit!" << endl;
-                                    player->setHP(player->getHP() - (currentEnemy->getATK()));
+                                    player->setHP(max(float(0), player->getHP() - (currentEnemy->getATK())));
                                     }
                                 }
-                                if(player->getHP() < 0) {
-                                    cout << "Your HP: 0" << endl;
-                                } else {
-                                    cout << "Your HP: " << player->getHP() << endl;
-                                }
-                                cout << endl;
                            }
                            else {
                               cout << "Enemy's attack missed!" << endl;
-                              cout << "Your HP: " << player->getHP() << endl;
-                              cout << endl;
                            }
-                       }
-                       else {
+                           cout << "Your HP: " << player->getHP() << endl;
+                           cout << endl;
+                       } else {
                             cout << "The enemy has been slain, excellent work" << endl;
                             cout << "Money dropped by enemy: " << currentEnemy->getWealth() << endl;
                             player->setWealth(player->getWealth() + currentEnemy->getWealth());
                             currentRoom->removeEnemyFromRoom(location);
                             cout << currentRoom->longDescription() << endl;
                        }
-
-
 
                       if(player->getHP() <= 0) {
                            cout << "you died";

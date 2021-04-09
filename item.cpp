@@ -1,6 +1,6 @@
 #include "item.h"
 
-Item::Item (string inDescription, string info, Type type, int inWeightGrams, float inValue, float ATK = 0, float DEF = 0) {
+Item::Item (string inDescription, string info, Type type, int inWeightGrams, float inValue, float HP, float ATK = 0, float DEF = 0) {
     description = inDescription;
     this->info = info;
     this->type = type;
@@ -8,7 +8,7 @@ Item::Item (string inDescription, string info, Type type, int inWeightGrams, flo
     value = inValue;
     this->ATK = ATK;
     this->DEF = DEF;
-    /**weaponCheck(isWeapon);*/
+    this->HP = HP;
 }
 
 Item::Item(string inDescription) {
@@ -18,6 +18,7 @@ Item::Item(string inDescription) {
 Item::Item(const Item& oldItem) {
     this->ATK = oldItem.ATK;
     this->DEF = oldItem.DEF;
+    this->HP = oldItem.HP;
     this->type = oldItem.type;
     this->weightGrams = oldItem.weightGrams;
     this->value = oldItem.value;
@@ -62,20 +63,22 @@ string Item::getShortDescription()
 
 string Item::getLongDescription()
 {
-	return " item(s), " + description + ".\n";
+    return " item(s), " + description + ".\n";
 }
 
 string Item::getVendorDescription()
 {
-    int ATK = getATK();
-    int DEF = getDEF();
+    string desc = description + " ";
     if(ATK > 0) {
-       return description + " " + "ATK: " + to_string(getATK()) + " " + "Value: " + to_string(value);
+       desc += "ATK: " + to_string(getATK()) + " ";
     }
     else if(DEF > 0) {
-       return description + " " + "DEF: " + to_string(getDEF()) + " " + "Value: " + to_string(value);
+       desc += "DEF: " + to_string(getDEF()) + " ";
+    } else if(HP > 0) {
+       desc += "HP: " + to_string(HP) + " ";
     }
-    return NULL;
+    desc += "Value: " + to_string(value);
+    return desc;
 }
 
 string Item::getTypeAsString() {
