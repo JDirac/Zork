@@ -52,6 +52,8 @@ class Entity {
         //virtual
         virtual void attack() = 0; // combat
         virtual ~Entity() { name.clear(); description.clear(); state.clear(); };
+        friend class Enemy;
+        friend class Player;
 };
 
 enum State { Combat, NotInCombat, BossCombat, shop };
