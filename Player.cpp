@@ -155,4 +155,26 @@ void Player::use(string itemName) {
     }
 }
 
-
+void Player::attack() {
+    if(getACC() >= (double)(rand())/RAND_MAX) {
+       if(getCRT() >= (double)(rand())/RAND_MAX) {
+           cout << "Critial Hit" << endl;
+           currentEnemy->setHP(max(0, currentEnemy->getHP() - (getATK()*2)));
+       }
+       else {
+           if(currentEnemy->getDEF() >= getATK()) {
+           cout << "Your Attack hit but damage dealt has been halved due to armor" << endl;
+           currentEnemy->setHP(max(0, currentEnemy->getHP() - (getATK()/2)));
+           }
+           else {
+           cout << "Your Attack hit" << endl;
+           currentEnemy->setHP(max(0, currentEnemy->getHP() - getATK()));
+           }
+       }
+   }
+    else {
+        cout << "Your attack missed" << endl;
+    }
+    cout << "Enemy HP: " << currentEnemy->getHP() << endl;
+    cout << endl;
+}

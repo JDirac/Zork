@@ -8,6 +8,7 @@ class Player: public Entity {
         Item *equippedWeapon = nullptr;
         Item *equippedArmor = nullptr;
         Item *equippedAccessory = nullptr;
+        Entity* currentEnemy = nullptr;
         int wealth;
         State status; // In combat? No? Ok.
     public:
@@ -26,8 +27,7 @@ class Player: public Entity {
         void setWealth(int wealth) { this->wealth = wealth; };
         void equipItem(Item target);
         void equipItem(string name);
-        void defend(); // combat
-        void escape(); // Non boss combat
+        void attack();
         void buyItem(Item* target) { inv.push_back(*target); };
         int itemPresentInInventory();
         void showWealth();
@@ -35,6 +35,7 @@ class Player: public Entity {
         Item& getItemInventory(int index) {return inv[index]; };
         int getInvSize() { return inv.size(); };
         void use(string itemName);
+        void setEnemy(Entity* enemy) { currentEnemy = enemy; };
         /*
         *  Special skills?
         */

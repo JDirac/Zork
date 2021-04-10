@@ -597,53 +597,14 @@ bool ZorkUL::processCommand(Command command) {
                   if (location  < 0 ) cout << "The enemy cannot be found in this room, eager beaver" << endl;
                   else {
                        Enemy* currentEnemy = currentRoom->getEnemy(location);
-                       //currentEnemy.combat();
+                       player->setEnemy(currentEnemy);
+                       currentEnemy->setTarget(player);
+                       player->attack();
 
-                       if(player->getACC() >= (double)(rand())/RAND_MAX) {
-                          if(player->getCRT() >= (double)(rand())/RAND_MAX) {
-                              cout << "Critial Hit" << endl;
-                              currentEnemy->setHP(max(0, currentEnemy->getHP() - (player->getATK()*2)));
-                          }
-                          else {
-                              if(currentEnemy->getDEF() >= player->getATK()) {
-                              cout << "Your Attack hit but damage dealt has been halved due to armor" << endl;
-                              currentEnemy->setHP(max(0, currentEnemy->getHP() - (player->getATK()/2)));
-                              }
-                              else {
-                              cout << "Your Attack hit" << endl;
-                              currentEnemy->setHP(max(0, currentEnemy->getHP() - player->getATK()));
-                              }
-                          }
-                      }
-                       else {
-                           cout << "Your attack missed" << endl;
-                       }
-                       cout << "Enemy HP: " << currentEnemy->getHP() << endl;
-                       cout << endl;
+
 
                        if(currentEnemy->getHP() > 0) {
-                           if(currentEnemy->getACC() >=  (double)(rand())/RAND_MAX) {
-                                if(currentEnemy->getCRT() >= (double)(rand())/RAND_MAX) {
-                                    cout << "Enemy's attack hit you, Critical damage!" << endl;
-                                    player->setHP(max(0, player->getHP() - (currentEnemy->getATK()*2)));
-
-                                }
-                                else {
-                                    if(player->getDEF() >= currentEnemy->getATK()) {
-                                    cout << "Enemy Attack was successful but damage you recieved has been halved due to armor!" << endl;
-                                    player->setHP(max(0, player->getHP() - (currentEnemy->getATK()/2)));
-                                }
-                                    else {
-                                    cout << "Enemy's attack hit!" << endl;
-                                    player->setHP(max(0, player->getHP() - (currentEnemy->getATK())));
-                                    }
-                                }
-                           }
-                           else {
-                              cout << "Enemy's attack missed!" << endl;
-                           }
-                           cout << "Your HP: " << player->getHP() << endl;
-                           cout << endl;
+                            currentEnemy->attack();
                        } else {
                             cout << "The enemy has been slain, excellent work" << endl;
                             cout << "Money dropped by enemy: " << currentEnemy->getWealth() << endl << endl;

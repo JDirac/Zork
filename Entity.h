@@ -34,7 +34,9 @@ class Entity {
         void setACC(float ACC) { this->ACC = ACC; };
         void setCRT(float CRT) { this->CRT = CRT; };
         void setDebuff(Status debuff) { state.push_back(debuff); };
-        void attack(); // combat
+        //virtual
+        virtual void attack() = 0; // combat
+        virtual ~Entity() { };
 };
 
 enum State { Combat, NotInCombat, BossCombat, shop };
