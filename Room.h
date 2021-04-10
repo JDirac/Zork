@@ -28,7 +28,7 @@ public:
 	Room(string description);
 	void setExits(Room *north, Room *east, Room *south, Room *west);
 	string shortDescription();
-	string longDescription();
+    string longDescription();
 	Room* nextRoom(string direction);
     Item& getItem(int index) {return itemsInRoom[index]; };
     void addItem(Item *inItem);
@@ -50,6 +50,11 @@ public:
     Vendor* getVendor(int location) { return &vendorsInRoom[location]; }
     int isVendorInRoom(string inString);
     int vendorPresent();
+    friend std::ostream& operator<<(std::ostream& os, const Room& room)
+    {
+        os << room.description;
+        return os;
+    };
 };
 
 #endif

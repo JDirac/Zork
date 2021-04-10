@@ -46,7 +46,7 @@ void Player::showInventory() {
     char choice = 'A';
     cout << "\nInventory size: " << inv.size() << endl;
     for(Item &item : inv) {
-        cout << choice << ") " << item.getShortDescription() << " - " << item.getTypeAsString();
+        cout << choice << ") " << item << " - " << item.getTypeAsString();
         if(item.getEquipped()) {
             cout << " - " << "equipped";
         }

@@ -43,6 +43,11 @@ public:
     Type getType() { return type; };
     string getVendorDescription();
     string getItemInfo();
+    friend std::ostream& operator<<(std::ostream& os, const Item& item)
+    {
+        os << item.description;
+        return os;
+    };
 };
 
 #endif /*ITEM_H_*/

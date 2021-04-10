@@ -373,28 +373,28 @@ bool ZorkUL::processCommand(Command command) {
             cout << "\nLooking around, you can faintly see: " << endl;
             nextRoom = currentRoom->nextRoom("north");
             if(nextRoom != NULL) {
-                cout << "North: " <<nextRoom->shortDescription() << endl;
+                cout << "North: " << *nextRoom << endl;
             } else {
                 cout << "North: Nothing." << endl;
             }
 
             nextRoom = currentRoom->nextRoom("east");
             if(nextRoom != NULL) {
-                cout << "East: " <<nextRoom->shortDescription() << endl;
+                cout << "East: " << *nextRoom << endl;
             } else {
                 cout << "East: Nothing." << endl;
             }
 
             nextRoom = currentRoom->nextRoom("south");
             if(nextRoom != NULL) {
-                cout << "South: " <<nextRoom->shortDescription() << endl;
+                cout << "South: " << *nextRoom << endl;
             } else {
                 cout << "South: Nothing." << endl;
             }
 
             nextRoom = currentRoom->nextRoom("west");
             if(nextRoom != NULL) {
-                cout << "West: " <<nextRoom->shortDescription() << endl;
+                cout << "West: " << *nextRoom << endl;
             } else {
                 cout << "West: Nothing." << endl;
             }
