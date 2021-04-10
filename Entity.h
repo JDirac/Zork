@@ -8,7 +8,7 @@ using namespace std;
 #include <vector>
 using std::vector;
 
-enum Status { Blind, Intimidated, Weakened, Wise, Sturdy, Agile, Webbed}; // more?
+enum Status : unsigned char { Blind = 0, Intimidated = 1, Weakened = 2, Wise = 3, Sturdy = 4, Agile = 5, Webbed = 6}; // more?
 
 class Entity {
     private:

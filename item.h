@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-enum Type {Weapon = 0, Armor = 1, Accessory = 2, Consumable = 3, KeyItem = 4};
+enum Type : unsigned char {Weapon = 0, Armor = 1, Accessory = 2, Consumable = 3, KeyItem = 4};
 
 class Item {
 private:
