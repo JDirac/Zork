@@ -13,13 +13,14 @@ enum Status { Blind, Intimidated, Weakened, Wise, Sturdy, Agile, Webbed}; // mor
 class Entity {
     private:
         string name;
-        float HP;
-        float ATK;
-        float DEF;
+        string description;
+        int HP;
+        int ATK;
+        int DEF;
         float ACC; // Accuracy. Subject to decrease with Blind or intimidated debuff.
         float CRT; // Crit rate
         vector<Status> state; // current debuffs or buffs.
-        string description;
+
     public:
         Entity(string name, string description, int HP, int ATK, int DEF, float ACC, float CRT);
         int getHP() { return HP; };
@@ -27,6 +28,7 @@ class Entity {
         int getDEF() { return DEF; };
         float getACC() { return ACC; };
         float getCRT() { return CRT; };
+        string getName() { return name; };
         string getDescription() { return description; };
         void setHP(float HP) { this->HP = HP; };
         void setATK(float ATK) { this->ATK = ATK; };
@@ -36,7 +38,7 @@ class Entity {
         void setDebuff(Status debuff) { state.push_back(debuff); };
         //virtual
         virtual void attack() = 0; // combat
-        virtual ~Entity() { };
+        virtual ~Entity() { name.clear(); description.clear(); state.clear(); };
 };
 
 enum State { Combat, NotInCombat, BossCombat, shop };
