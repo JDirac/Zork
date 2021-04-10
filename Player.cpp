@@ -2,7 +2,7 @@
 
 // Enter methods for player
 Player::Player(string name, string description, float HP, float ATK, float DEF, float ACC, float CRT, int wealth)
-    : Entity(name, description, HP, ATK, DEF, ACC, CRT)
+    : Entity(name, description, HP, ATK, DEF, ACC, CRT, 0, 0)
 {
        this->wealth = wealth;
 }

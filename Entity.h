@@ -10,6 +10,18 @@ using std::vector;
 
 enum Status : unsigned char { Blind = 0, Intimidated = 1, Weakened = 2, Wise = 3, Sturdy = 4, Agile = 5, Webbed = 6}; // more?
 
+template <typename T, typename U> class weight {
+private:
+    T kg = 0;
+    U grams = 0;
+public:
+    weight() {};
+    weight(T kg, U grams): kg(kg), grams(grams) {};
+    T getKG() { return kg; };
+    U getGrams() { return grams; };
+    void setWeight(T kg, U grams) { this->kg = kg; this->grams = grams; };
+};
+
 class Entity {
     private:
         string name;
@@ -19,10 +31,11 @@ class Entity {
         int DEF;
         float ACC; // Accuracy. Subject to decrease with Blind or intimidated debuff.
         float CRT; // Crit rate
+        weight<int, float> mass;
         vector<Status> state; // current debuffs or buffs.
 
     public:
-        Entity(string name, string description, int HP, int ATK, int DEF, float ACC, float CRT);
+        Entity(string name, string description, int HP, int ATK, int DEF, float ACC, float CRT, int KG, float grams);
         int getHP() { return HP; };
         int getATK() { return ATK; };
         int getDEF() { return DEF; };
