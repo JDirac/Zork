@@ -3,17 +3,19 @@
 using namespace std;
 #include "ZorkUL.h"
 
+auto start = chrono::high_resolution_clock::now();
+
 int main() {
-	ZorkUL temp;
+    game::ZorkUL temp;
 	temp.play();
 	return 0;
 }
 
-ZorkUL::ZorkUL() {
+game::ZorkUL::ZorkUL() {
 	createRooms();
 }
 
-void ZorkUL::createRooms()  {
+void game::ZorkUL::createRooms()  {
 
         // Delete rooms currently in the vector
         for(auto it = roomsInRegion.begin(); it < roomsInRegion.end(); it++) {
@@ -295,7 +297,7 @@ void ZorkUL::createRooms()  {
 /**
  *  Main play routine.  Loops until end of play.
  */
-void ZorkUL::play() {
+void game::ZorkUL::play() {
 	printWelcome();
     player = new Player("Craig", "Our Valiant Hero", 100, 10, 10, 0.8, 0.5, 0);
 
@@ -316,7 +318,7 @@ void ZorkUL::play() {
 	cout << "end" << endl;
 }
 
-void ZorkUL::printWelcome() {
+void game::ZorkUL::printWelcome() {
 	cout << "start"<< endl;
 	cout << "info for help"<< endl;
 	cout << endl;
@@ -328,7 +330,7 @@ void ZorkUL::printWelcome() {
  * If this command ends the ZorkUL game, true is returned, otherwise false is
  * returned.
  */
-bool ZorkUL::processCommand(Command command) {
+bool game::ZorkUL::processCommand(Command command) {
 	if (command.isUnknown()) {
 		cout << "invalid input"<< endl;
 		return false;
@@ -639,7 +641,10 @@ bool ZorkUL::processCommand(Command command) {
                        }
 
                       if(player->getHP() <= 0) {
-                           cout << "you died";
+                           cout << "you died" << endl;
+                           auto end = chrono::high_resolution_clock::now();
+                           auto duration = chrono::duration_cast<chrono::minutes>(end - start);
+                           cout << "You survived for " << duration.count() << " minutes";
                            return true;
                       }
                  }
@@ -809,19 +814,23 @@ bool ZorkUL::processCommand(Command command) {
     else if (commandWord.compare("quit") == 0) {
         if (command.hasSecondWord())
             cout << "overdefined input"<< endl;
-        else
+        else {
+            auto end = chrono::high_resolution_clock::now();
+            auto duration = chrono::duration_cast<chrono::minutes>(end - start);
+            cout << "You've been playing for " << duration.count() << " minutes";
             return true; /**signal to quit*/
+        }
     }
     return false;
 }
 /** COMMANDS **/
-void ZorkUL::printHelp() {
+void game::ZorkUL::printHelp() {
 	cout << "valid inputs are; " << endl;
 	parser.showCommands();
 
 }
 
-void ZorkUL::goRoom(Command command) {
+void game::ZorkUL::goRoom(Command command) {
     try {
         if(!command.hasSecondWord()) throw IncompleteInputException();
     }  catch (IncompleteInputException& e) {

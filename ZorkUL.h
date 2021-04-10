@@ -13,6 +13,7 @@
 #include <string>
 #include <algorithm>
 #include <time.h>
+#include <chrono>
 using namespace std;
 
 enum Region : unsigned char {SmokingCrater = 1, WindingPath = 2, EtheVillage = 3,
@@ -20,29 +21,33 @@ enum Region : unsigned char {SmokingCrater = 1, WindingPath = 2, EtheVillage = 3
              WizardsChambers = 7, KingsChambers = 8
             };
 
-class ZorkUL {
-private:
-	Parser parser;
-    Player *player;
-	Room *currentRoom;
-    Vendor* currentVend;
-    Region currentRegion = SmokingCrater;
-    vector<Room*> roomsInRegion;
-    bool wizardFought = false;
-    bool enteringRoom = true;
-	void createRooms();
-	void printWelcome();
-	bool processCommand(Command command);
-	void printHelp();
-	void goRoom(Command command);
-    void createItems();
-    void displayItems();
-    void addEnemy(Enemy *Enemy);
-public:
-	ZorkUL();
-	void play();
-	string go(string direction);
+namespace game {
+    class ZorkUL {
+    private:
+        Parser parser;
+        Player *player;
+        Room *currentRoom;
+        Vendor* currentVend;
+        Region currentRegion = SmokingCrater;
+        vector<Room*> roomsInRegion;
+        bool wizardFought = false;
+        bool enteringRoom = true;
+        void createRooms();
+        void printWelcome();
+        bool processCommand(Command command);
+        void printHelp();
+        void goRoom(Command command);
+        void createItems();
+        void displayItems();
+        void addEnemy(Enemy *Enemy);
+    public:
+        ZorkUL();
+        void play();
+        string go(string direction);
 };
+}
+
+
 
 #endif /*ZORKUL_H_*/
 
