@@ -3,6 +3,11 @@
 using namespace std;
 #include "ZorkUL.h"
 
+#ifndef PLAYER_NAME
+#define PLAYER_NAME "Craig"
+#endif
+
+
 auto start = chrono::high_resolution_clock::now();
 
 int main() {
@@ -299,7 +304,7 @@ void game::ZorkUL::createRooms()  {
  */
 void game::ZorkUL::play() {
 	printWelcome();
-    player = new Player("Craig", "Our Valiant Hero", 100, 10, 10, 0.8, 0.5, 0);
+    player = new Player(PLAYER_NAME, "Our Valiant Hero", 100, 10, 10, 0.8, 0.5, 0);
 
 	// Enter the main command loop.  Here we repeatedly read commands and
 	// execute them until the ZorkUL game is over.
