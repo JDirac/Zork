@@ -2,7 +2,7 @@
 
 // Enter methods for player
 Player::Player(string name, string description, float HP, float ATK, float DEF, float ACC, float CRT, int wealth)
-    : Entity(name, description, HP, ATK, DEF, ACC, CRT)
+    : Entity(name, description, HP, ATK, DEF, ACC, CRT, 0, 0)
 {
        this->wealth = wealth;
 }
@@ -32,14 +32,12 @@ void Player::equipItem(string itemName) {
                     target->setEquipped(true);
                     cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
                 break;
-            break;
                 case Accessory:
                     setEquippedAccessory(*target);
-                    target->setEquipped(true);
                     cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
                 break;
                 default:
-                cout << "You cannot equip this item!" << endl;;
+                cout << "You cannot equip this item!" << endl;
             }
         }
 }
@@ -48,18 +46,13 @@ void Player::showInventory() {
     char choice = 'A';
     cout << "\nInventory size: " << inv.size() << endl;
     for(Item &item : inv) {
-        cout << choice << ") " << item.getShortDescription() << " - " << item.getTypeAsString();
+        cout << choice << ") " << item << " - " << item.getTypeAsString();
         if(item.getEquipped()) {
             cout << " - " << "equipped";
         }
         cout << endl;
         choice++;
     }
-}
-
-void Player::showItemInInventory(int location) {
-
-    cout << inv[location].getInventoryInfo();
 }
 
 void Player::showStats() {
@@ -139,31 +132,49 @@ void Player::showWealth() {
 }
 
 void Player::use(string itemName) {
-        Item* target = nullptr;
-
-        for (Item& item : inv) {
-            if(item.getShortDescription().compare(itemName) == 0) {
-                target = &item;
+    for(auto it = inv.begin(); it != inv.end(); it++) {
+        if((*it).getShortDescription().compare(itemName) == 0){
+            if((*it).getType() != Consumable) {
+                cout << "Cannot use this item!" << endl;
+                break;
+            } else {
+               // ITEM BY ITEM SCENARIOS
+                if(itemName.compare("Health Potion") == 0) {
+                    if(getHP() == 100) {
+                        cout << "You already have full HP!" << endl;
+                        break;
+                    } else {
+                        float newHP = getHP() + 50;
+                        setHP(min(newHP, float(100)));
+                        cout << "Health restored! HP: " << getHP() << endl;
+                        inv.erase(it);
+                    }
+                }
             }
         }
-
-        if(target == nullptr) {
-            cout << "No such Item found" << endl;
-        } else {
-            if(target->getType() == Consumable) {
-                 cout << "You used: " << target->getShortDescription() << "!\n";
-                 if(getHP() < 100) {
-                 setEquippedHealth(*target);
-                 target->setEquipped(true);
-                 putItem(target->getShortDescription());
-                 } else {
-                     cout << "Already at full health" << endl;;
-                 }
-            } else {
-                cout << "You cannot use this item!" << endl;;
-            }
     }
 }
 
-
-
+void Player::attack() {
+    if(ACC >= (double)(rand())/RAND_MAX) {
+       if(CRT >= (double)(rand())/RAND_MAX) {
+           cout << "Critial Hit" << endl;
+           (*currentEnemy).HP = max(0, (*currentEnemy).HP - (ATK*2));
+       }
+       else {
+           if((*currentEnemy).DEF >= ATK) {
+           cout << "Your Attack hit but damage dealt has been halved due to armor" << endl;
+           (*currentEnemy).HP = max(0, (*currentEnemy).HP - (ATK/2));
+           }
+           else {
+           cout << "Your Attack hit" << endl;
+           (*currentEnemy).HP = max(0, (*currentEnemy).HP - ATK);
+           }
+       }
+   }
+    else {
+        cout << "Your attack missed" << endl;
+    }
+    cout << "Enemy HP: " << (*currentEnemy).HP << endl;
+    cout << endl;
+}

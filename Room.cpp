@@ -22,7 +22,7 @@ string Room::shortDescription() {
 }
 
 string Room::longDescription() {
-    return "\nroom = " + description + ".\n" + displayItem() + ".\n" + displayEnemy() + ".\n" + displayNPC() + ".\n" + displayVendor() + exitString();
+    return "room = " + description + ".\n" + displayItem() + ".\n" + displayEnemy() + ".\n" + displayNPC() + ".\n" + displayVendor() + exitString() + "\n";
 }
 
 string Room::exitString() {
@@ -123,7 +123,7 @@ string Room::displayEnemy() {
     else if (EnemysInRoom.size() > 0) {
        int x = (0);
         for (int n = sizeEnemies; n > 0; n--) {
-            tempString = tempString + EnemysInRoom[x].getEnemyName() + "  " ;
+            tempString = tempString + EnemysInRoom[x].getName() + "  " ;
             x++;
             }
         }
@@ -144,7 +144,7 @@ int Room::isEnemyInRoom(string inString)
        int x = (0);
         for (int n = sizeEnemies; n > 0; n--) {
             // compare inString with short description
-            int tempFlag = inString.compare( EnemysInRoom[x].getEnemyName());
+            int tempFlag = inString.compare( EnemysInRoom[x].getName());
             if (tempFlag == 0) {
 
                 return x;
