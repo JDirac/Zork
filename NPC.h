@@ -7,7 +7,7 @@ using namespace std;
 
 class NPC {
     private:
-        string description;
+
         string npcName;
         float npcHP;
     public:
@@ -15,6 +15,7 @@ class NPC {
         string showNPCStats();
         string getNPCName();
         string getNPCDescription();
+        string description;
 };
 
 #endif // NPC_H

@@ -10,13 +10,11 @@ using namespace std;
 
 auto start = chrono::high_resolution_clock::now();
 
-//union
 union GFG {
     int Geek1;
     char Geek2;
     float Geek3;
 };
-
 
 //Dynamic Casting
 class Base
@@ -55,7 +53,6 @@ Base* getObject(bool bReturnDerived)
         return new Base{2};
 }
 
-
 //Multiple Inheritance
 class A
 {
@@ -77,6 +74,7 @@ public:
   C()  { //cout << "C's constructor called" << endl;
        }
 };
+
 
 
 int main() {
@@ -107,12 +105,12 @@ int main() {
         //std::cout << "The name of the Derived is: " << d->getName() << '\n';
         delete b;
 
-        C c;                                            //Multiple Inheritance
+         C c;                                            //Multiple Inheritance
 
     game::ZorkUL temp;
-    temp.scene1();
-	temp.play();
-	return 0;
+    //game::ZorkUL::scene1();
+    temp.play();
+    return 0;
 }
 
 game::ZorkUL::ZorkUL() {
@@ -146,6 +144,7 @@ void game::ZorkUL::createRooms()  {
                 roomsInRegion[0]->addItem(new Item("Broken Phone", "Your Phone. It appears to have been damaged during your fall.", KeyItem, 1, 300, 0, 0, 0));
                 roomsInRegion[0]->addItem(new Item("Shattered Glasses", "Your Glasses. They broke as you hit the ground.", KeyItem, 0, 30, 0, 0, 0));
                 roomsInRegion[0]->addNPC(new NPC("Daev", "Daev: I'm ready to leave when you are, Craig."));
+                roomsInRegion[0]->addEnemy(new Enemy("Goblin", "3 Ft tall. Fast. Semi-intelligent", 50, 10, 10, 0.6, 0.2, 15));
             roomsInRegion.push_back(new Room("exit"));
 
         //                                    (N, E, S, W)
@@ -210,28 +209,36 @@ void game::ZorkUL::createRooms()  {
 
         case EtheVillage:
             roomsInRegion.push_back(new Room("Village Square"));
-                roomsInRegion[0]->addNPC(new NPC("Cow", "Moo"));
-                roomsInRegion[0]->addNPC(new NPC("Sheep", "Baa"));
-                roomsInRegion[0]->addNPC(new NPC("Moose", "Moo"));
+                roomsInRegion[0]->addNPC(new NPC("Heem", "He seems to be singing a song to himself.\n\n"
+"Heem: ~Toss a coin to your...~"));
+                roomsInRegion[0]->addNPC(new NPC("Do'nal", "He stumbles out of the inn drunkenly muttering something.\n"
+"As he passes by you hear \"Man that whiskey ain't shit.\""));
+                roomsInRegion[0]->addNPC(new NPC("Aeron", "He seems to be writing some complicated stuff on some paper... best leave him be."));
             roomsInRegion.push_back(new Room("Inn"));
-                roomsInRegion[1]->addNPC(new NPC("Innkeeper", "There is change in the air"));
+                roomsInRegion[1]->addNPC(new NPC("Jaek", "Welcome!"));
+                roomsInRegion[1]->addNPC(new NPC("Bros", "Without a doubt, he's drunk. Guess what Daev said is true."));
             roomsInRegion.push_back(new Room("Merchant"));
-                currentVend = new Vendor("Merchant", "Well met traveller, you look to be quite the eccentric customer,\nI'd be delighted to have your business!");
+                currentVend = new Vendor("Denaes", "Scraic lad, take a look at dese wares, pretty swheet stuff");
                 currentVend->addVendorItem(new Item("Leather Armor", "Cheap and cheerful", Armor, 0, 10, 0, 0, 12));
                 currentVend->addVendorItem(new Item("Potion", "recovers 50 HP", Consumable, 0, 25, 50, 0, 0));
                 currentVend->addVendorItem(new Item("Potion", "recovers 50 HP", Consumable, 0, 25, 50, 0, 0));
+                currentVend->addVendorItem(new Item("Potion", "recovers 50 HP", Consumable, 0, 25, 50, 0, 0));
+                currentVend->addVendorItem(new Item("Potion", "recovers 50 HP", Consumable, 0, 25, 50, 0, 0));
+                currentVend->addVendorItem(new Item("Half Potion", "recovers 25 HP", Consumable, 0, 14, 25, 0, 0));
+                currentVend->addVendorItem(new Item("Half Potion", "recovers 25 HP", Consumable, 0, 14, 25, 0, 0));
+                currentVend->addVendorItem(new Item("Half Potion", "recovers 25 HP", Consumable, 0, 14, 25, 0, 0));
+                currentVend->addVendorItem(new Item("Half Potion", "recovers 25 HP", Consumable, 0, 14, 25, 0, 0));
                 currentVend->addVendorItem(new Item("Half Potion", "recovers 25 HP", Consumable, 0, 14, 25, 0, 0));
                 currentVend->addVendorItem(new Item("Half Potion", "recovers 25 HP", Consumable, 0, 14, 25, 0, 0));
                 roomsInRegion[2]->addVendor(currentVend);
             roomsInRegion.push_back(new Room("Blacksmith"));
-                currentVend = new Vendor("Blacksmith", "Planning on heading to the forst? Best stock up on gear first, and that's where I come in!");
-                currentVend ->addVendorItem(new Item("Iron Armor", "Shiny, Reliable", Armor, 0, 15, 0, 0, 20));
-                currentVend ->addVendorItem(new Item("Iron Sword", "The definition of wont let you down", Weapon, 0, 20, 0, 15, 0));
-                currentVend ->addVendorItem(new Item("Steel Armor", "Shiny, Reliable", Armor, 0, 25, 0, 0, 25));
-                currentVend->addVendorItem(new Item("Steel Sword", "Powerful and dangerous", Weapon, 0, 20, 0, 20, 0));
+                currentVend = new Vendor("Myer", "Heading to the forest? You'll want some good gear, unless you want your head taken off I guess.");
+                currentVend ->addVendorItem(new Item("Iron Armor", "Shiny, Reliable", Armor, 0, 15, 70, 0, 20));
+                currentVend ->addVendorItem(new Item("Iron Sword", "The definition of wont let you down", Weapon, 0, 20, 50, 15, 0));
+                currentVend ->addVendorItem(new Item("Steel Armor", "Shinier, even more Reliable", Armor, 0, 25, 125, 0, 25));
+                currentVend->addVendorItem(new Item("Steel Sword", "Powerful and dangerous", Weapon, 0, 20, 80, 20, 0));
                 roomsInRegion[3]->addVendor(currentVend);
             roomsInRegion.push_back(new Room("Blarn Street"));
-                roomsInRegion[4]->addNPC(new NPC("The Beyonder", "Craig, you are almost at the Kings and Wizards castle, \nMake sure you are prepared for the battles to come"));
             roomsInRegion.push_back(new Room("entrance"));
             roomsInRegion.push_back(new Room("exit"));
 
@@ -715,8 +722,19 @@ bool game::ZorkUL::processCommand(Command command) {
                 }
 
                 if (location > -1) {
-                    cout << currentRoom->getNPC(location)->getNPCDescription() << endl;
-                    cout << endl;
+                    if(command.getSecondWord().compare("Jaek") == 0) {
+                        if(!sceneThreeSeen) {
+                            game::ZorkUL::scene3();
+                            currentRoom = currentRoom->nextRoom("east");
+                            cout << currentRoom->longDescription() << endl << endl;
+                            sceneThreeSeen = true;
+                        } else {
+                            cout << "Jaek: Welcome back!" << endl;
+                        }
+                    } else {
+                        cout << currentRoom->getNPC(location)->getNPCDescription() << endl;
+                        cout << endl;
+                    }
                 }
                 else {
                     cout << "There was no response" << endl;
@@ -979,9 +997,19 @@ void game::ZorkUL::goRoom(Command command) {
             currentRegion = WindingPath;
             break;
         case WindingPath:
+            if(!sceneTwoSeen) {
+                game::ZorkUL::scene2();
+                sceneTwoSeen = true;
+            }
             currentRegion = EtheVillage;
             break;
         case EtheVillage:
+            if(!mistySeen) {
+                cout << "Craig had finally arrived in the daunting Misty Woods." << endl;
+                cout << "\"Just remember what Daev told you.\" He said to himself." << endl;
+                cout << "\"I should keep track of where I'm going and where I've been.\"" << endl;
+            }
+
             currentRegion = MistyWoods;
             break;
         case MistyWoods:
@@ -1201,3 +1229,120 @@ void game::ZorkUL::scene1() {
     cout << endl;
 }
 
+void game::ZorkUL::scene2() {
+    string temp;
+    cout << "Craig and Daev arrive into Ethe Village's central square." << endl;
+    cout << "It's a small village, the buildings seem to mostly be made of stone," << endl;
+    cout << "only adding to Craig's unease about the lands he has found himself in." << endl;
+    getline(cin, temp);
+    cout << "While on the winding path, Craig had been thinking of where he could" << endl;
+    cout << "possibly be. The existence of magic and monsters seem to imply it was" << endl;
+    cout << "a world unlike his own. Daev's clothes and now the architecture of Ethe" << endl;
+    cout << "Village's buildings seemed to confirm they weren't technologically advanced." << endl;
+    getline(cin, temp);
+    cout << "Looking around some more, Craig could see a few key buildings" << endl;
+    cout << "that Daev had told him about. To the west was the Inn run by " << endl;
+    cout << "a man named Jaek. Apparently a bard named Bros frequents there" << endl;
+    cout << "and puts on shows in return for free booze from Jaek." << endl;
+    getline(cin, temp);
+    cout << "To the north of the square was the Merchant's shop, run by a man" << endl;
+    cout << "named Denaes. Daev says he'd buy most things off you for a fair price." << endl;
+    getline(cin, temp);
+    cout << "Then to the east of the Village square is Blarn Street, where you can find the Blacksmith Myer." << endl;
+    cout << "He's your go to for weaponry and armor" << endl;
+    getline(cin, temp);
+    cout << "Continuing on east from Blarn Street will take you on a path leading to the Misty Woods." << endl;
+    cout << "That place is bad news according to Daev. Apparently the Wizard serving the King cast" << endl;
+    cout << "a spell to make the forest morph itself every day into a different region entirely." << endl;
+    cout << "Only the king's men know the path through their at any given time. Why? because beyond" << endl;
+    cout << "the Misty Woods is none other than the King's castle itself. King must like his privacy, Craig thought" << endl;
+    getline(cin, temp);
+    cout << "\"You feeling hungry Craig?\" Daev asked as Craig was surveying the village." << endl;
+    cout << "It had been a while since Craig last ate. \"Sure.\" He replied cheerfully." << endl;
+    cout << "\"Great. Let's talk to Jaek at the inn then. I'll treat you to something.\"" << endl;
+    getline(cin, temp);
+    cout << "Daev gestured to move but then quickly stopped himself." << endl;
+    cout << "\"Almost forgot...\" He poked Craig's head with his index finger." << endl;
+    cout << "\"What are you doing?\" Craig asked, with a face of confusion." << endl;
+    cout << "\"I temporarily shared my gift with you. Now you should be able to talk to people here easily!" << endl;
+    cout << "\"Damn that's useful\" Craig thought to himself. \"Alright let's go.\"" << endl;
+    getline(cin, temp);
+    cout << "And with that Craig and Daev set off to Jaek's Inn to get food." << endl;
+    getline(cin, temp);
+
+}
+
+void game::ZorkUL::scene3() {
+    string temp;
+    cout << "Craig and Daev are seated by the waiter named Chraes." << endl;
+    cout << "Behind the counter Jaek is cleaning glasses, until he spots Daev" << endl;
+    cout << "and proceeds to walk over." << endl;
+    getline(cin, temp);
+    cout << "\"Geez Daev it's been a while.\" He greets Daev. \"Ah sure, it has indeed Jaek.\"" << endl;
+    cout << "Jaek notices Craig sitted next to the Daev. \"Is this a new friend of yours?\"" << endl;
+    cout << "\"Just met him today actually. He's Craig. He fell from the sky and I healed him up.\"" << endl;
+    getline(cin, temp);
+    cout << "Jaek was taken aback and stared at Daev, expecting a punchline. But none came." << endl;
+    cout << "\"I'm not even gonna ask about it. Nice to meet you Craig, you want something to eat?\"" << endl;
+    cout << "\"Sounds good.\" Craig replied as he scanned the menu. He placed his order with Jaek" << endl;
+    cout << "and chatted with Daev while waiting." << endl;
+    getline(cin, temp);
+    cout << "A couple of minutes later Craig and Daev heard some drunken Knights burst into laughter." << endl;
+    cout << "\"I can't forget the look on that wizard's face when Alen brought back that weird two wheeled thingy!" << endl;
+    cout << "\"Think Alen was serious when he said it fell from the sky?\"" << endl;
+    cout << "\"Not sure myself. I'd heard something else fell from the sky south west of this village," << endl;
+    cout << "But nothing was there by the time the knights on patrol got there\"" << endl;
+    getline(cin, temp);
+    cout << "Their conversation caught the attention of Craig and Daev in particular." << endl;
+    cout << "If what they're saying is true, Craig's bike must have fallen somewhere" << endl;
+    cout << "other than where craig landed." << endl;
+    getline(cin, temp);
+    cout << "Craig began thinking. Just how high did he fall from for his bike to land" << endl;
+    cout << "somewhere else entierely? But on the bright side, he'd found a goal for himself." << endl;
+    cout << "If nothing else, he would at least get his bike back" << endl;
+    cout << "and now he knew that the Wizard serving the king had his bike." << endl;
+    getline(cin, temp);
+    cout << "Craig told Daev what he was planning to do. Daev looked troubled." << endl;
+    cout << "He knew all too well that to get to the Wizard, he'd have to cross the" << endl;
+    cout << "Misty Woods that many an adventurer had gotten lost in" << endl;
+    getline(cin, temp);
+    cout << "But Daev could tell from the look in Craig's eyes that he would" << endl;
+    cout << "not let this go. He sighed and began explaining to Craig how he could" << endl;
+    cout << "get to the the wizard." << endl;
+    getline(cin, temp);
+    cout << "First he would need good gear. Stocking up on some potions at the Merchant's shop" << endl;
+    cout << "and getting armor from the Blacksmith were a must. Then the hard part, getting" << endl;
+    cout << "through Misty Woods alive. He would have to find the exit by pure chance before" << endl;
+    cout << "the Woods morphed, or worse, his death at the hands of whatever lies within the Woods" << endl;
+    getline(cin, temp);
+    cout << "If he made it through the woods, he'd have to make it through the knights" << endl;
+    cout << "and down to the castle underground, where many creatres were trapped" << endl;
+    cout << "to prevent anyone from disturbing the wizard. Getting through the" << endl;
+    cout << "should land him right in the wizard's chambers, where he needs to be." << endl;
+    getline(cin, temp);
+    cout << "Craig made a note of Daev's intructions and mentally prepared himself." << endl;
+    cout << "But first, their food had just arrived for them to enjoy." << endl;
+    cout << "Once he had a full stomach, Craig would set out and prepare himself" << endl;
+    getline(cin, temp);
+    cout << "Leaving the Inn after that great meal, Craig turned around and asked Daev" << endl;
+    cout << "\"Oh, we'll have to get you some gear too won't we?\"" << endl;
+    cout << "Daev grimaced. \"Sorry Craig, but I won't be joining you.\"" << endl;
+    getline(cin, temp);
+    cout << "Craig was surprised. \"You're not coming?\" Daev shook his head." << endl;
+    cout << "\"There's a place I must go myself\" He shot a faint smile." << endl;
+    cout << "\"I was able to come with you this far since Ethe Village is along the path" << endl;
+    cout << "to my destination.\"" << endl;
+    getline(cin, temp);
+    cout << "\"I guess I never did ask...\" Craig thought. \"So I guess this is Goodbye?\"" << endl;
+    cout << "\"Yeah.It was a pleasure Craig.\" He reached out his hand. \"Don't forget what I told you." << endl;
+    cout << "Do that, and maybe one day we can meet again.\"" << endl;
+    getline(cin, temp);
+    cout << "\"Of course.\" Craig replied, grabbing his hand and shaking it." << endl;
+    cout << "Craig watched as Daev walked off into the distance. He was sad to see" << endl;
+    cout << "His first friend in this world leave. But that only reminded him" << endl;
+    cout << "that he too must get going. He had to return home, where his friends would be waiting." << endl;
+    getline(cin, temp);
+    cout << "Having affirmed his resolve, he set out to prepare to cross the Misty Woods." << endl;
+    getline(cin, temp);
+    cout << endl;
+}

@@ -15,6 +15,7 @@ class Vendor: public NPC {
         string showVendorInventory();
         int isItemInVendor(string inString);
         Item* getItem(int index) { return &inventory[index]; };
+        string getVendorDescription();
 
 };
 
