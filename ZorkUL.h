@@ -28,9 +28,12 @@ namespace game {
         Player *player;
         Room *currentRoom;
         Vendor* currentVend;
-        Region currentRegion = SmokingCrater;
+        Region currentRegion = EtheVillage;
         vector<Room*> roomsInRegion;
         bool wizardFought = false;
+        bool sceneTwoSeen = false;
+        bool sceneThreeSeen = false;
+        bool mistySeen = false;
         bool enteringRoom = true;
         void createRooms();
         void printWelcome();
@@ -44,6 +47,9 @@ namespace game {
         ZorkUL();
         void play();
         string go(string direction);
+        static void scene1();
+        static void scene2();
+        static void scene3();
 };
 }
 
@@ -59,7 +65,7 @@ namespace game {
  *Player - Me (Almost complete, might add special skills or something)
  *Bosses - Me  (Probably do this towards the end)
  *NPCs - Me (Probably add them in as I work on narrative)
- *GUI - Denis
+ *GUI - Denis -- INCOMPLETE
  *
  *Narrative (LAST) - Me
  *
