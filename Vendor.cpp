@@ -50,8 +50,3 @@ int Vendor::isItemInVendor(string inString)
         }
     return -1;
 }
-
-string Vendor::getVendorDescription()
-{
-    return description;
-}
