@@ -139,13 +139,23 @@ void Player::use(string itemName) {
                 break;
             } else {
                // ITEM BY ITEM SCENARIOS
-                if(itemName.compare("Health Potion") == 0) {
+                if(itemName.compare("Potion") == 0) {
                     if(getHP() == 100) {
                         cout << "You already have full HP!" << endl;
                         break;
                     } else {
-                        float newHP = getHP() + 50;
-                        setHP(min(newHP, float(100)));
+                        int newHP = getHP() + 50;
+                        setHP(min(newHP, 100));
+                        cout << "Health restored! HP: " << getHP() << endl;
+                        inv.erase(it);
+                    }
+                } else if(itemName.compare("Half Potion") == 0) {
+                    if(getHP() == 100) {
+                        cout << "You already have full HP!" << endl;
+                        break;
+                    } else {
+                        int newHP = getHP() + 25;
+                        setHP(min(newHP, 100));
                         cout << "Health restored! HP: " << getHP() << endl;
                         inv.erase(it);
                     }
