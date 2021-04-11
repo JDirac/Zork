@@ -487,7 +487,6 @@ bool game::ZorkUL::processCommand(Command command) {
         }  catch (VendorNotFoundException& e) {
             cout << e.what() << endl << endl;
         }
-        currentVend = currentRoom->getVendor(location);
 
     }
 
@@ -508,7 +507,7 @@ bool game::ZorkUL::processCommand(Command command) {
                     else {
                         if(player->getWealth() >= currentVend->getItem(location)->getValue()) {
                             player->buyItem(currentVend->getItem(location));
-                             player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue()*1.2);
+                            player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue()*1.2);
                             currentVend->removeItemFromVendor(location);
                             player->showWealth();
                         } else {
