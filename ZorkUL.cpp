@@ -144,7 +144,6 @@ void game::ZorkUL::createRooms()  {
                 roomsInRegion[0]->addItem(new Item("Broken Phone", "Your Phone. It appears to have been damaged during your fall.", KeyItem, 1, 300, 0, 0, 0));
                 roomsInRegion[0]->addItem(new Item("Shattered Glasses", "Your Glasses. They broke as you hit the ground.", KeyItem, 0, 30, 0, 0, 0));
                 roomsInRegion[0]->addNPC(new NPC("Daev", "Daev: I'm ready to leave when you are, Craig."));
-                roomsInRegion[0]->addEnemy(new Enemy("Goblin", "3 Ft tall. Fast. Semi-intelligent", 50, 10, 10, 0.6, 0.2, 15));
             roomsInRegion.push_back(new Room("exit"));
 
         //                                    (N, E, S, W)
@@ -214,6 +213,7 @@ void game::ZorkUL::createRooms()  {
                 roomsInRegion[0]->addNPC(new NPC("Do'nal", "He stumbles out of the inn drunkenly muttering something.\n"
 "As he passes by you hear \"Man that whiskey ain't shit.\""));
                 roomsInRegion[0]->addNPC(new NPC("Aeron", "He seems to be writing some complicated stuff on some paper... best leave him be."));
+                roomsInRegion[0]->addEnemy(new Enemy("Goblin", "3 Ft tall. Fast. Semi-intelligent", 50, 10, 10, 0.6, 0.2, 25));
             roomsInRegion.push_back(new Room("Inn"));
                 roomsInRegion[1]->addNPC(new NPC("Jaek", "Welcome!"));
                 roomsInRegion[1]->addNPC(new NPC("Bros", "Without a doubt, he's drunk. Guess what Daev said is true."));
