@@ -34,6 +34,7 @@ void Player::equipItem(string itemName) {
                 break;
                 case Accessory:
                     setEquippedAccessory(*target);
+                    target->setEquipped(true);
                     cout << "You equipped: " << target->getShortDescription() << "!\n" << endl;
                 break;
                 default:
