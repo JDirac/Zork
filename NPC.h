@@ -15,7 +15,6 @@ class NPC {
         string showNPCStats();
         string getNPCName();
         string getNPCDescription();
-
 };
 
 #endif // NPC_H

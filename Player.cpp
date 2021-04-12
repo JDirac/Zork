@@ -132,29 +132,36 @@ void Player::showWealth() {
 }
 
 void Player::use(string itemName) {
-        Item* target = nullptr;
-
-        for (Item& item : inv) {
-            if(item.getShortDescription().compare(itemName) == 0) {
-                target = &item;
+    for(auto it = inv.begin(); it != inv.end(); it++) {
+        if((*it).getShortDescription().compare(itemName) == 0){
+            if((*it).getType() != Consumable) {
+                cout << "Cannot use this item!" << endl;
+                break;
+            } else {
+               // ITEM BY ITEM SCENARIOS
+                if(itemName.compare("Potion") == 0) {
+                    if(getHP() == 100) {
+                        cout << "You already have full HP!" << endl;
+                        break;
+                    } else {
+                        int newHP = getHP() + 50;
+                        setHP(min(newHP, 100));
+                        cout << "Health restored! HP: " << getHP() << endl;
+                        inv.erase(it);
+                    }
+                } else if(itemName.compare("Half Potion") == 0) {
+                    if(getHP() == 100) {
+                        cout << "You already have full HP!" << endl;
+                        break;
+                    } else {
+                        int newHP = getHP() + 25;
+                        setHP(min(newHP, 100));
+                        cout << "Health restored! HP: " << getHP() << endl;
+                        inv.erase(it);
+                    }
+                }
             }
         }
-
-        if(target == nullptr) {
-            cout << "No such Item found" << endl;
-        } else {
-            if(target->getType() == Consumable) {
-                 cout << "You used: " << target->getShortDescription() << "!\n";
-                 if(getHP() < 100) {
-                 setEquippedHealth(*target);
-                 target->setEquipped(true);
-                 putItem(target->getShortDescription());
-                 } else {
-                     cout << "Already at full health" << endl;;
-                 }
-            } else {
-                cout << "You cannot use this item!" << endl;;
-            }
     }
 }
 

@@ -30,10 +30,14 @@ namespace game {
         Vendor* currentVend;
         Region currentRegion = EtheVillage;
         vector<Room*> roomsInRegion;
+        bool finished = false;
         bool wizardFought = false;
         bool sceneTwoSeen = false;
         bool sceneThreeSeen = false;
         bool mistySeen = false;
+        bool entSeen = false;
+        bool underSeen = false;
+        bool wizSeen = false;
         bool enteringRoom = true;
         void createRooms();
         void printWelcome();
@@ -50,6 +54,9 @@ namespace game {
         static void scene1();
         static void scene2();
         static void scene3();
+        static void scene4();
+        static void scene5();
+        static void finalScene();
 };
 }
 

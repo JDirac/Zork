@@ -45,6 +45,29 @@ public:
     const std::string& getName() const { return m_name; }
 };
 
+//Multiple Inheritance
+class LandCreature
+{
+public:
+  LandCreature()  { //cout << "LandCreatures's constructor called" << endl;
+       }
+};
+
+class AirborneCreature
+{
+public:
+  AirborneCreature()  { //cout << "AirborneCreature's constructor called" << endl;
+       }
+};
+
+class Pegasus: public AirborneCreature, public LandCreature  // Note the order
+{
+public:
+  Pegasus()  { //cout << "Pegasus' constructor called" << endl;
+       }
+};
+
+
 Base* getObject(bool bReturnDerived)
 {
     if (bReturnDerived)
@@ -53,64 +76,40 @@ Base* getObject(bool bReturnDerived)
         return new Base{2};
 }
 
-//Multiple Inheritance
-class A
-{
-public:
-  A()  { //cout << "A's constructor called" << endl;
-       }
-};
-
-class B
-{
-public:
-  B()  { //cout << "B's constructor called" << endl;
-       }
-};
-
-class C: public B, public A  // Note the order
-{
-public:
-  C()  { //cout << "C's constructor called" << endl;
-       }
-};
-
-
-
 int main() {
     union GFG G1, G2, G3;                         //union
 
-        G1.Geek1 = 34;
-        G2.Geek2 = 34;
-        G3.Geek3 = 34.34;
+    G1.Geek1 = 34;
+    G2.Geek2 = 34;
+    G3.Geek3 = 34.34;
 
-        // Printing values
-        //cout << "The first value at "
-             //<< "the allocated memory : "
-             //<< G1.Geek1 << endl;
+    // Printing values
+    //cout << "The first value at "
+         //<< "the allocated memory : "
+         //<< G1.Geek1 << endl;
 
-        //cout << "The next value stored "
-             //<< "after removing the "
-             //<< "previous value : "
-             //<< G2.Geek2 << endl;
+    //cout << "The next value stored "
+         //<< "after removing the "
+         //<< "previous value : "
+         //<< G2.Geek2 << endl;
 
-        //cout << "The Final value value "
-             //<< "at the same allocated "
-             //<< "memory space : "
-             //<< G3.Geek3 << endl;
-        //return 0;
+    //cout << "The Final value value "
+         //<< "at the same allocated "
+         //<< "memory space : "
+         //<< G3.Geek3 << endl;
+    //return 0;
 
-        Base *b{ getObject(true) };                     //Dynamic Casting
-        Derived *d{ dynamic_cast<Derived*>(b) }; // use dynamic cast to convert Base pointer into Derived pointer
-        //std::cout << "The name of the Derived is: " << d->getName() << '\n';
-        delete b;
+    Base *b{ getObject(true) };                     //Dynamic Casting
+    Derived *d{ dynamic_cast<Derived*>(b) }; // use dynamic cast to convert Base pointer into Derived pointer
+    //std::cout << "The name of the Derived is: " << d->getName() << '\n';
+    delete b;
 
-         C c;                                            //Multiple Inheritance
+    Pegasus pegasus;
 
     game::ZorkUL temp;
-    //game::ZorkUL::scene1();
-    temp.play();
-    return 0;
+    game::ZorkUL::scene1();
+	temp.play();
+	return 0;
 }
 
 game::ZorkUL::ZorkUL() {
@@ -213,12 +212,11 @@ void game::ZorkUL::createRooms()  {
                 roomsInRegion[0]->addNPC(new NPC("Do'nal", "He stumbles out of the inn drunkenly muttering something.\n"
 "As he passes by you hear \"Man that whiskey ain't shit.\""));
                 roomsInRegion[0]->addNPC(new NPC("Aeron", "He seems to be writing some complicated stuff on some paper... best leave him be."));
-                roomsInRegion[0]->addEnemy(new Enemy("Goblin", "3 Ft tall. Fast. Semi-intelligent", 50, 10, 10, 0.6, 0.2, 25));
             roomsInRegion.push_back(new Room("Inn"));
                 roomsInRegion[1]->addNPC(new NPC("Jaek", "Welcome!"));
                 roomsInRegion[1]->addNPC(new NPC("Bros", "Without a doubt, he's drunk. Guess what Daev said is true."));
             roomsInRegion.push_back(new Room("Merchant"));
-                currentVend = new Vendor("Denaes", "Scraic lad, take a look at dese wares, pretty swheet stuff");
+                currentVend = new Vendor("Denaes", "Well met traveller, you look to be quite the eccentric customer,\nI'd be delighted to have your business!");
                 currentVend->addVendorItem(new Item("Leather Armor", "Cheap and cheerful", Armor, 0, 10, 0, 0, 12));
                 currentVend->addVendorItem(new Item("Potion", "recovers 50 HP", Consumable, 0, 25, 50, 0, 0));
                 currentVend->addVendorItem(new Item("Potion", "recovers 50 HP", Consumable, 0, 25, 50, 0, 0));
@@ -363,7 +361,7 @@ void game::ZorkUL::createRooms()  {
         case CastleUnderground: // Denis
 
             roomsInRegion.push_back(new Room("Castleunderground Entrance"));
-                roomsInRegion[0]->addItem(new Item("Silver Sword", "A blade which cuts through the darkness with ease", Weapon, 0, 0, 0, 25, 0));
+                roomsInRegion[0]->addItem(new Item("Silver Sword", "A blade which cuts through the darkness with ease", Weapon, 0, 0, 0, 30, 0));
             roomsInRegion.push_back(new Room("Spider Crypt"));
                 roomsInRegion[1]->addEnemy(new Enemy("Gigantic Spider", "Its a huge spider, duh", 75, 15, 8, 0.6, 0.6, 100));
                 roomsInRegion[1]->addEnemy(new Enemy("Spider", "Its a huge spider, duh", 50, 10, 7, 0.5, 0.4, 100));
@@ -406,8 +404,10 @@ void game::ZorkUL::createRooms()  {
 
         case WizardsChambers:
 
-            roomsInRegion.push_back(new Room("entrance"));
+
             roomsInRegion.push_back(new Room("Wizard's Chambers"));
+                roomsInRegion[0]->addEnemy(new Enemy("Wizard", "This one won't be easy.", 500, 40, 20, 0.8, 0.15, 420));
+            roomsInRegion.push_back(new Room("entrance"));
             roomsInRegion.push_back(new Room("secret passage"));
 
             roomsInRegion[0]->setExits(roomsInRegion[2], NULL, roomsInRegion[1], NULL);
@@ -415,11 +415,12 @@ void game::ZorkUL::createRooms()  {
 
         case KingsChambers:
 
-            roomsInRegion.push_back(new Room("entrance"));
             roomsInRegion.push_back(new Room("King's Chambers"));
-            roomsInRegion.push_back(new Room("exit"));
+            roomsInRegion[0]->addEnemy(new Enemy("Vey", "The mightiest warrior and ruler of this country. Brace yourself.", 2000, 100, 90, 0.9, 0.15, 9999));
+            roomsInRegion.push_back(new Room("entrance"));
+            roomsInRegion.push_back(new Room("end"));
 
-            roomsInRegion[0]->setExits(roomsInRegion[2], NULL, roomsInRegion[1], NULL);
+            roomsInRegion[1]->setExits(roomsInRegion[2], NULL, roomsInRegion[0], NULL);
     }
         if(enteringRoom) {
             if(currentRegion == MistyWoods) currentRoom = roomsInRegion[1];
@@ -439,8 +440,6 @@ void game::ZorkUL::play() {
 
 	// Enter the main command loop.  Here we repeatedly read commands and
 	// execute them until the ZorkUL game is over.
-
-	bool finished = false;
 	while (!finished) {
 		// Create pointer to command and give it a command.
 		Command* command = parser.getCommand();
@@ -638,7 +637,7 @@ bool game::ZorkUL::processCommand(Command command) {
                     else {
                         if(player->getWealth() >= currentVend->getItem(location)->getValue()) {
                             player->buyItem(currentVend->getItem(location));
-                            player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue()*1.2);
+                            player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue());
                             currentVend->removeItemFromVendor(location);
                             player->showWealth();
                         } else {
@@ -684,7 +683,7 @@ bool game::ZorkUL::processCommand(Command command) {
                       }
                       if (location  < 0 ) cout << "You do not have this item to sell" << endl;
                       else {
-                          player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue()));
+                          player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue())*0.8);
                           player->showWealth();
                       }
                   } else {
@@ -1008,17 +1007,32 @@ void game::ZorkUL::goRoom(Command command) {
                 cout << "Craig had finally arrived in the daunting Misty Woods." << endl;
                 cout << "\"Just remember what Daev told you.\" He said to himself." << endl;
                 cout << "\"I should keep track of where I'm going and where I've been.\"" << endl;
+                mistySeen = true;
             }
-
             currentRegion = MistyWoods;
             break;
         case MistyWoods:
+            if(!entSeen) {
+                cout << "\"I finally made it out\" Craig thought." << endl;
+                cout << "Ahead of Craig, he could see the King's Castle in the distance." << endl;
+                cout << "It was massive, just like the castles he had seen in history books." << endl;
+                cout << "\"Almost there.\" He muttered. \"I'll probably have to fight Knights and god knows what now.\"" << endl;
+                entSeen = true;
+            }
             currentRegion = CastleEntrance;
             break;
         case CastleEntrance:
+            if(!underSeen) {
+                cout << "The Wizard is just up ahead. One more push to go." << endl;
+                cout << "\"Daev said there's be some tricky enemies down here. I should keep my guard up.\"" << endl;
+                underSeen = true;
+            }
             currentRegion = CastleUnderground;
             break;
         case CastleUnderground:
+            if(!wizSeen) {
+                game::ZorkUL::scene4();
+            }
             currentRegion = WizardsChambers;
         case WizardsChambers:
             break;
@@ -1058,40 +1072,48 @@ void game::ZorkUL::goRoom(Command command) {
         cout << currentRoom->longDescription() << endl;
     } else if(nextRoom->shortDescription() == "To King") {
         if(!wizardFought) {
-            cout << "\nAre you sure you wish to meet the King?\n"
-                 << "It is highly recommended you head to the Wizard first! [yes/no]\n"
-                 << "\n> ";
-            string temp;
-            getline(cin, temp);
-            transform(temp.begin(), temp.end(), temp.begin(),:: tolower);
-
-            if(temp == "yes") {
-                currentRegion = KingsChambers;
-                enteringRoom = true;
-                createRooms();
-                cout << "\nYou are now in the King's chambers." << endl;
-                cout << "His overwhelming aura dominates the room." << endl;
-            } else {
-                cout << currentRoom->longDescription() << endl;
-            }
+            cout << "You're supposed to be going to the Wizard!" << endl << endl;
+            cout << currentRoom->longDescription() << endl;
         } else {
           currentRegion = KingsChambers;
           enteringRoom = true;
           createRooms();
+          game::ZorkUL::scene5();
           cout << currentRoom->longDescription() << endl;
         }
 
     } else if(nextRoom->shortDescription() == "secret passage") {
-        if(wizardFought) {
+        if(currentRoom->numberOfEnemies() < 1) {
             currentRegion = CastleEntrance;
+            string temp;
+            cout << "On his way out, Craig's attention was caught by the items on the wizard's workbench." << endl;
+            cout << "He wasn't quite sure what they were but he decided to take them," << endl;
+            cout << "Seeing as they looked powerful." << endl;
+            getline(cin, temp);
+            player->addItem(new Item("Prototype Raikiri", "A custom weapon developed by the Wizard during his research on Divine weapons.", Weapon, 5, 200, 0, 90, 0));
+            cout << "Item: \"Prototype Raikiri\" was added to your inventory!" << endl;
+            getline(cin, temp);
+            player->addItem(new Item("Achilles' Armor", "A legendary set of armor. You'd need the might of a god to damage the wearer.", Armor, 10, 1000, 100, 0, 100));
+            cout << "Item: \"Achilles' Armor\" was added to your inventory!" << endl;
+            getline(cin, temp);
             enteringRoom = true;
+            wizardFought = true;
             createRooms();
-            cout << "You follow the secret path... and find yourself back at the castle entrance!\n" << endl;
+            cout << "Craig followed the secret path... and found himself back at the castle entrance!\n" << endl;
         } else {
-            cout << "You spot something weird in the corner of the room, but you must deal with the Wizard first!\n" << endl;
+            cout << "Craig spotted something weird in the corner of the room, but he must deal with the Wizard first!\n" << endl;
         }
         cout << currentRoom->longDescription() << endl;
 
+    } else if(nextRoom->shortDescription() == "end") {
+        if(currentRoom->numberOfEnemies() < 1) {
+            game::ZorkUL::finalScene();
+            finished = true;
+        } else {
+            cout << "You have to deal with the king first!" << endl;
+            cout << endl;
+            cout << currentRoom->longDescription() << endl;
+        }
     } else {
 		currentRoom = nextRoom;
 		cout << currentRoom->longDescription() << endl;
@@ -1345,4 +1367,168 @@ void game::ZorkUL::scene3() {
     cout << "Having affirmed his resolve, he set out to prepare to cross the Misty Woods." << endl;
     getline(cin, temp);
     cout << endl;
+}
+
+void game::ZorkUL::scene4() {
+    string temp;
+    cout << "Craig was finally at the entrance to the wizard's chambers." << endl;
+    cout << "He had fought long and hard to get here. Now it was finally time." << endl;
+    cout << "It was finally time to get his bike back. Then he would find a way home." << endl;
+    getline(cin, temp);
+    cout << "He exerted his strength and opened the gargantuan stone doors before him." << endl;
+    cout << "He took a deep breath and walked inside. He observed a man inside working on something." << endl;
+    cout << "He wore a long blue robe and a matching pointy blue hat" << endl;
+    getline(cin, temp);
+    cout << "He would almost be a stereotypical wizard from a cartoon " << endl;
+    cout << "if not for his flowing, shaggy blond hair and youthful appearance." << endl;
+    cout << "The wizard turned his head toward the now opened doors with a look of discontent." << endl;
+    getline(cin, temp);
+    cout << "\"Aw, who the hell is coming in now, I told you I was busy working on-\"" << endl;
+    cout << "The wizard's mouth froze at the sight of unknown character before him." << endl;
+    cout << "\"Are you the Wizard?\" Craig cut straight to the chase." << endl;
+    getline(cin, temp);
+    cout << "\"And what if I am?\" The wizard seemed wary of Craig." << endl;
+    cout << "\"You have something that belongs to me.\" Craig spoke with the full capacity of his chest." << endl;
+    cout << "\" A bike-- The two wheeled means of transport.\"" << endl;
+    getline(cin, temp);
+    cout << "The wizard raised his eyebrows. \"You know what that thing is?\"" << endl;
+    cout << "\"Of course. As I said, It's my bike.\"" << endl;
+    cout << "\"The wizard's eyes widened in an instant, as though realising something." << endl;
+    getline(cin, temp);
+    cout << "Then he let out a hearty laugh. \"I see! So it was a success after all!\"" << endl;
+    cout << "\"I'm sorry to say, but I already repaired that... bike of yours. It is in my liege's hands now.\" " << endl;
+    cout << "\"Is that so?\" Craig asked. \"Guess I'll go speak to him myself.\"" << endl;
+    getline(cin, temp);
+    cout << "*BANG*" << endl;
+    cout << "With a swift wave of his hand, the doors instantly slammed shut. And with" << endl;
+    cout << "a finger snap, they locked. \"Now that you've landed right into my arms, " << endl;
+    cout << "I simply can't just let you leave again!\" The wizard exclaimed with a twisted smile." << endl;
+    getline(cin, temp);
+    cout << "\"Great. Guess I'm dealing with this clown first.\" Craig sighed under his breath." << endl;
+    cout << "He equipped his weapon and prepared for battle." << endl;
+    getline(cin, temp);
+    cout << endl;
+}
+
+void game::ZorkUL::scene5() {
+    string temp;
+    cout << "Craig entered the King's chambers. An intimidating aura overwhelmed him" << endl;
+    cout << "as soon as he entered the room. But he wouldn't back down here." << endl;
+    cout << "he refused to give up after coming all this way!" << endl;
+    getline(cin, temp);
+    cout << "The King was seated across the massive room on his throne." << endl;
+    cout << "He opened his eyes and gazed at Craig." << endl;
+    cout << "\"I take it you're the one making a mess in my home?\" He asked." << endl;
+    getline(cin, temp);
+    cout << "Craig could feel the heavy weight behind his words. This man truly had" << endl;
+    cout << "the aura of a ruler. \"Sorry about that.\" Craig replied. " << endl;
+    cout << "\"I'm just here to retrieve something that belongs to me\"" << endl;
+    getline(cin, temp);
+    cout << "\"Oh and what would that be?\"" << endl;
+    cout << "\"That bike you've mounted on the wall behind you!\" Craig replied scornfully." << endl;
+    cout << "\"This? Oh, I see now, this is quite the promising result after all.\"" << endl;
+    getline(cin, temp);
+    cout << "Craig had no idea what he meant by that. \"Care to explain?\"" << endl;
+    cout << "\"Well, I suppose it's the least I could offer after we dragged you into this world\"" << endl;
+    cout << "Craig froze momentarily from the shock those words delivered." << endl;
+    getline(cin, temp);
+    cout << "\"Dragged me here? What the hell does that mean? You brought me to this world?\"" << endl;
+    cout << "\"That's right... Hmm. Let me explain the why first." << endl;
+    getline(cin, temp);
+    cout << "The king explained that for a long time now, there's been a growing concern" << endl;
+    cout << "between him and the wizard that their research into better technology wasn't yielding any results." << endl;
+    cout << "They feared that as the population of their country continued to grow," << endl;
+    cout << "Things like manual farm labour wouldn't be sufficient to feed the growing population." << endl;
+    cout << "The King and the Wizard wanted to nip this problem at the bud before it could bloom." << endl;
+    getline(cin, temp);
+    cout << "So they devised a plan. They believed in the possibility of alternate universes with civilisations" << endl;
+    cout << "far more advanced than their own. They thought \"What if we could summon one such member of" << endl;
+    cout << "an advanced civilisation and have them tell us about their technology?\"" << endl;
+    getline(cin, temp);
+    cout << "So the wizard began work. And after countless months, and trial and error, they had done it." << endl;
+    cout << "\"You are the first successful instance of a person being summoned to our world.\"" << endl;
+    cout << "\"We thought it was another failure when all we found was your bike..." << endl;
+    cout << "\"But here you stand before me now!\"" << endl;
+    getline(cin, temp);
+    cout << "Craig pondered what line of action to take. An idea finally came to mind." << endl;
+    cout << "\"I'd like to propose a duel.\" The king smirked in response." << endl;
+    cout << "\"A duel?\" Craig then explained the terms of the duel." << endl;
+    getline(cin, temp);
+    cout << "\"If I win, I get to take my bike, and you'll send me back home.\"" << endl;
+    cout << "The king thought for a moment. \"...well, I guess it would be possible to send you back.\"" << endl;
+    cout << "Craig tried to hide his relief at those words. \"But what would I receieve if I win?\"" << endl;
+    getline(cin, temp);
+    cout << "\"I'll do as you wish and tell you all about the technology of my world.\"" << endl;
+    cout << "The king pondered once more. It was an appealing offer." << endl;
+    cout << "Judging from Craig's bike, he could definitely obtain some useful information." << endl;
+    getline(cin, temp);
+    cout << "\"Very well. I accept. Would you tell me your name?\" The king rose to his feet" << endl;
+    cout << "\"...I'm Craig\" The king grabbed a peculiar shield and put it on his offhand." << endl;
+    cout << "He then grabbed a sheathed sword next to the throne and strided pridefully towards Craig." << endl;
+    getline(cin, temp);
+    cout << "\"Craig, huh? I'm Vey, the king of this country, as you know by now.\"" << endl;
+    cout << "He slowly unsheathed his sword. In the blink of an eye golden flames danced around" << endl;
+    cout << "the exposed blade, illuminating the room and the details of the brown haired King." << endl;
+    getline(cin, temp);
+    cout << "\"And as king, I must be a beacon of strength and hope for my people.\"" << endl;
+    cout << "His blue eyes flared with intensity as he assumed a combat stance." << endl;
+    cout << "\"I'm ready when you are, Craig.\"" << endl;
+    getline(cin, temp);
+    cout << "Craig reached for his sword and prepared to encounter the greatest foe" << endl;
+    getline(cin, temp);
+    cout << endl;
+}
+
+void game::ZorkUL::finalScene() {
+    string temp;
+    cout << "Craig had done it. He had bested the strongest warrior in combat." << endl;
+    cout << "His legs gave out from beneath him as he gasped for air." << endl;
+    cout << "\"Well played\" The king struggled to speak. He too was feeling the" << endl;
+    cout << "consequences of a duel of that caliber." << endl;
+    getline(cin, temp);
+    cout << "That both laid still for a while, as they gathered their strength once more." << endl;
+    cout << "The king was the first to stand. He walked to Craig and extended out his hand." << endl;
+    cout << "\"As promised, I'll have you sent back home now. Grab your bike and follow me.\"" << endl;
+    getline(cin, temp);
+    cout << "Craig unmounted his bike from the wall. He couldn't hide his smile when the " << endl;
+    cout << "reailty had settled in. He was finally going home. He walked up to the king" << endl;
+    cout << "and repeated the same words the king spoke to him. \"I'm ready when you are.\"" << endl;
+    getline(cin, temp);
+    cout << "\"Hmph, follow me. We need the wizard.\" The king escorted Craig through the castle" << endl;
+    cout << "and entered the Wizard's chambers through the secret entrance. There the wizard" << endl;
+    cout << "was still passed out on the floor from his battle with Craig." << endl;
+    getline(cin, temp);
+    cout << "\"Is this going to be a problem?\" Craig asked jokingly." << endl;
+    cout << "\"No... DANEL.\" His voice shook the room, and the wizard was shocked awake instantly" << endl;
+    cout << "\"My liege! ...and you.\" The contrast between his reactions was painfully evident." << endl;
+    getline(cin, temp);
+    cout << "\"Get ready, we're sending him home.\" The king ordered." << endl;
+    cout << "\"But isn't that a waste, Vey? To send him home without any info?\"" << endl;
+    cout << "\"It is, but those are the terms I agreed to...\"" << endl;
+    getline(cin, temp);
+    cout << "The wizard got the hint that he shouldn't dig any deeper. He immediately got to his feet" << endl;
+    cout << "and began setting things up. Within a few minutes he nodded at Vey to let him know" << endl;
+    cout << "he was ready to go." << endl;
+    getline(cin, temp);
+    cout << "\"Alright Craig, stand in that circle and hold still.\" Craig complied, his bike beside him." << endl;
+    cout << "\"I have a request before I go.\" The King turned back to face him. \"Yes?\"" << endl;
+    cout << "\"If you ever see a man named Daev, let him know what happened to me.\"" << endl;
+    getline(cin, temp);
+    cout << "\"We can do that.\" He began to leave once more but was stopped by Craig's voice" << endl;
+    cout << "\"As thanks I'll tell you something interesting. I sold a high tech device from my world" << endl;
+    cout << "to the merchant in Ethe Village. Although it is kinda broken.\" The king and wizard both shook." << endl;
+    getline(cin, temp);
+    cout << "The king smiled. \"I see. Thank you, Craig.\". And with that Craig was blinded by a white light" << endl;
+    cout << "for the second time that day. When he opened his eyes once more He was back on the path" << endl;
+    cout << "in the National Park. His bike right next to him." << endl;
+    getline(cin, temp);
+    cout << "He debated if that was all just a dream. That was until he looked down." << endl;
+    cout << "He was still wearing the spare clothes Daev lent him. That's when he realised" << endl;
+    cout << "he needed to get home and change fast before someone saw him." << endl;
+    getline(cin, temp);
+    cout << "And thus Craig hopped on his bike for what felt like the first time in forever" << endl;
+    cout << "and raced home. \"Man, thank god I got my bike back- Walking fucking sucks, man!\"" << endl;
+    getline(cin, temp);
+    cout << endl << endl << endl;
+    cout << "Thanks for playing!" << endl;
 }

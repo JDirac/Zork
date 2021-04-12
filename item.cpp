@@ -64,7 +64,7 @@ string Item::getVendorDescription()
     } else if(HP > 0) {
        desc += "HP: " + to_string(HP) + " ";
     }
-    desc += "Value: " + to_string(value*1.2);
+    desc += "Value: " + to_string(int(value));
     return desc;
 }
 
