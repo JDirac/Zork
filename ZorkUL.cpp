@@ -231,10 +231,10 @@ void game::ZorkUL::createRooms()  {
                 roomsInRegion[2]->addVendor(currentVend);
             roomsInRegion.push_back(new Room("Blacksmith"));
                 currentVend = new Vendor("Myer", "Heading to the forest? You'll want some good gear, unless you want your head taken off I guess.");
-                currentVend ->addVendorItem(new Item("Iron Armor", "Shiny, Reliable", Armor, 0, 15, 70, 0, 20));
-                currentVend ->addVendorItem(new Item("Iron Sword", "The definition of wont let you down", Weapon, 0, 20, 50, 15, 0));
-                currentVend ->addVendorItem(new Item("Steel Armor", "Shinier, even more Reliable", Armor, 0, 25, 125, 0, 25));
-                currentVend->addVendorItem(new Item("Steel Sword", "Powerful and dangerous", Weapon, 0, 20, 80, 20, 0));
+                currentVend ->addVendorItem(new Item("Iron Armor", "Shiny, Reliable", Armor, 0, 70, 20, 0, 20));
+                currentVend ->addVendorItem(new Item("Iron Sword", "The definition of wont let you down", Weapon, 0, 50, 0, 15, 0));
+                currentVend ->addVendorItem(new Item("Steel Armor", "Shinier, even more Reliable", Armor, 0, 125, 50, 0, 25));
+                currentVend->addVendorItem(new Item("Steel Sword", "Powerful and dangerous", Weapon, 0, 80, 0, 20, 0));
                 roomsInRegion[3]->addVendor(currentVend);
             roomsInRegion.push_back(new Room("Blarn Street"));
             roomsInRegion.push_back(new Room("entrance"));
