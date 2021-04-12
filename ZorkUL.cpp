@@ -681,7 +681,7 @@ bool game::ZorkUL::processCommand(Command command) {
                       }
                       if (location  < 0 ) cout << "You do not have this item to sell" << endl;
                       else {
-                          player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue()));
+			  player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue())*0.8);
 			  if(location != -1 && !command.hasThirdWord()) {
                           currentVend->addVendorItem(player->putItem(command.getSecondWord()));
                           }
