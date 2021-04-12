@@ -209,7 +209,6 @@ void game::ZorkUL::createRooms()  {
             roomsInRegion.push_back(new Room("Village Square"));
                 roomsInRegion[0]->addNPC(new NPC("Heem", "He seems to be singing a song to himself.\n\n"
 "Heem: ~Toss a coin to your...~"));
-                roomsInRegion[0]->addEnemy(new Enemy("Goblin", "3 Ft tall. Fast. Semi-intelligent", 50, 10, 10, 0.6, 0.2, 15));
                 roomsInRegion[0]->addNPC(new NPC("Do'nal", "He stumbles out of the inn drunkenly muttering something.\n"
 "As he passes by you hear \"Man that whiskey ain't shit.\""));
                 roomsInRegion[0]->addNPC(new NPC("Aeron", "He seems to be writing some complicated stuff on some paper... best leave him be."));
@@ -437,7 +436,7 @@ void game::ZorkUL::createRooms()  {
  */
 void game::ZorkUL::play() {
 	printWelcome();
-    player = new Player(PLAYER_NAME, "Our Valiant Hero", 100, 10, 10, 0.8, 0.5, 50);
+    player = new Player(PLAYER_NAME, "Our Valiant Hero", 100, 10, 10, 0.8, 0.5, 0);
 
 	// Enter the main command loop.  Here we repeatedly read commands and
 	// execute them until the ZorkUL game is over.
@@ -638,7 +637,7 @@ bool game::ZorkUL::processCommand(Command command) {
                     else {
                         if(player->getWealth() >= currentVend->getItem(location)->getValue()) {
                             player->buyItem(currentVend->getItem(location));
-                            player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue()*1.2);
+                            player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue());
                             currentVend->removeItemFromVendor(location);
                             player->showWealth();
                         } else {
@@ -684,7 +683,7 @@ bool game::ZorkUL::processCommand(Command command) {
                       }
                       if (location  < 0 ) cout << "You do not have this item to sell" << endl;
                       else {
-                          player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue()));
+                          player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue())*0.8);
                           player->showWealth();
                       }
                   } else {
