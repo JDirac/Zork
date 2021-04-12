@@ -107,7 +107,7 @@ int main() {
     Pegasus pegasus;
 
     game::ZorkUL temp;
-    //game::ZorkUL::scene1();
+    game::ZorkUL::scene1();
 	temp.play();
 	return 0;
 }
