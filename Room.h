@@ -41,6 +41,7 @@ public:
     void removeEnemyFromRoom(int location);
     string showStats();
     Enemy* getEnemy(int location) { return &EnemysInRoom[location]; };
+    int numberOfEnemies() { return EnemysInRoom.size(); };
     void addNPC(NPC* NPC);
     string displayNPC();
     NPC* getNPC(int location) {return &NPCSInRoom[location]; };

@@ -36,6 +36,7 @@ class Player: public Entity {
         int getInvSize() { return inv.size(); };
         void use(string itemName);
         void setEnemy(Entity* enemy) { currentEnemy = enemy; };
+        void addItem(Item* item) {inv.push_back(*item); };
         /*
         *  Special skills?
         */
