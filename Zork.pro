@@ -4,7 +4,6 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        Boss.cpp \
         Command.cpp \
         CommandWords.cpp \
         Enemy.cpp \
@@ -22,7 +21,6 @@ DISTFILES += \
     Zork.pro.user
 
 HEADERS += \
-    Boss.h \
     Command.h \
     CommandWords.h \
     Enemy.h \

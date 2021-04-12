@@ -637,7 +637,7 @@ bool game::ZorkUL::processCommand(Command command) {
                     else {
                         if(player->getWealth() >= currentVend->getItem(location)->getValue()) {
                             player->buyItem(currentVend->getItem(location));
-                            player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue()*1.2);
+                            player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue());
                             currentVend->removeItemFromVendor(location);
                             player->showWealth();
                         } else {
@@ -683,7 +683,7 @@ bool game::ZorkUL::processCommand(Command command) {
                       }
                       if (location  < 0 ) cout << "You do not have this item to sell" << endl;
                       else {
-                          player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue()));
+                          player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue())*0.8);
                           player->showWealth();
                       }
                   } else {

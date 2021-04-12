@@ -28,7 +28,7 @@ namespace game {
         Player *player;
         Room *currentRoom;
         Vendor* currentVend;
-        Region currentRegion = KingsChambers;
+        Region currentRegion = SmokingCrater;
         vector<Room*> roomsInRegion;
         bool finished = false;
         bool wizardFought = false;
