@@ -675,15 +675,19 @@ bool game::ZorkUL::processCommand(Command command) {
                       if (command.hasThirdWord()) {
                           cout << "you sold the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
                           location = player->isItemInInventory(command.getSecondWord() + " " + command.getThirdWord());
-                          currentVend->addVendorItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
                       } else {
                           cout << "you sold the " + command.getSecondWord() <<endl;
                           location = player->isItemInInventory(command.getSecondWord());
-                          currentVend->addVendorItem(player->putItem(command.getSecondWord()));
                       }
                       if (location  < 0 ) cout << "You do not have this item to sell" << endl;
                       else {
                           player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue()));
+			  if(location != -1 && !command.hasThirdWord()) {
+                          currentVend->addVendorItem(player->putItem(command.getSecondWord()));
+                          }
+                          else {
+                          currentVend->addVendorItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
+                          }
                           player->showWealth();
                       }
                   } else {
