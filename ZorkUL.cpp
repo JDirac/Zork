@@ -10,7 +10,102 @@ using namespace std;
 
 auto start = chrono::high_resolution_clock::now();
 
+union GFG {
+    int Geek1;
+    char Geek2;
+    float Geek3;
+};
+
+//Dynamic Casting
+class Base
+{
+protected:
+    int m_value{};
+
+public:
+    Base(int value)
+        : m_value{value}
+    {
+    }
+
+    virtual ~Base() = default;
+};
+
+class Derived : public Base
+{
+protected:
+    std::string m_name{};
+
+public:
+    Derived(int value, const std::string& name)
+        : Base{value}, m_name{name}
+    {
+    }
+
+    const std::string& getName() const { return m_name; }
+};
+
+//Multiple Inheritance
+class LandCreature
+{
+public:
+  LandCreature()  { //cout << "LandCreatures's constructor called" << endl;
+       }
+};
+
+class AirborneCreature
+{
+public:
+  AirborneCreature()  { //cout << "AirborneCreature's constructor called" << endl;
+       }
+};
+
+class Pegasus: public AirborneCreature, public LandCreature  // Note the order
+{
+public:
+  Pegasus()  { //cout << "Pegasus' constructor called" << endl;
+       }
+};
+
+
+Base* getObject(bool bReturnDerived)
+{
+    if (bReturnDerived)
+        return new Derived{1, "Apple"};
+    else
+        return new Base{2};
+}
+
 int main() {
+    union GFG G1, G2, G3;                         //union
+
+    G1.Geek1 = 34;
+    G2.Geek2 = 34;
+    G3.Geek3 = 34.34;
+
+    // Printing values
+    //cout << "The first value at "
+         //<< "the allocated memory : "
+         //<< G1.Geek1 << endl;
+
+    //cout << "The next value stored "
+         //<< "after removing the "
+         //<< "previous value : "
+         //<< G2.Geek2 << endl;
+
+    //cout << "The Final value value "
+         //<< "at the same allocated "
+         //<< "memory space : "
+         //<< G3.Geek3 << endl;
+    //return 0;
+
+    Base *b{ getObject(true) };                     //Dynamic Casting
+    Derived *d{ dynamic_cast<Derived*>(b) }; // use dynamic cast to convert Base pointer into Derived pointer
+    //std::cout << "The name of the Derived is: " << d->getName() << '\n';
+    delete b;
+
+    Pegasus pegasus;
+
     game::ZorkUL temp;
     //game::ZorkUL::scene1();
 	temp.play();
