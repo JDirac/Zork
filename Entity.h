@@ -43,9 +43,9 @@ class Entity {
         float getCRT() { return CRT; };
         string getName() { return name; };
         string getDescription() { return description; };
-        void setHP(float HP) { this->HP = HP; };
-        void setATK(float ATK) { this->ATK = ATK; };
-        void setDEF(float DEF) { this->DEF = DEF; };
+        void setHP(int HP) { this->HP = HP; };
+        void setATK(int ATK) { this->ATK = ATK; };
+        void setDEF(int DEF) { this->DEF = DEF; };
         void setACC(float ACC) { this->ACC = ACC; };
         void setCRT(float CRT) { this->CRT = CRT; };
         void setDebuff(Status debuff) { state.push_back(debuff); };

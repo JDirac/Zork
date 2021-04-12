@@ -77,11 +77,11 @@ Base* getObject(bool bReturnDerived)
 }
 
 int main() {
-    union GFG G1, G2, G3;                         //union
+    //union GFG G1, G2, G3;  //union
 
-    G1.Geek1 = 34;
-    G2.Geek2 = 34;
-    G3.Geek3 = 34.34;
+    //G1.Geek1 = 34;
+    //G2.Geek2 = 34;
+    //G3.Geek3 = 34.34;
 
     // Printing values
     //cout << "The first value at "
@@ -99,12 +99,12 @@ int main() {
          //<< G3.Geek3 << endl;
     //return 0;
 
-    Base *b{ getObject(true) };                     //Dynamic Casting
-    Derived *d{ dynamic_cast<Derived*>(b) }; // use dynamic cast to convert Base pointer into Derived pointer
+    //Base *b{ getObject(true) };  //Dynamic Casting
+    //Derived *d{ dynamic_cast<Derived*>(b) }; // use dynamic cast to convert Base pointer into Derived pointer
     //std::cout << "The name of the Derived is: " << d->getName() << '\n';
-    delete b;
+    //delete b;
 
-    Pegasus pegasus;
+    //Pegasus pegasus;  // multiple inheritance
 
     game::ZorkUL temp;
     game::ZorkUL::scene1();
@@ -160,7 +160,7 @@ void game::ZorkUL::createRooms()  {
                 roomsInRegion[1]->addNPC(new NPC("Daev", "Daev: Hope you have that sword equipped, Craig, this guy looks vicious.\n\n"
 "Craig: (Oh god, he was serious about the monsters)"));
             roomsInRegion.push_back(new Room("Winding Path 3"));
-                roomsInRegion[2]->addItem(new Item("Potion", "Heals you for 50 HP", Consumable, 1, 20, 0, 0, 0));
+                roomsInRegion[2]->addItem(new Item("Potion", "Heals you for 50 HP", Consumable, 1, 20, 50, 0, 0));
                 roomsInRegion[2]->addNPC(new NPC("Daev", "Daev: Someone dropped a potion, huh? Grab it so you can heal your wounds in a fight if you need to."));
             roomsInRegion.push_back(new Room("Winding Path 4"));
                 roomsInRegion[3]->addEnemy(new Enemy("Goblin", "3 Ft tall. Fast. Semi-intelligent", 50, 10, 10, 0.6, 0.2, 15));
@@ -291,7 +291,7 @@ void game::ZorkUL::createRooms()  {
                             } else if(chanceOfItem < 28) {
                                 roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Bag-O-Coins"));
                             } else {
-                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Potion", "Heals the player for 50 HP", Consumable, 1, 30, 0, 0, 0));
+                                roomsInRegion[prevNumNewRooms + i]->addItem(new Item("Potion", "Heals the player for 50 HP", Consumable, 1, 30, 50, 0, 0));
                             }
                         }
 
@@ -637,7 +637,7 @@ bool game::ZorkUL::processCommand(Command command) {
                     else {
                         if(player->getWealth() >= currentVend->getItem(location)->getValue()) {
                             player->buyItem(currentVend->getItem(location));
-                            player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue());
+                            player->setWealth(player->getWealth() - currentVend->getItem(location)->getValue()*1.2);
                             currentVend->removeItemFromVendor(location);
                             player->showWealth();
                         } else {
@@ -675,19 +675,15 @@ bool game::ZorkUL::processCommand(Command command) {
                       if (command.hasThirdWord()) {
                           cout << "you sold the " + command.getSecondWord() + " " + command.getThirdWord() << endl;
                           location = player->isItemInInventory(command.getSecondWord() + " " + command.getThirdWord());
+                          currentVend->addVendorItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
                       } else {
                           cout << "you sold the " + command.getSecondWord() <<endl;
                           location = player->isItemInInventory(command.getSecondWord());
+                          currentVend->addVendorItem(player->putItem(command.getSecondWord()));
                       }
                       if (location  < 0 ) cout << "You do not have this item to sell" << endl;
                       else {
-                          player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue())*0.8);
-                          if(location != -1 && !command.hasThirdWord()) {
-                          currentVend->addVendorItem(player->putItem(command.getSecondWord()));
-                          }
-                          else {
-                          currentVend->addVendorItem(player->putItem(command.getSecondWord() + " " + command.getThirdWord()));
-                          }
+                          player->setWealth(player->getWealth() + (player->getItemInventory(location).getValue()));
                           player->showWealth();
                       }
                   } else {
